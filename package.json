@@ -1,0 +1,36 @@
+{
+  "name": "pr0-discord-bot",
+  "version": "0.1.0",
+  "description": "pr0gramm Discord Bot",
+  "main": "./src/app.js",
+  "scripts": {
+    "start": "node ./src/app.js",
+    "lint": "eslint ./src",
+    "dev": "npm run lint && npm start"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/pr0-dev/Discord-Bot.git"
+  },
+  "bugs": {
+    "url": "https://github.com/pr0-dev/Discord-Bot/issues"
+  },
+  "homepage": "https://github.com/pr0-dev/Discord-Bot",
+  "author": "TheShad0w",
+  "license": "Apache-2.0",
+  "dependencies": {
+    "body-parser": "^1.19.0",
+    "cors": "^2.8.5",
+    "discord.js": "^12.2.0",
+    "ejs": "^3.1.3",
+    "express": "^4.17.1",
+    "express-minify": "^1.0.0",
+    "helmet": "^3.23.3",
+    "moment": "^2.27.0",
+    "serve-favicon": "^2.5.0",
+    "unirest": "^0.6.0"
+  },
+  "devDependencies": {
+    "eslint": "^5.2.0"
+  }
+}
