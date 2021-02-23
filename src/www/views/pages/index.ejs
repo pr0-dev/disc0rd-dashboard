@@ -1,0 +1,93 @@
+<%
+    "use strict";
+
+    let getRank = function(mark){
+        switch (String(mark)){
+            case "0":  return "Schwuchtel";
+            case "1":  return "Neuschwuchtel";
+            case "2":  return "Altschwuchtel";
+            case "3":  return "Admin";
+            case "4":  return "Gesperrt";
+            case "5":  return "Moderator";
+            case "6":  return "Fliesentischbesitzer";
+            case "7":  return "Lebende Legende";
+            case "8":  return "Wichtler";
+            case "9":  return "Edler Spender";
+            case "10": return "Mittelaltschwuchtel";
+            case "11": return "Alt-Moderator";
+            case "12": return "Community-Helfer";
+            case "13": return "Nutzer-Bot";
+            case "14": return "System-Bot";
+            case "15": return "Alt-Helfer";
+        }
+    };
+%>
+<%- include("../layouts/header"); -%>
+    <% if (!!user){
+        if (!pr0?.user.name){ %>
+
+        <div class="login-notice">
+            <div class="login-notice-inner">
+                <h1>Fehler!</h1>
+                <h3>Du scheinst deinen Discord Account noch nicht mit deinem pr0gramm Account verknüpft zu haben.</h3>
+
+                <a href="https://pr0gramm.com/discord">Discord- und pr0gramm Account verknüpfen</a>
+                <a href="/">Die Accounts sind nun verknüpft! (Neu laden)</a>
+            </div>
+        </div>
+
+        <% }
+
+        else if (!guilds.some(e => e.id === config.auth.server_id)){ %>
+
+        <div class="login-notice">
+            <div class="login-notice-inner">
+                <h1>Fehler!</h1>
+                <h3>Du scheinst derzeit nicht am disc0rd server zu sein.</h3>
+
+                <a href="https://discord.com/invite/5245vVp">Klicke hier um beizutreten</a>
+                <a href="/">Ich bin nun beigetraten! (Neu laden)</a>
+            </div>
+        </div>
+
+        <% } 
+        
+        else { %>
+            <div class="logged-in-inner">
+                <h2 class="sub-h sub-h-pr0">pr0gramm</h2>
+                <div class="user-info user-info-pr0">
+                    <span class="pr0-rank" id="um<%= pr0.user.mark %>"><%= pr0.user.name %></span>
+                    <br>
+                    Rang: <span><%= getRank(pr0.user.mark) %></span>
+                    <br>
+                    Benis: <span><%= pr0.user.score %></span>
+                </div>
+
+                <h2 class="sub-h sub-h-dc">Discord</h2>
+                <div class="user-info user-info-dc">
+                    <div class="user-info-dc-left">
+                        <img src="<%= `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}` %>" alt="User">
+                    </div>
+                    <div class="user-info-dc-right">
+                        <span class="dc-name"><%= user.tag %></span>
+                        <br>
+                        <input type="checkbox" name="sync-nick" id="sync-nick"<%= dc.nick !== pr0.user.name ? "" : " checked" %>>
+                        <label for="sync-nick">pr0gramm Namen als Discord Nick setzen (synchronisieren)</label>
+                    </div>
+                </div>
+            </div>
+        <% }
+    }
+
+    else { %> 
+        <div class="login-notice">
+            <div class="login-notice-inner">
+                <h1>Willkommen</h1>
+                <h3>zum pr0gramm disc0rd panel</h3>
+
+                <a href="/auth">Zum fortfahren mit Discord einloggen</a>
+            </div>
+        </div>
+    <% } %>
+
+<%- include("../layouts/footer"); -%>
