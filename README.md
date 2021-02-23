@@ -1,7 +1,7 @@
-# disc0rd-auth-bot
+# disc0rd-Dashboard
 
 <p align="center"><img height="150" width="auto" src="https://i.imgur.com/ff7vivP.png" /></p>
-<p align="center"><b>pr0gramm Discord Auth-Bot</b></p>
+<p align="center"><b>pr0gramm disc0rd Dashboard</b></p>
 <hr>
 
 ## :wrench: Installation
