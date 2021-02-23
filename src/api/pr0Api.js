@@ -13,6 +13,7 @@ let unirest = require("unirest");
 
 // Utils
 let log = require("../utils/logger");
+let config = require("../utils/configHandler").getConfig();
 
 // Helper Functions
 
@@ -141,6 +142,22 @@ let getUser = function(username, callback){
     });
 };
 
+/**
+ * Get pr0gramm username from Discord ID
+ *
+ * @param {String} discordId
+ * @param {Function} callback
+ */
+let getPr0Username = function(discordId, callback){
+    performRequest("GET", `https://pr0gramm.com/api/discord/getUsername?id=${discordId}&secret=${config.pr0api.discord_secret}`, {}, {}, {}, (err, res) => {
+        if (err){
+            log.error(err);
+            return callback(err);
+        }
+        return callback(null, res);
+    });
+};
+
 // POST Requests
 
 /**
@@ -176,6 +193,7 @@ module.exports = {
     getPost,
     getPostMeta,
     getUser,
+    getPr0Username,
     // POST
     postLogin
 };
