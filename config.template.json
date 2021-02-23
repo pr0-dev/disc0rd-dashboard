@@ -1,6 +1,7 @@
 {
     "auth": {
-        "bot_token": ""
+        "bot_token": "",
+        "server_id": ""
     },
     "bot_settings": {
         "bot_status": "Name ist pr0gramm",
@@ -11,9 +12,17 @@
     },
     "pr0api": {
         "username": "",
-        "password": ""
+        "password": "",
+        "discord_secret": ""
     },
     "webserver": {
-        "port": 1337
+        "port": 1337,
+        "session_secret": "",
+        "auth": {
+            "clientId": "",
+            "clientSecret": "",
+            "scopes": ["identify", "guilds"],
+            "redirectUri": ""
+        }
     }
 }
