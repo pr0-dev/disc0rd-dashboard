@@ -11,10 +11,12 @@ let path = require("path");
 let Discord = require("discord.js");
 let express = require("express");
 let favicon = require("serve-favicon");
-let bodyParser = require("body-parser");
 let cors = require("cors");
 let helmet = require("helmet");
 let minify = require("express-minify");
+let session = require("express-session");
+let csrf = require("csurf");
+let cookieParser = require("cookie-parser");
 
 // API
 let embedHandler = require("./api/embedHandler");
@@ -55,13 +57,20 @@ meta((data) => {
 app.enable("trust proxy");
 
 app.set("view engine", "ejs");
-app.set("port", portHandler(config.server.port));
+app.set("port", portHandler(config.webserver.port));
 app.set("views", path.join(__dirname, "www", "views"));
 
 app.use(helmet());
 app.use(cors());
-app.use(bodyParser.urlencoded({ extended: true }));
+app.use(express.urlencoded({ extended: true }));
 app.use(favicon(path.join(__dirname, "www", "assets", "favicon.png")));
+app.use(cookieParser());
+app.use(session({
+    secret: config.webserver.session_secret,
+    resave: false,
+    saveUninitialized: false
+}));
+app.use(csrf({ cookie: true }));
 
 app.use((req, res, next) => {
     if (/\.min\.(css|js)$/.test(req.url)){
@@ -76,7 +85,7 @@ app.use((req, res, next) => {
 app.use(minify());
 app.use(express.static("./src/www/assets"));
 
-require("./www/router")(app);
+require("./www/router")(app, client);
 
 process.on("unhandledRejection", (err, promise) => {
     log.error("Unhandled rejection (promise: " + promise + ", reason: " + err + ")");
@@ -84,7 +93,7 @@ process.on("unhandledRejection", (err, promise) => {
 
 client.on("ready", () => {
     log.info("Bot läuft...");
-    log.info(`${client.users.size} User, in ${client.channels.size} Kanälen von ${client.guilds.size} Gilden registriert`);
+    log.info(`${client.users.cache.size} User, in ${client.channels.cache.size} Kanälen von ${client.guilds.cache.size} Guilden`);
     client.user.setActivity(config.bot_settings.bot_status);
 });
 
