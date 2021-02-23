@@ -4,7 +4,7 @@
 // = Copyright (c) TheShad0w = //
 // =========================== //
 
-let env = process.env.NODE_ENV;
+let env = process.env.NODE_ENV ?? "dev";
 let nodev = process.version;
 let osinfo = process.platform;
 
