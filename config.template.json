@@ -24,5 +24,6 @@
             "scopes": ["identify", "guilds"],
             "redirectUri": ""
         }
-    }
+    },
+    "rollen_auswahl": []
 }
