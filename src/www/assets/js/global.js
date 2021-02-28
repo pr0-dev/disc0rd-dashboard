@@ -14,12 +14,14 @@
  * @param {boolean} [force=false]
  * @returns {Promise<void>}
  */
-let handleNickChange = async function(e, SA, force = false){
+let handleNickChange = async function(e, SA, $, force = false){
     let res = await (await fetch(
         (force || e.target.checked)
             ? "/nick/set"
             : "/nick/unset"
     )).json();
+
+    $("#resync-nick").attr("disabled", !e.target.checked);
 
     return SA.fire({
         position: "bottom-start",
@@ -119,8 +121,8 @@ let bugsAndFeedback = function(e, SA){
 
     $(document).ready(function(){
         if ($(".logged-in-inner").hasClass("logged-in")){
-            $("#sync-nick").on("change", e => handleNickChange(e, SA));
-            $("#resync-nick").on("click", e => handleNickChange(e, SA, true));
+            $("#sync-nick").on("change", e => handleNickChange(e, SA, $));
+            $("#resync-nick").on("click", e => handleNickChange(e, SA, $, true));
             $(document).on("change", ".role-setter", e => handleRoleChange(e, SA, $));
             getRoles(SA, $);
         }

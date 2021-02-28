@@ -73,7 +73,7 @@
                         <br>
                         <input type="checkbox" name="sync-nick" id="sync-nick"<%= dc.nick !== pr0.user.name ? "" : " checked" %>>
                         <label for="sync-nick">pr0gramm Namen als Discord Nick setzen</label>
-                        <button id="resync-nick"<%= dc.nick === pr0.user.name ? "" : " disabled" %>>Re-Sync</button>
+                        <button id="resync-nick"<%= dc.nick === pr0.user.name ? "" : ' disabled="true"' %>>Re-Sync</button>
                     </div>
                 </div>
 
@@ -137,7 +137,7 @@
                     <br>
                     <input type="checkbox" name="sync-nick" id="sync-nick" checked>
                     <label for="sync-nick">pr0gramm Namen als Discord Nick setzen</label>
-                    <button id="resync-nick">Re-Sync</button>
+                    <button id="resync-nick" disabled="true">Re-Sync</button>
                 </div>
             </div>
 

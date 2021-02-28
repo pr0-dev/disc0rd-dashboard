@@ -260,7 +260,11 @@ section.main > .logged-in-inner > .user-info.user-info-dc > .user-info-dc-right 
     transition: background 0.3s ease;
 }
 
-section.main > .logged-in-inner > .user-info.user-info-dc > .user-info-dc-right > button#resync-nick:hover {
+section.main > .logged-in-inner > .user-info.user-info-dc > .user-info-dc-right > button#resync-nick:disabled {
+    background: #585a63;
+}
+
+section.main > .logged-in-inner > .user-info.user-info-dc > .user-info-dc-right > button#resync-nick:not(:disabled):hover {
     cursor: pointer;
     background: #5566a3;
 }
