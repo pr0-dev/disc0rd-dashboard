@@ -12,12 +12,12 @@ $ `node -v` <br>
 Wenn es eine Versionsnummer zurückgibt, ist NodeJS installiert.
  **Wenn nicht**, NodeJS <a href="https://nodejs.org/en/download/package-manager/">hier</a> downloaden. <br><br>
 2. Repository clonen und hinein navigieren. Wenn Git installiert ist: <br>
-$ `git clone https://github.com/pr0-dev/disc0rd-auth-bot.git && cd disc0rd-auth-bot` <br>
-Wenn nicht, <a href="https://github.com/pr0-dev/disc0rd-auth-bot/archive/master.zip">hier</a> herunterladen und die ZIP extrahieren. <br>
+$ `git clone https://github.com/pr0-dev/disc0rd-dashboard.git && cd disc0rd-dashboard` <br>
+Wenn nicht, <a href="https://github.com/pr0-dev/disc0rd-dashboard/archive/master.zip">hier</a> herunterladen und die ZIP extrahieren. <br>
 Dann in den Ordner navigieren.<br><br>
 3. Dependencies installieren: <br>
 $ `npm install`<br><br>
-4. Das Config-Template [config.template.json](https://github.com/pr0-dev/disc0rd-auth-bot/blob/master/config.template.json) kopieren und als `config.json` einfügen.<br><br>
+4. Das Config-Template [config.template.json](https://github.com/pr0-dev/disc0rd-dashboard/blob/master/config.template.json) kopieren und als `config.json` einfügen.<br><br>
 5. Die frisch kopierte Config datei ausfüllen. <br><br>
 6. Das Script starten <br>
 $ `npm start` <br><br>
