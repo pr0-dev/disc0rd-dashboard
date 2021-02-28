@@ -17,14 +17,17 @@ let getRoutes = require("./services/getRoutes");
 let robotsHandler = require("./modules/robotsHandler");
 let { getPr0Account, getPr0Name } = require("./modules/pr0Helpers");
 
+// Routes
+let setNick = require("./modules/api/setNick");
+let unsetNick = require("./modules/api/unsetNick");
+let getRoles = require("./modules/api/getRoles");
+
 const { clientId, clientSecret, scopes, redirectUri } = config.webserver.auth;
+const authorizeUrl = `https://discordapp.com/api/oauth2/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=${scopes.join("%20")}`;
 
 let routes;
 
-let checkAuth = function(req, res, next){
-    if (!req.session.user) return res.redirect("/");
-    return next();
-};
+let checkAuth = (req, res, next) => (!req.session.user) ? res.redirect("/") : next();
 
 module.exports = function(app, client){
     app.get("/", async(req, res) => {
@@ -57,11 +60,6 @@ module.exports = function(app, client){
             "log": log,
             "pr0": pr0
         });
-    });
-
-    app.get("/auth", (req, res) => {
-        const authorizeUrl = `https://discordapp.com/api/oauth2/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=${scopes.join("%20")}`;
-        return res.redirect(!!req.session.user ? "/" : authorizeUrl);
     });
 
     // Auth
@@ -101,64 +99,11 @@ module.exports = function(app, client){
         });
     });
 
+    app.get("/auth", (req, res) => res.redirect(!!req.session.user ? "/" : authorizeUrl));
     app.get("/logout", checkAuth, (req, res) => req.session.destroy(() => res.redirect("/")));
-
-    app.get("/nick/set", async(req, res) => {
-        let response = {
-            error: !!req.session.user ? 0 : 1,
-            status: !!req.session.user ? 200 : 403,
-            message: !!req.session.user ? "Nickname has been set." : "Unauthorized"
-        };
-
-        if (!!req.session.user){
-            try {
-                client.guilds.cache
-                    .get(config.auth.server_id).members.cache
-                    .get(req.session.user.id)
-                    .setNickname(
-                        (await getPr0Account((await getPr0Name(req.session.user.id)).name)).user.name,
-                        "pr0 nick-sync"
-                    );
-            }
-            catch (e){
-                response.error = 1;
-                response.status = 500;
-                response.message = String(e);
-            }
-        }
-
-        return res.set({
-            "Content-Type": "application/json; charset=utf-8"
-        }).status(response.status).send(response);
-    });
-
-    app.get("/nick/unset", (req, res) => {
-        let response = {
-            error: !!req.session.user ? 0 : 1,
-            status: !!req.session.user ? 200 : 403,
-            message: !!req.session.user ? "Nickname has been removed." : "Unauthorized"
-        };
-
-        if (!!req.session.user){
-            try {
-                client.guilds.cache
-                    .get(config.auth.server_id).members.cache
-                    .get(req.session.user.id)
-                    .setNickname("", "pr0 nick-desync");
-            }
-            catch (e){
-                response.error = 1;
-                response.status = 500;
-                response.message = String(e);
-            }
-        }
-
-        return res.set({
-            "Content-Type": "application/json; charset=utf-8"
-        }).status(response.status).send(response);
-    });
-
-    // Handler
+    app.get("/roles/get", (req, res) => getRoles(req, res, client));
+    app.get("/nick/set", (req, res) => setNick(req, res, client));
+    app.get("/nick/unset", (req, res) => unsetNick(req, res, client));
     app.get("/robots.txt", robotsHandler);
 
     // Errors
