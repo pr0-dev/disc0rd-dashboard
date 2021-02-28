@@ -6,6 +6,14 @@
 
 /* eslint-disable no-var, no-use-before-define, consistent-return, quotes */
 
+/**
+ * Set/Remove Nickname
+ *
+ * @param {Event & { target: HTMLInputElement }} e
+ * @param {any} SA
+ * @param {boolean} [force=false]
+ * @returns {Promise<void>}
+ */
 let handleNickChange = async function(e, SA, force = false){
     let res = await (await fetch(
         (force || e.target.checked)
@@ -24,6 +32,13 @@ let handleNickChange = async function(e, SA, force = false){
     });
 };
 
+/**
+ * Retrieve Roles from Server
+ *
+ * @param {any} SA
+ * @param {any} $
+ * @returns {Promise<void>}
+ */
 let getRoles = async function(SA, $){
     let res = await (await fetch("/roles/get")).json();
 
@@ -41,7 +56,7 @@ let getRoles = async function(SA, $){
 
     $(".user-info.user-info-dc.user-info-dc-rollen").empty().addClass("grid-style");
 
-    res.roles.forEach((r, i) => {
+    return res.roles.forEach((r, i) => {
         $(".user-info.user-info-dc.user-info-dc-rollen").append(
             '<div class="role">' +
             '    <input type="checkbox" class="role-setter" name="role-' + i + '" id="role-' + i + '"' + (r.on_user ? " checked" : "") + '>' +
@@ -51,6 +66,14 @@ let getRoles = async function(SA, $){
     });
 };
 
+/**
+ * Set/Remove Role
+ *
+ * @param {Event & { target: HTMLInputElement }} e
+ * @param {any} SA
+ * @param {any} $
+ * @returns {Promise<void>}
+ */
 let handleRoleChange = async function(e, SA, $){
     let res = await (await fetch(((e.target.checked)
         ? "/roles/set?role="
@@ -66,6 +89,23 @@ let handleRoleChange = async function(e, SA, $){
         timer: 3000,
         timerProgressBar: true
     });
+};
+
+/**
+ * Show Bugs & Feedback modal
+ *
+ * @param {Event} e
+ * @param {any} SA
+ * @returns {void}
+ */
+let bugsAndFeedback = function(e, SA){
+    e.preventDefault();
+    return SA.fire(
+        "Feedback & Bugs",
+        "Für Feedback oder Infos über Bugs, bitte an TheShad0w wenden:<br><br>" +
+        'pr0gramm: <a href="https://pr0gramm.com/user/TheShad0w" target="_blank" rel="noopener" style="color: #000">TheShad0w</a><br>' +
+        "Discord: ShadowByte#1337"
+    );
 };
 
 (($, SA) => {
@@ -84,6 +124,7 @@ let handleRoleChange = async function(e, SA, $){
             $(document).on("change", ".role-setter", e => handleRoleChange(e, SA, $));
             getRoles(SA, $);
         }
+        $("#f-b").on("click", e => bugsAndFeedback(e, SA));
     });
 // @ts-ignore
 })($ || window.jQuery, swal || window.swal || window.Swal);
