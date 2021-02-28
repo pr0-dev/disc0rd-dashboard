@@ -18,6 +18,14 @@ let hasParams = function(value){
     return regExp.test(value);
 };
 
+/**
+ * List all registered routes
+ *
+ * @param {import("express").Application} app
+ * @param {*} [path=[]]
+ * @param {*} [endpoints=[]]
+ * @returns
+ */
 let getRoutes = function(app, path = [], endpoints = []){
     let regExp = /^\/\^\\\/(?:(:?[\w\\.-]*(?:\\\/:?[\w\\.-]*)*)|(\(\?:\(\[\^\\\/]\+\?\)\)))\\\/.*/;
     let stack = app.stack || (app._router && app._router.stack);
@@ -50,7 +58,6 @@ let getRoutes = function(app, path = [], endpoints = []){
 
                 if (parsedPath === ":postId/sub-router") console.log(val);
 
-                // @ts-ignore
                 getRoutes(val.handle, path + "/" + parsedPath, endpoints);
             }
             else getRoutes(val.handle, path, endpoints);
