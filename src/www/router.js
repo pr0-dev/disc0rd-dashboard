@@ -6,7 +6,6 @@
 
 // Dependencies
 let fetch = require("node-fetch");
-let FormData = require("form-data");
 
 // Utils
 let log = require("../utils/logger");
@@ -16,13 +15,16 @@ let config = require("../utils/configHandler").getConfig();
 let getRoutes = require("./services/getRoutes");
 let robotsHandler = require("./modules/robotsHandler");
 let { getPr0Account, getPr0Name } = require("./modules/pr0Helpers");
+let callbackHandler = require("./modules/callBackHandler");
 
 // Routes
 let setNick = require("./modules/api/setNick");
 let unsetNick = require("./modules/api/unsetNick");
 let getRoles = require("./modules/api/getRoles");
+let setRole = require("./modules/api/setRole");
+let unsetRole = require("./modules/api/unsetRole");
 
-const { clientId, clientSecret, scopes, redirectUri } = config.webserver.auth;
+const { clientId, scopes, redirectUri } = config.webserver.auth;
 const authorizeUrl = `https://discordapp.com/api/oauth2/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=${scopes.join("%20")}`;
 
 let routes;
@@ -62,48 +64,17 @@ module.exports = function(app, client){
         });
     });
 
-    // Auth
-    app.get("/callback", (req, res) => {
-        if (req.session.user) return res.redirect("/");
-
-        const accessCode = req.query.code;
-        if (!accessCode) return res.redirect("/");
-
-        const data = new FormData();
-        data.append("client_id", clientId);
-        data.append("client_secret", clientSecret);
-        data.append("grant_type", "authorization_code");
-        data.append("redirect_uri", redirectUri);
-        data.append("scope", scopes.join(" "));
-        data.append("code", accessCode);
-
-        // @ts-ignore
-        return fetch("https://discordapp.com/api/oauth2/token", {
-            method: "POST",
-            body: data
-        }).then(response => response.json()).then(response => {
-            // @ts-ignore
-            fetch("https://discordapp.com/api/users/@me", {
-                method: "GET",
-                headers: {
-                    authorization: `${response.token_type} ${response.access_token}`
-                }
-            }).then(res2 => res2.json()).then(userResponse => {
-                userResponse.tag = `${userResponse.username}#${userResponse.discriminator}`;
-                userResponse.avatarURL = userResponse.avatar ? `https://cdn.discordapp.com/avatars/${userResponse.id}/${userResponse.avatar}.png?size=1024` : null;
-                req.session.user = userResponse;
-                req.session.access_token = response.access_token;
-                req.session.token_type = response.token_type;
-                res.redirect("/");
-            });
-        });
-    });
-
+    app.get("/callback", (req, res) => callbackHandler(req, res));
     app.get("/auth", (req, res) => res.redirect(!!req.session.user ? "/" : authorizeUrl));
     app.get("/logout", checkAuth, (req, res) => req.session.destroy(() => res.redirect("/")));
+
     app.get("/roles/get", (req, res) => getRoles(req, res, client));
+    app.get("/roles/set", (req, res) => setRole(req, res, client));
+    app.get("/roles/unset", (req, res) => unsetRole(req, res, client));
+
     app.get("/nick/set", (req, res) => setNick(req, res, client));
     app.get("/nick/unset", (req, res) => unsetNick(req, res, client));
+
     app.get("/robots.txt", robotsHandler);
 
     // Errors
