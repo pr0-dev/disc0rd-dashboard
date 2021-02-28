@@ -53,7 +53,7 @@
         <% } 
         
         else { %>
-            <div class="logged-in-inner">
+            <div class="logged-in-inner logged-in">
                 <h2 class="sub-h sub-h-pr0">pr0gramm</h2>
                 <div class="user-info user-info-pr0">
                     <span class="pr0-rank" id="um<%= pr0.user.mark %>"><%= pr0.user.name %></span>
@@ -72,7 +72,32 @@
                         <span class="dc-name"><%= user.tag %></span>
                         <br>
                         <input type="checkbox" name="sync-nick" id="sync-nick"<%= dc.nick !== pr0.user.name ? "" : " checked" %>>
-                        <label for="sync-nick">pr0gramm Namen als Discord Nick setzen (synchronisieren)</label>
+                        <label for="sync-nick">pr0gramm Namen als Discord Nick setzen</label>
+                        <button id="resync-nick"<%= dc.nick === pr0.user.name ? "" : " disabled" %>>Re-Sync</button>
+                    </div>
+                </div>
+
+                <h2 class="sub-h sub-h-dc">Rollen</h2>
+                <div class="user-info user-info-dc user-info-dc-rollen">
+                    <div class="skeleton">
+                        <div class="preload-line"></div>
+                        <div class="preload-line"></div>
+                        <div class="preload-line"></div>
+                    </div>
+                    <div class="skeleton">
+                        <div class="preload-line"></div>
+                        <div class="preload-line"></div>
+                        <div class="preload-line"></div>
+                    </div>
+                    <div class="skeleton">
+                        <div class="preload-line"></div>
+                        <div class="preload-line"></div>
+                        <div class="preload-line"></div>
+                    </div>
+                    <div class="skeleton">
+                        <div class="preload-line"></div>
+                        <div class="preload-line"></div>
+                        <div class="preload-line"></div>
                     </div>
                 </div>
             </div>
@@ -88,6 +113,59 @@
                 <a href="/auth">Zum fortfahren mit Discord einloggen</a>
             </div>
         </div>
+    <% } %>
+
+    <% if (!user || !pr0?.user.name || !guilds.some(e => e.id === config.auth.server_id)) { %>
+
+        <div class="logged-in-inner noselect" style="filter: blur(8px); cursor: default !important; pointer-events: none">
+            <h2 class="sub-h sub-h-pr0">pr0gramm</h2>
+            <div class="user-info user-info-pr0">
+                 <span class="pr0-rank" id="um0">LoremIpsum</span>
+                <br>
+                Rang: <span>Schwuchtel</span>
+                <br>
+                Benis: <span>1337</span>
+            </div>
+
+            <h2 class="sub-h sub-h-dc">Discord</h2>
+            <div class="user-info user-info-dc">
+                <div class="user-info-dc-left">
+                    <img src="/img/user-placeholder.png" alt="User">
+                </div>
+                <div class="user-info-dc-right">
+                    <span class="dc-name">LoremIpsum#1337</span>
+                    <br>
+                    <input type="checkbox" name="sync-nick" id="sync-nick" checked>
+                    <label for="sync-nick">pr0gramm Namen als Discord Nick setzen</label>
+                    <button id="resync-nick">Re-Sync</button>
+                </div>
+            </div>
+
+            <h2 class="sub-h sub-h-dc">Rollen</h2>
+            <div class="user-info user-info-dc user-info-dc-rollen">
+                <div class="skeleton">
+                    <div class="preload-line"></div>
+                    <div class="preload-line"></div>
+                    <div class="preload-line"></div>
+                </div>
+                <div class="skeleton">
+                    <div class="preload-line"></div>
+                    <div class="preload-line"></div>
+                    <div class="preload-line"></div>
+                </div>
+                <div class="skeleton">
+                    <div class="preload-line"></div>
+                    <div class="preload-line"></div>
+                    <div class="preload-line"></div>
+                </div>
+                <div class="skeleton">
+                    <div class="preload-line"></div>
+                    <div class="preload-line"></div>
+                    <div class="preload-line"></div>
+                </div>
+            </div>
+        </div>
+
     <% } %>
 
 <%- include("../layouts/footer"); -%>
