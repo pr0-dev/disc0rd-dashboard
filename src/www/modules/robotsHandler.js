@@ -7,10 +7,10 @@
 /**
  * Generate robots.txt
  *
- * @param {*} req
- * @param {*} res
+ * @param {import("express").Request} _
+ * @param {import("express").Response} res
  */
-module.exports = function(req, res){
+module.exports = function(_, res){
     let cYear = (new Date()).getFullYear();
     let author = "TheShad0w";
 

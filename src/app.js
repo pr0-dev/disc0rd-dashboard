@@ -145,8 +145,8 @@ client.login(config.auth.bot_token).then(() => {
 
 app.listen(app.get("port"), (err) => {
     if (err){
-        log.error(`Error on port ${app.get("port")}: ${err}`);
+        log.error(`Fehler auf Port ${app.get("port")}: ${err}`);
         process.exit(1);
     }
-    log.info(`Listening on port ${app.get("port")}...`);
+    log.info(`Listening auf Port ${app.get("port")}...`);
 });
