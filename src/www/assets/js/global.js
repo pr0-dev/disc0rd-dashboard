@@ -44,10 +44,27 @@ let getRoles = async function(SA, $){
     res.roles.forEach((r, i) => {
         $(".user-info.user-info-dc.user-info-dc-rollen").append(
             '<div class="role">' +
-            '    <input type="checkbox" name="role-' + i + '" id="role-' + i + '"' + (r.on_user ? " checked" : "") + '>' +
+            '    <input type="checkbox" class="role-setter" name="role-' + i + '" id="role-' + i + '"' + (r.on_user ? " checked" : "") + '>' +
             '    <label for="role-' + i + '">' + r.role + '</label>' +
             '</div>'
         );
+    });
+};
+
+let handleRoleChange = async function(e, SA, $){
+    let res = await (await fetch(((e.target.checked)
+        ? "/roles/set?role="
+        : "/roles/unset?role="
+    ) + encodeURIComponent($('label[for="' + e.target.id + '"]').text()))).json();
+
+    return SA.fire({
+        position: "bottom-start",
+        title: res.error === 0 ? res.message : "Fehler beim aktualisieren der Rollen",
+        // background: "#9AA3B5",
+        toast: true,
+        showConfirmButton: false,
+        timer: 3000,
+        timerProgressBar: true
     });
 };
 
@@ -64,6 +81,7 @@ let getRoles = async function(SA, $){
         if ($(".logged-in-inner").hasClass("logged-in")){
             $("#sync-nick").on("change", e => handleNickChange(e, SA));
             $("#resync-nick").on("click", e => handleNickChange(e, SA, true));
+            $(document).on("change", ".role-setter", e => handleRoleChange(e, SA, $));
             getRoles(SA, $);
         }
     });
