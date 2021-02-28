@@ -6,6 +6,26 @@
 
         <link rel="stylesheet" href="/css/loader.css">
         <link rel="stylesheet" href="/css/main.css">
+
+        <% if (status_code === 404){ %>
+        <style data-for="404" type="text/css">
+            .not-found-wrap {
+                position: absolute;
+                top: 50%;
+                left: 50%;
+                transform: translate(-50%, -50%);
+                text-align: center;
+            }
+            .not-found-wrap > h1 {
+                font-size: 78px;
+                margin: 5px 0;
+            }
+            .not-found-wrap > h3 {
+                font-size: 24px;
+                margin: 15px 0;
+            }
+        </style>
+        <% } %>
     </head>
     <body>
         <header class="site-header">
