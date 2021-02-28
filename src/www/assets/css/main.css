@@ -81,16 +81,22 @@ header.site-header > .h-container {
 header.site-header > .h-container > .h-left,
 header.site-header > .h-container > .h-right {
     width: 50%;
+    position: relative;
 }
 
 header.site-header > .h-container > .h-left a,
-header.site-header > .h-container > .h-right a {
+header.site-header > .h-container > .h-right a,
+header.site-header > .h-container > .h-right a span {
     display: flex;
     height: 100%;
     align-items: center;
     color: #FFF;
     text-decoration: none;
     transition: color .3s ease;
+}
+
+header.site-header > .h-container > .h-right a span.h-logout-bold {
+    font-weight: bold;
 }
 
 header.site-header > .h-container > .h-left a {
@@ -104,7 +110,8 @@ header.site-header > .h-container > .h-right a {
 }
 
 header.site-header > .h-container > .h-left a:hover,
-header.site-header > .h-container > .h-right a:hover {
+header.site-header > .h-container > .h-right a:hover,
+header.site-header > .h-container > .h-right a:hover span {
     color: rgb(184, 184, 184);
 }
 
@@ -243,6 +250,11 @@ section.main > .logged-in-inner > .user-info.user-info-dc > .user-info-dc-right 
     font-size: 22px;
 }
 
+section.main > .logged-in-inner > .user-info.user-info-dc > .user-info-dc-right > label {
+    color: #FFF;
+    transition: color .3s ease;
+}
+
 section.main > .logged-in-inner > .user-info.user-info-dc > .user-info-dc-right > input#sync-nick:hover,
 section.main > .logged-in-inner > .user-info.user-info-dc > .user-info-dc-right > label:hover {
     cursor: pointer;
@@ -295,7 +307,7 @@ section.main > .logged-in-inner > .user-info.user-info-dc.user-info-dc-rollen > 
     margin-bottom: 10px;
 }
 
-section.main > .logged-in-inner > .user-info.user-info-dc.user-info-dc-rollen.grid-style{
+section.main > .logged-in-inner > .user-info.user-info-dc.user-info-dc-rollen.grid-style {
     display: grid;
     grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
     grid-template-rows: 1fr 1fr 1fr;
@@ -304,6 +316,17 @@ section.main > .logged-in-inner > .user-info.user-info-dc.user-info-dc-rollen.gr
       ". . . . ."
       ". . . . ."
       ". . . . .";
+}
+
+section.main > .logged-in-inner > .user-info.user-info-dc.user-info-dc-rollen.grid-style .role > label {
+    color: #FFF;
+    transition: color .3s ease;
+}
+
+section.main > .logged-in-inner > .user-info.user-info-dc.user-info-dc-rollen.grid-style .role > input:hover,
+section.main > .logged-in-inner > .user-info.user-info-dc.user-info-dc-rollen.grid-style .role > label:hover {
+    cursor: pointer;
+    color: rgb(184, 184, 184);
 }
 
 /* Footer */
