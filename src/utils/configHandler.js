@@ -17,7 +17,7 @@ const configPath = path.resolve("config.json");
 /**
  * Check if the config is valid JSON
  *
- * @param {*} obj
+ * @param {object} obj
  * @returns {boolean} whether it is valid JSON
  */
 let validJson = function(obj){
