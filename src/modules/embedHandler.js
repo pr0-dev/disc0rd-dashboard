@@ -4,6 +4,8 @@
 // = Copyright (c) TheShad0w = //
 // =========================== //
 
+/* eslint-disable consistent-return */
+
 // Core Modukes
 let path = require("path");
 
@@ -11,7 +13,7 @@ let path = require("path");
 let moment = require("moment");
 
 // API
-let api = require("./pr0Api");
+let api = require("../api/pr0Api");
 
 // Utils
 let log = require("../utils/logger");
@@ -30,16 +32,18 @@ moment.locale("de");
  * Pr0gramm Orange
  * Hex: 0xEE4d2E
  * Dec: 15617326
+ *
+ * DiscordJS: Range = 0 - 16777215 (0xFFFFFF)
  */
-const orange = "15617326";
+const orange = 15617326;
 
 const imgUri = "https://img.pr0gramm.com/";
 
 /**
  * Creates the Post embed based on fetched data
  *
- * @param {*} message
- * @param {*} post
+ * @param {import("discord.js").Message & { channel: import("discord.js").GuildChannel }} message
+ * @param {Object} post
  * @returns embed
  */
 let uploadEmbed = function(message, post){
@@ -105,12 +109,6 @@ let uploadEmbed = function(message, post){
                     inline: true
                 }
             ]
-            /*
-            footer: {
-                color: "00000",
-                text: "auf pr0gramm.com"
-            }
-            */
         },
         files: [
             preview
@@ -123,8 +121,8 @@ let uploadEmbed = function(message, post){
 /**
  * Creates the comment embed based on fetched data
  *
- * @param {*} message
- * @param {*} data
+ * @param {import("discord.js").Message} message
+ * @param {Object} data
  * @returns embed
  */
 let commentEmbed = function(message, data){
@@ -178,8 +176,8 @@ let commentEmbed = function(message, data){
 /**
  * Creates the user embed based on fetched data
  *
- * @param {*} message
- * @param {*} data
+ * @param {import("discord.js").Message} message
+ * @param {Object} data
  * @returns
  */
 let userEmbed = function(message, data){
@@ -265,7 +263,13 @@ let userEmbed = function(message, data){
     return embed;
 };
 
-// eslint-disable-next-line consistent-return
+/**
+ * Create a Discord Embed
+ *
+ * @param {import("discord.js").Message & { channel: import("discord.js").GuildChannel}} message
+ * @param {Function} callback
+ * @returns
+ */
 let createEmbed = function(message, callback){
     if (config.bot_settings.embed_direct_links && (message.content).match(regexes.directsRegex)){
         let query = (message.content).replace(/http(?:s?):\/\/(?:vid|img)\.pr0gramm\.com\//gi, "");
@@ -332,8 +336,6 @@ let createEmbed = function(message, callback){
                     callback(null, embedLayout);
                 }
             }
-
-            return null;
         });
     }
 
@@ -363,7 +365,7 @@ let createEmbed = function(message, callback){
                 timestamp: timestamp
             });
 
-            return callback(null, postLayout);
+            callback(null, postLayout);
         });
     }
 
@@ -379,7 +381,7 @@ let createEmbed = function(message, callback){
 
             let userLayout = userEmbed(message, resData);
 
-            return callback(null, userLayout);
+            callback(null, userLayout);
         });
     }
 
