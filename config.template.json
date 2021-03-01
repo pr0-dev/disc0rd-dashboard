@@ -8,7 +8,12 @@
         "nsfw_in_nswfchat_only": true,
         "disable_nsfl_preview": true,
         "delete_user_message": false,
-        "embed_direct_links": false
+        "embed_direct_links": false,
+        "prefix": {
+            "command_prefix": ".",
+            "mod_prefix": "~"
+        },
+        "moderator_roles": []
     },
     "pr0api": {
         "username": "",
