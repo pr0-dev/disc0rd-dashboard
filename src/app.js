@@ -18,8 +18,11 @@ let session = require("express-session");
 let csrf = require("csurf");
 let cookieParser = require("cookie-parser");
 
+// Modules
+let embedHandler = require("./modules/embedHandler");
+let messageHandler = require("./modules/messageHandler");
+
 // API
-let embedHandler = require("./api/embedHandler");
 let login = require("./api/pr0Login");
 
 // Utils
@@ -117,6 +120,8 @@ client.on("message", (message) => {
             return null;
         });
     }
+
+    else messageHandler(message, client);
 });
 
 client.on("error", (err) => {
