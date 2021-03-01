@@ -4,6 +4,8 @@
 <p align="center"><b>pr0gramm disc0rd Dashboard</b></p>
 <hr>
 
+**Info:** Dieses Repository basiert auf dem [pr0gramm Discord Bot](https://github.com/pr0-dev/Discord-Bot).
+
 ## :wrench: Installation
 
 0. Terminal aufmachen und dorthin navigieren, wo man es downloaden möchte <br><br>
