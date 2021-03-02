@@ -32,4 +32,4 @@ exports.run = (client, message, args, callback) => {
     return callback();
 };
 
-exports.description = "Listet informationen über diesen Bot";
+exports.description = "Listet informationen über diesen Bot.";
