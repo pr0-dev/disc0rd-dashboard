@@ -4,6 +4,11 @@
 // = Copyright (c) TheShad0w = //
 // =========================== //
 
+/**
+ * @typedef {import("discord.js").Message} Message
+ * @typedef {import("discord.js").Client} Client
+ */
+
 // Core Modules
 let fs = require("fs");
 let path = require("path");
@@ -15,8 +20,8 @@ let config = require("../utils/configHandler").getConfig();
 /**
  * Passes commands to the correct executor
  *
- * @param {import("discord.js").Message} message
- * @param {import("discord.js").Client} client
+ * @param {Message} message
+ * @param {Client} client
  * @param {boolean} isModCommand
  * @param {Function} callback
  * @returns {any} callback

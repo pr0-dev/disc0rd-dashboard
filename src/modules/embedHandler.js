@@ -4,6 +4,11 @@
 // = Copyright (c) TheShad0w = //
 // =========================== //
 
+/**
+ * @typedef {import("discord.js").Message & { channel: import("discord.js").GuildChannel }} Message
+ * @typedef {import("discord.js").Client} Client
+ */
+
 /* eslint-disable consistent-return */
 
 // Core Modukes
@@ -42,7 +47,7 @@ const imgUri = "https://img.pr0gramm.com/";
 /**
  * Creates the Post embed based on fetched data
  *
- * @param {import("discord.js").Message & { channel: import("discord.js").GuildChannel }} message
+ * @param {Message} message
  * @param {Object} post
  * @returns embed
  */
@@ -121,7 +126,7 @@ let uploadEmbed = function(message, post){
 /**
  * Creates the comment embed based on fetched data
  *
- * @param {import("discord.js").Message} message
+ * @param {Message} message
  * @param {Object} data
  * @returns embed
  */
@@ -176,7 +181,7 @@ let commentEmbed = function(message, data){
 /**
  * Creates the user embed based on fetched data
  *
- * @param {import("discord.js").Message} message
+ * @param {Message} message
  * @param {Object} data
  * @returns
  */
@@ -266,7 +271,7 @@ let userEmbed = function(message, data){
 /**
  * Create a Discord Embed
  *
- * @param {import("discord.js").Message & { channel: import("discord.js").GuildChannel}} message
+ * @param {Message} message
  * @param {Function} callback
  * @returns
  */

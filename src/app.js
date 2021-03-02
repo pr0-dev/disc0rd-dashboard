@@ -4,6 +4,10 @@
 // = Copyright (c) TheShad0w = //
 // =========================== //
 
+/**
+ * @typedef {import("discord.js").Message & {channel: import("discord.js").GuildChannel}} Message
+ */
+
 // Core Modules
 let path = require("path");
 
@@ -112,7 +116,7 @@ client.on("message", (message) => {
     if (message.author.bot) return;
 
     if (message.content.startsWith("http") && message.content.match(/\bpr0gramm.com\//i)){
-        embedHandler.createEmbed(message, (err, embed) => {
+        embedHandler.createEmbed(/** @type {Message} */ (message), (err, embed) => {
             if (err) return log.error(`Konnte Embed nicht erstellen: ${err}`);
             message.channel.send(embed);
 
