@@ -114,7 +114,7 @@ client.on("guildDelete", (guild) => {
 
 client.on("guildMemberAdd", member => {
     member.send(`
-Hallo, ${member.user.tag}!
+Hallo, ${member.user.username}!
 
 Willkommen auf dem offiziellen pr0gramm Discord.
 Um auf dem Server schreiben zu können, musst du dich zuerst mit deinem pr0gramm Account authentifizieren. Um das zu tun, klicke auf folgenden Link und verknüpfe deinen Account:
