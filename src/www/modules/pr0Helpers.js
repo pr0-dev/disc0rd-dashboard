@@ -56,7 +56,8 @@ let getDiscordId = function(username){
                 log.error(err);
                 return resolve(null);
             }
-            return resolve(res.body);
+
+            return resolve(JSON.parse(res.raw_body.replace(/"discordId":(\d+),/g, '"discordId":"$1",')));
         });
     });
 };
