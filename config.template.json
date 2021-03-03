@@ -13,7 +13,8 @@
             "command_prefix": ".",
             "mod_prefix": "~"
         },
-        "moderator_roles": []
+        "moderator_roles": [],
+        "verfied_nick_role": ""
     },
     "pr0api": {
         "username": "",
