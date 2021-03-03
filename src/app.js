@@ -112,6 +112,24 @@ client.on("guildDelete", (guild) => {
     log.info(`Von Gilde gelöscht: ${guild.name} (id: ${guild.id}).`);
 });
 
+client.on("guildMemberAdd", member => {
+    member.send(`
+Hallo, ${member.user.tag}!
+
+Willkommen auf dem offiziellen pr0gramm Discord.
+Um auf dem Server schreiben zu können, musst du dich zuerst mit deinem pr0gramm Account authentifizieren. Um das zu tun, klicke auf folgenden Link und verknüpfe deinen Account:
+
+<https://pr0gramm.com/discord>
+
+Nachdem du das getan hast, wirst du automatisch freigeschalten. Dann kannst du deinen Account auf dem Discord Server hier verwalten:
+
+<https://discordpanel.pr0gramm.com>
+
+Viel spaß! :orange_heart:
+`
+    );
+});
+
 client.on("message", (message) => {
     if (message.author.bot) return;
 
