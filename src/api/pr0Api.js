@@ -172,6 +172,23 @@ let getPr0Username = function(discordId, callback){
     });
 };
 
+/**
+ * Get pr0gramm username from Discord ID
+ *
+ * @param {string} username
+ * @param {Function} callback
+ * @returns {any} callback
+ */
+let getDiscordId = function(username, callback){
+    performRequest("GET", `https://pr0gramm.com/api/discord/getDiscordId?name=${username}&secret=${config.pr0api.discord_secret}`, {}, {}, {}, (err, res) => {
+        if (err){
+            log.error(err);
+            return callback(err);
+        }
+        return callback(null, res);
+    });
+};
+
 // POST Requests
 
 /**
@@ -209,6 +226,7 @@ module.exports = {
     getPostMeta,
     getUser,
     getPr0Username,
+    getDiscordId,
     // POST
     postLogin
 };
