@@ -66,7 +66,7 @@
                 <h2 class="sub-h sub-h-dc">Discord</h2>
                 <div class="user-info user-info-dc">
                     <div class="user-info-dc-left">
-                        <img src="<%= `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}` %>" alt="User">
+                        <img src="<%= !!user.avatar ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}` : "/img/user-placeholder.png" %>" alt="User">
                     </div>
                     <div class="user-info-dc-right">
                         <span class="dc-name"><%= user.tag %></span>

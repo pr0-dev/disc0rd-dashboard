@@ -37,7 +37,7 @@
                 </div>
                 <div class="h-right">
                     <a href="<%= !!user ? "/logout" : "/auth" %>">
-                        <img src="<%= !!user ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}` : "/img/user-placeholder.png" %>" alt="User">
+                        <img src="<%= (!!user && !!user.avatar) ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}` : "/img/user-placeholder.png" %>" alt="User">
                         <span>
                             <%= !!user ? user.username : "Anmelden" %>
                             <% if(!!user){ %>&nbsp;<span class="h-logout-bold"> Ausloggen</span><% } %>
