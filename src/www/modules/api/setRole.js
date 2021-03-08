@@ -6,6 +6,14 @@
 
 let config = require("../../../utils/configHandler").getConfig();
 
+/**
+ * Set role for user
+ *
+ * @param {import("express").Request & { session: Object }} req
+ * @param {import("express").Response} res
+ * @param {import("discord.js").Client} client
+ * @returns {Promise<any>} JSON
+ */
 module.exports = async function(req, res, client){
     let response = {
         error: !!req.session.user ? 0 : 1,
@@ -18,7 +26,7 @@ module.exports = async function(req, res, client){
             response.message = "Keine Rolle angegeben.";
             response.error = 1;
         }
-        else if (!config.rollen_auswahl.includes(decodeURIComponent(req.query.role))) {
+        else if (!config.rollen_auswahl.includes(decodeURIComponent(String(req.query.role)))) {
             response.message = "Diese Rolle darf nicht gesetzt werden.";
             response.error = 1;
         }
@@ -30,7 +38,7 @@ module.exports = async function(req, res, client){
                     .add(
                         client.guilds.cache
                             .get(config.auth.server_id).roles.cache
-                            .find(r => r.name === decodeURIComponent(req.query.role))
+                            .find(r => r.name === decodeURIComponent(String(req.query.role)))
                     );
             }
             catch (e){
