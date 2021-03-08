@@ -219,7 +219,7 @@ let postLogin = function(user, pass, callback){
 };
 
 module.exports = {
-    // GEGT
+    // GET
     getLoginStatus,
     reverseSearch,
     getPost,
