@@ -4,6 +4,13 @@
 // = Copyright (c) TheShad0w = //
 // =========================== //
 
+/**
+ * Render the 404 Page
+ *
+ * @param {import("express").Request & { session: Object}} req
+ * @param {import("express").Response} res
+ * @returns {any} renderer
+ */
 module.exports = function(req, res){
     return res.status(404).render("errors/404", {
         "routeTitle": "Nicht gefunden =(",

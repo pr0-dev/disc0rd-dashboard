@@ -13,6 +13,13 @@ let config = require("../../utils/configHandler").getConfig();
 
 let { getPr0Account, getPr0Name } = require("./pr0Helpers");
 
+/**
+ * Handle the PWA-ishness of the main page
+ *
+ * @param {import("express").Request & { session: Object }} req
+ * @param {import("express").Response} res
+ * @returns {Promise<any>} renderer
+ */
 module.exports = async function(req, res){
     let pr0 = !req.session.user
         ? null

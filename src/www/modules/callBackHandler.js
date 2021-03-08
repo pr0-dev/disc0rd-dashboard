@@ -10,6 +10,13 @@ let fetch = require("node-fetch");
 
 const { clientId, clientSecret, scopes, redirectUri } = config.webserver.auth;
 
+/**
+ * Handle the OAuth2 callback from Discord
+ *
+ * @param {import("express").Request & { session: Object }} req
+ * @param {import("express").Response} res
+ * @returns {any} fetch
+ */
 module.exports = function(req, res){
     if (req.session.user) return res.redirect("/");
 

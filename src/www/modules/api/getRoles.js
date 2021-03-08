@@ -6,6 +6,14 @@
 
 let config = require("../../../utils/configHandler").getConfig();
 
+/**
+ * Get matching roles from discord server
+ *
+ * @param {import("express").Request & { session: Object }} req
+ * @param {import("express").Response} res
+ * @param {import("discord.js").Client} client
+ * @returns {Promise<any>} JSON
+ */
 module.exports = async function(req, res, client){
     let response = {
         error: !!req.session.user ? 0 : 1,

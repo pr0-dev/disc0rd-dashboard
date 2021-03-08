@@ -7,6 +7,14 @@
 let config = require("../../../utils/configHandler").getConfig();
 let { getPr0Account, getPr0Name } = require("../pr0Helpers");
 
+/**
+ * Sync nick for user
+ *
+ * @param {import("express").Request & { session: Object }} req
+ * @param {import("express").Response} res
+ * @param {import("discord.js").Client} client
+ * @returns {Promise<any>} JSON
+ */
 module.exports = async function(req, res, client){
     let response = {
         error: !!req.session.user ? 0 : 1,
