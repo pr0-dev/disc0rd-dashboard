@@ -57,6 +57,8 @@ let getDiscordId = function(username){
                 return resolve(null);
             }
 
+            // Make sure the ID is a string.
+            // Otherwise it might overflow as Number.
             return resolve(
                 typeof res.body.discordId !== "string"
                     ? JSON.parse(res.raw_body.replace(/"discordId":(\d+),/g, '"discordId":"$1",'))
