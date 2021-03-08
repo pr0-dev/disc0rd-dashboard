@@ -25,14 +25,21 @@ let notFoundHandler = require("./modules/404Handler");
 const { clientId, scopes, redirectUri } = config.webserver.auth;
 const authorizeUrl = `https://discordapp.com/api/oauth2/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=${scopes.join("%20")}`;
 
-let routes;
-
 let checkAuth = (req, res, next) => (!req.session.user) ? res.redirect("/") : next();
+let logRoutes = r => r.forEach(e => log.info(`Route ${e.path} registered with methods ${(e.methods).join(", ")}`));
 
+/**
+ * Main Router
+ *
+ * @param {import("express").Application} app
+ * @param {import("discord.js").Client} client
+ */
 module.exports = function(app, client){
     app.get("/", async(req, res) => indexHandler(req, res));
 
     app.get("/callback", (req, res) => callbackHandler(req, res));
+
+    // @ts-ignore
     app.get("/auth", (req, res) => res.redirect(!!req.session.user ? "/" : authorizeUrl));
     app.get("/logout", checkAuth, (req, res) => req.session.destroy(() => res.redirect("/")));
 
@@ -47,8 +54,5 @@ module.exports = function(app, client){
 
     app.get("*", (req, res) => notFoundHandler(req, res));
 
-    routes = getRoutes(app);
-    for (let i in routes){
-        log.info(`Route ${routes[i].path} registered with methods ${(routes[i].methods).join(", ")}`);
-    }
+    logRoutes(getRoutes(app));
 };
