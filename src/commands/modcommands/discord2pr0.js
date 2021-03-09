@@ -8,7 +8,7 @@ let config = require("../../utils/configHandler").getConfig();
 let { getPr0Name } = require("../../www/modules/pr0Helpers");
 
 /**
- * Shows some generic infos
+ * Resolves a discord ID to it's pr0gramm username
  *
  * @param {import("discord.js").Client} client
  * @param {import("discord.js").Message} message
@@ -32,4 +32,4 @@ exports.run = async(client, message, args, callback) => {
     return callback();
 };
 
-exports.description = "Gibt den pr0gramm Usernamen zu einer Discord-ID aus.";
+exports.description = `Gibt den pr0gramm Usernamen zu einer Discord-ID aus. Verwendung: \`${config.bot_settings.prefix.mod_prefix}discord2pr0 DISCORD_ID\``;
