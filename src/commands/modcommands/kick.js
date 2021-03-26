@@ -24,6 +24,8 @@ exports.run = (client, message, args, callback) => {
 
     let mentionedUserObject = message.guild.member(mentioned);
 
+    if (!mentionedUserObject.kickable) return callback("Dieser User kann nicht gekickt werden.");
+
     message.channel.send(`User ${mentionedUserObject} wurde gekickt!\nGrund: ${reason}`);
     message.guild.member(mentioned).send(
 `Du wurdest vom pr0gramm disc0rd gekickt.
@@ -37,4 +39,4 @@ Du kannst dies als Verwarnung betrachten. Das nächste mal könnte es bereits ei
     return callback();
 };
 
-exports.description = `Kickt einen User mit Grund (wird an User per PN gesendet). Verwendung: \`${config.bot_settings.prefix.mod_prefix}kick \@username KICKGRUND\``;
+exports.description = `Kickt einen User mit Grund (wird an User per PN gesendet). Verwendung: ${config.bot_settings.prefix.mod_prefix}kick \@username KICKGRUND`;

@@ -32,4 +32,4 @@ exports.run = async(client, message, args, callback) => {
     return callback();
 };
 
-exports.description = `Gibt den pr0gramm Usernamen zu einer Discord-ID aus. Verwendung: \`${config.bot_settings.prefix.mod_prefix}discord2pr0 DISCORD_ID\``;
+exports.description = `Gibt den pr0gramm Usernamen zu einer Discord-ID aus. Verwendung: ${config.bot_settings.prefix.mod_prefix}discord2pr0 DISCORD_ID`;
