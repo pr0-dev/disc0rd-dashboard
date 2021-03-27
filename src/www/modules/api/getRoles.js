@@ -25,19 +25,28 @@ module.exports = async function(req, res, client){
         const finalRoles = [];
         const configRoles = config.rollen_auswahl;
 
-        const userRoles = client.guilds.cache
-            .get(config.auth.server_id).members.cache
-            .get(req.session.user.id).roles.cache
-            .map(role => role.name);
+        const userRoles = await client.guilds.cache
+            .get(config.auth.server_id).members
+            .fetch()
+            .then(guildMembers => guildMembers.get(req.session.user.id)
+                .fetch()
+                .then(fetchedUser => fetchedUser.roles.cache.map(role => role.name))
+            );
 
-        client.guilds.cache
-            .get(config.auth.server_id).roles.cache
-            .map(role => role.name)
-            .filter(role => configRoles.includes(role))
-            .forEach(e => finalRoles.push({
-                "role": e,
-                "on_user": userRoles.includes(e)
-            }));
+        await client.guilds.cache
+            .get(config.auth.server_id)
+            .fetch()
+            .then(async fetched => (await fetched.roles
+                .fetch()
+                .then(fetchedRoles => (fetchedRoles.cache
+                    .map(role => role.name)
+                    .filter(role => configRoles.includes(role))
+                    .forEach(e => finalRoles.push({
+                        "role": e,
+                        "on_user": userRoles.includes(e)
+                    }))
+                ))
+            ));
 
         response.roles = finalRoles;
     }
