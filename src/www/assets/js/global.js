@@ -56,10 +56,10 @@ let getRoles = async function(SA, $){
         });
     }
 
-    $(".user-info.user-info-dc.user-info-dc-rollen").empty().addClass("grid-style");
+    $(".user-info-dc-rollen").empty().addClass("grid-style");
 
     return res.roles.forEach((r, i) => {
-        $(".user-info.user-info-dc.user-info-dc-rollen").append(
+        $(".user-info-dc-rollen").append(
             '<div class="role">' +
             '    <input type="checkbox" class="role-setter" name="role-' + i + '" id="role-' + i + '"' + (r.on_user ? " checked" : "") + '>' +
             '    <label for="role-' + i + '">' + r.role + '</label>' +
