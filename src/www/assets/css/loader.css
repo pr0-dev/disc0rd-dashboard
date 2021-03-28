@@ -13,7 +13,7 @@
     top: 0;
     left: 0;
     width: 100%;
-    z-index: 9999;
+    z-index: 40;
     -webkit-transform: translate3d(0, -50px, 0);
     -ms-transform: translate3d(0, -50px, 0);
     transform: translate3d(0, -50px, 0);
