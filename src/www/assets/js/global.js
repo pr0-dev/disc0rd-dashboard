@@ -106,7 +106,8 @@ let bugsAndFeedback = function(e, SA){
         "Feedback & Bugs",
         "Für Feedback oder Infos über Bugs, bitte an TheShad0w wenden:<br><br>" +
         'pr0gramm: <a href="https://pr0gramm.com/user/TheShad0w" target="_blank" rel="noopener" style="color: #000">TheShad0w</a><br>' +
-        "Discord: ShadowByte#1337"
+        "Discord: ShadowByte#1337<br><br>" +
+        'Hilfe beim Frontend-Design: <a href="https://pr0gramm.com/user/jonas32" target="_blank" rel="noopener" style="color: #000">jonas32</a>'
     );
 };
 
