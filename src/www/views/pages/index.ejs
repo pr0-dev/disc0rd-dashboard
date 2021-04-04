@@ -26,13 +26,13 @@
     <% if (!!user){
         if (!pr0?.user.name){ %>
 
-        <div class="login-notice absolute bg-light px-4 z-50 shadow-md rounded-xl">
+        <div class="login-notice absolute bg-light px-4 z-50 shadow-md rounded-md">
             <div class="login-notice-inner text-center absolute">
                 <h1 class="text-2xl">Fehler!</h1>
                 <h3 class="text-lg">Du scheinst deinen Discord Account noch nicht mit deinem pr0gramm Account verknüpft zu haben.</h3>
 
-                <a class="rounded-xl shadow-md bg-discord-blue px-4 py-2 mt-8 inline-block text-white transition-300 cursor-pointer hover:bg-discord-blue-dark whitespace-normal" href="https://pr0gramm.com/discord">Discord- und pr0gramm Account verknüpfen</a>
-                <a class="rounded-xl shadow-md bg-discord-blue px-4 py-2 mt-8 inline-block text-white transition-300 cursor-pointer hover:bg-discord-blue-dark whitespace-normal" href="/">Die Accounts sind nun verknüpft! (Neu laden)</a>
+                <a class="rounded-md shadow-md bg-discord-blue px-4 py-2 mt-8 inline-block text-white transition-300 cursor-pointer hover:bg-discord-blue-dark whitespace-normal" href="https://pr0gramm.com/discord">Discord- und pr0gramm Account verknüpfen</a>
+                <a class="rounded-md shadow-md bg-discord-blue px-4 py-2 mt-8 inline-block text-white transition-300 cursor-pointer hover:bg-discord-blue-dark whitespace-normal" href="/">Die Accounts sind nun verknüpft! (Neu laden)</a>
             </div>
         </div>
 
@@ -40,13 +40,13 @@
 
         else if (!guilds.some(e => e.id === config.auth.server_id)){ %>
 
-        <div class="login-notice absolute bg-light px-4 z-50 shadow-md rounded-xl">
+        <div class="login-notice absolute bg-light px-4 z-50 shadow-md rounded-md">
             <div class="login-notice-inner text-center absolute">
                 <h1 class="text-2xl">Fehler!</h1>
                 <h3 class="text-lg">Du scheinst derzeit nicht am disc0rd server zu sein.</h3>
 
-                <a class="rounded-xl shadow-md bg-discord-blue px-4 py-2 mt-8 inline-block text-white transition-300 cursor-pointer hover:bg-discord-blue-dark whitespace-normal" href="https://discord.com/invite/5245vVp">Klicke hier um beizutreten</a>
-                <a class="rounded-xl shadow-md bg-discord-blue px-4 py-2 mt-8 inline-block text-white transition-300 cursor-pointer hover:bg-discord-blue-dark whitespace-normal" href="/">Ich bin nun beigetraten! (Neu laden)</a>
+                <a class="rounded-md shadow-md bg-discord-blue px-4 py-2 mt-8 inline-block text-white transition-300 cursor-pointer hover:bg-discord-blue-dark whitespace-normal" href="https://discord.com/invite/5245vVp">Klicke hier um beizutreten</a>
+                <a class="rounded-md shadow-md bg-discord-blue px-4 py-2 mt-8 inline-block text-white transition-300 cursor-pointer hover:bg-discord-blue-dark whitespace-normal" href="/">Ich bin nun beigetraten! (Neu laden)</a>
             </div>
         </div>
 
@@ -57,7 +57,7 @@
                 <div class="w-full md:flex px-4 md:pr-6">
                     <div class="w-full md:w-1/2">
                         <h2 class="text-2xl">pr0gramm</h2>
-                        <div class="bg-light mt-8 rounded-xl shadow-md p-8 md:h-48 h-auto text-center md:text-left">
+                        <div class="bg-light mt-8 rounded-md shadow-md p-8 md:h-48 h-auto text-center md:text-left">
                             <span class="pr0-rank" id="um<%= pr0.user.mark %>"><%= pr0.user.name %></span>
                             <p class="mt-6">
                             Rang: <span><%= getRank(pr0.user.mark) %></span>
@@ -69,16 +69,22 @@
                     </div>
                     <div class="w-full md:w-1/2 md:pl-6">
                         <h2 class="text-2xl pt-8 md:pt-0">Discord</h2>
-                        <div class="bg-light mt-8 rounded-xl shadow-md md:flex p-4 md:p-8 md:h-48 h-auto">
+                        <div class="bg-light mt-8 rounded-md shadow-md md:flex p-4 md:p-8 md:h-48 h-auto">
                             <div class="w-full md:w-48">
                                 <img class="block mx-auto h-full" src="<%= !!user.avatar ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}` : "/img/user-placeholder.png" %>" alt="User">
                             </div>
                             <div class="md:pr-0 md:pl-8 w-full md:flex-grow mt-8 md:mt-0 text-center md:text-left">
                                 <span class="dc-name text-xl"><%= user.tag %></span>
                                 <br>
-                                <input type="checkbox" class="duration-300 hover:text-gray-300 cursor-pointer" name="sync-nick" id="sync-nick"<%= dc.nick !== pr0.user.name ? "" : " checked" %>>
-                                <label class="block md:inline duration-300 hover:text-gray-300 cursor-pointer" for="sync-nick">pr0gramm Namen als Discord Nick setzen</label>
-                                <br />
+                                <div class="md:flex">
+                                    <div class="relative flex mx-auto md:mx-0 discord-input">
+                                        <input type="checkbox" class="duration-300 hover:text-gray-300 cursor-pointer" name="sync-nick" id="sync-nick"<%= dc.nick !== pr0.user.name ? "" : " checked" %>>
+                                        <label for="sync-nick"></label>
+                                        <span class="discord-tick"></span>
+                                    </div>
+                                    <p class="md:ml-2 block md:inline duration-300">pr0gramm Namen als Discord Nick setzen</p>
+                                    
+                                </div>
                                 <button class="rounded-md shadow-md mt-4 bg-discord-blue text-white px-4 py-2 duration-300 hover:bg-discord-blue-dark" id="resync-nick"<%= dc.nick === pr0.user.name ? "" : ' disabled="true"' %>>Re-Sync</button>
                             </div>
                         </div>
@@ -86,7 +92,7 @@
                 </div>
                 <div class="w-full px-4">
                     <h2 class="text-2xl pt-8">Rollen</h2>
-                    <div class="bg-light mt-8 user-info-dc-rollen justify-between rounded-xl shadow-md flex p-8">
+                    <div class="bg-light mt-8 user-info-dc-rollen justify-between rounded-md shadow-md flex p-8">
                         <div class="skeleton w-full h-auto block">
                             <div class="preload-line"></div>
                             <div class="preload-line"></div>
@@ -112,7 +118,7 @@
     
                 <div class="w-full md:w-full mt-8 px-4">
                     <h2 class="text-2xl pt-8 md:pt-0">Geburtstagsrolle</h2>
-                    <div class="mt-8 bg-light rounded-xl shadow-md p-4 md:p-8 text-center md:text-left">
+                    <div class="mt-8 bg-light rounded-md shadow-md p-4 md:p-8 text-center md:text-left">
                         <p class="info">
                             Hier kannst du deinen Geburtstag setzen. Wenn du das tust, bekommst du vom disc0rd-Bot an deinem Geburtstag eine spezielle Rolle zugewiesen, die dich bei den anderen hervorhebt.
                             <br>
@@ -133,12 +139,12 @@
     }
 
     else { %> 
-        <div class="login-notice absolute bg-light px-4 z-50 shadow-md rounded-xl">
+        <div class="login-notice absolute bg-light px-4 z-50 shadow-md rounded-md">
             <div class="login-notice-inner text-center absolute">
                 <h1 class="text-2xl">Willkommen</h1>
                 <h3 class="text-xl">zum pr0gramm disc0rd panel</h3>
 
-                <a class="rounded-xl shadow-md bg-discord-blue px-4 py-2 mt-8 inline-block text-white transition-300 cursor-pointer hover:bg-discord-blue-dark whitespace-normal" href="/auth">Zum fortfahren mit Discord einloggen</a>
+                <a class="rounded-md shadow-md bg-discord-blue px-4 py-2 mt-8 inline-block text-white transition-300 cursor-pointer hover:bg-discord-blue-dark whitespace-normal" href="/auth">Zum fortfahren mit Discord einloggen</a>
             </div>
         </div>
     <% } %>
@@ -150,7 +156,7 @@
             <div class="w-full md:flex px-4 md:pr-6">
                 <div class="w-full md:w-1/2">
                     <h2 class="text-2xl">pr0gramm</h2>
-                    <div class="bg-light mt-8 rounded-xl shadow-md p-8 md:h-32 h-auto text-center md:text-left">
+                    <div class="bg-light mt-8 rounded-md shadow-md p-8 md:h-48 h-auto text-center md:text-left">
                         <span class="pr0-rank" id="um0">LoremIpsum</span>
                         <p class="mt-6">
                             Rang: <span>Schwuchtel</span>
@@ -162,16 +168,21 @@
                 </div>
                 <div class="w-full md:w-1/2 px-4 md:pl-6">
                     <h2 class="text-2xl pt-8 md:pt-0">Discord</h2>
-                    <div class="bg-light mt-8 rounded-xl shadow-md md:flex p-4 md:p-8 md:h-32 h-auto">
+                    <div class="bg-light mt-8 rounded-md shadow-md md:flex p-4 md:p-8 md:h-48 h-auto">
                         <div class="w-full md:w-48">
                             <img class="block mx-auto h-full" src="/img/user-placeholder.png" alt="User">
                         </div>
                         <div class="md:pr-0 md:pl-8 w-full md:flex-grow mt-8 md:mt-0 text-center md:text-left">
                             <span class="dc-name text-xl">LoremIpsum#1337</span>
                             <br>
-                            <input type="checkbox" class="duration-300 hover:text-gray-300 cursor-pointer" name="sync-nick" id="sync-nick" checked>
-                            <label class="block md:inline duration-300 hover:text-gray-300 cursor-pointer" for="sync-nick">pr0gramm Namen als Discord Nick setzen</label>
-                            <br />
+                            <div class="md:flex">
+                                <div class="relative flex mx-auto md:mx-0 discord-input">
+                                    <input type="checkbox" class="duration-300 hover:text-gray-300 cursor-pointer" name="sync-nick" id="sync-nick" checked>
+                                    <label for="sync-nick"></label>
+                                    <span class="discord-tick"></span>
+                                </div>
+                                <p class="md:ml-2 block md:inline duration-300">pr0gramm Name als Discord Nick setzen</p>
+                            </div>
                             <button class="rounded-md shadow-md mt-4 bg-discord-blue text-white px-4 py-2 duration-300 hover:bg-discord-blue-dark" id="resync-nick" disabled>Re-Sync</button>
                         </div>
                     </div>
@@ -180,7 +191,7 @@
 
             <div class="w-full px-4">
                 <h2 class="text-2xl pt-8">Rollen</h2>
-                <div class="bg-light mt-8 user-info-dc-rollen justify-between rounded-xl shadow-md flex p-8">
+                <div class="bg-light mt-8 user-info-dc-rollen justify-between rounded-md shadow-md flex p-8">
                     <div class="skeleton w-full h-auto block">
                         <div class="preload-line"></div>
                         <div class="preload-line"></div>
@@ -205,7 +216,7 @@
             </div>
             <div class="w-full md:w-full mt-8 px-4">
                 <h2 class="text-2xl pt-8 md:pt-0">Geburtstagsrolle</h2>
-                <div class="mt-8 bg-light rounded-xl shadow-md p-4 md:p-8 text-center md:text-left">
+                <div class="mt-8 bg-light rounded-md shadow-md p-4 md:p-8 text-center md:text-left">
                     <p class="info">
                         Hier kannst du deinen Geburtstag setzen. Wenn du das tust, bekommst du vom disc0rd-Bot an deinem Geburtstag eine spezielle Rolle zugewiesen, die dich bei den anderen hervorhebt.
                         <br>
