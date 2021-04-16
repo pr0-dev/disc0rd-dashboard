@@ -178,10 +178,7 @@ button#resync-nick:disabled {
     margin-bottom: 10px;
 }
 
-.user-info-dc-rollen.grid-style {
-    display: grid;
-    grid-template-columns: 1fr 1fr 1fr 1fr 1fr;
-    grid-template-rows: 1fr 1fr 1fr;
+.user-info-dc-rollen. {
     gap: 0px 0px;
     grid-template-areas:
         ". . . . ."

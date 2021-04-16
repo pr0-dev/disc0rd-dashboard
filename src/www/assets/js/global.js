@@ -60,11 +60,20 @@ let getRoles = async function(SA, $){
 
     return res.roles.forEach((r, i) => {
         $(".user-info-dc-rollen").append(
+            '<div class="flex role py-2 md:py-0">'+
+                '<div class="relative flex discord-input">'+
+                    '<input type="checkbox" class="role-setter duration-300 hover:text-gray-300 cursor-pointer" name="role-' + i + '" id="role-' + i + '"' + (r.on_user ? " checked" : "") + '>' +
+                    '<label for="role-' + i + '"></label>'+
+                    '<span class="discord-tick"></span>'+
+                '</div>'+
+                '<label for="role-' + i + '" class="ml-4 block inline cursor-pointer">' + r.role + '</label>'+
+            '</div>  '      );
+        /*$(".user-info-dc-rollen").append(
             '<div class="role">' +
             '    <input type="checkbox" class="role-setter" name="role-' + i + '" id="role-' + i + '"' + (r.on_user ? " checked" : "") + '>' +
             '    <label for="role-' + i + '">' + r.role + '</label>' +
             '</div>'
-        );
+        );*/
     });
 };
 
