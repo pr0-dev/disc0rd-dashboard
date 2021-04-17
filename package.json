@@ -4,9 +4,10 @@
   "description": "pr0gramm Discord Bot",
   "main": "./src/app.js",
   "scripts": {
-    "start": "node ./src/app.js",
+    "start": "npm run tailwind && node ./src/app.js",
     "lint": "eslint ./src",
-    "dev": "npm run lint && npm start"
+    "dev": "npm run tailwind && npm run lint && npm start",
+    "tailwind": "cross-env ./node_modules/.bin/tailwind build ./tailwind.src.css -c ./tailwind.config.js -o ./src/www/assets/lib/css/tailwind.css"
   },
   "repository": {
     "type": "git",
@@ -35,6 +36,10 @@
     "unirest": "^0.6.0"
   },
   "devDependencies": {
-    "eslint": "^5.2.0"
+    "@tailwindcss/postcss7-compat": "^2.0.3",
+    "autoprefixer": "^9.8.6",
+    "eslint": "^5.2.0",
+    "postcss": "^7.0.35",
+    "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.3"
   }
 }

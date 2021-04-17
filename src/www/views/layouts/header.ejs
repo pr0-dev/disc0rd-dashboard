@@ -27,23 +27,23 @@
         </style>
         <% } %>
     </head>
-    <body>
-        <header class="site-header shadow-md">
-            <div class="h-container">
-                <div class="h-left">
-                    <a href="/">
-                        <img src="/img/logo.jpg" alt="disc0rd"> <span class="hidden md:block text-xl">disc0rd</span>
+    <body class="bg-dark">
+        <header class="shadow-md h-16 w-full flex fixed top-0 left-0 bg-light justify-center z-50">
+            <div class="h-container flex relative w-3/4 justify-center w-3/4">
+                <div class="w-1/2 relative">
+                    <a href="/" class="justify-start text-xl flex h-full items-center text-white transition-300">
+                        <img class="h-5/6 w-auto mr-4" src="/img/logo.jpg" alt="disc0rd"> <span class="hover:text-gray-300 hidden md:block text-xl">disc0rd</span>
                     </a>
                 </div>
-                <div class="h-right">
-                    <a href="<%= !!user ? "/logout" : "/auth" %>">
-                        <img class="hidden md:block rounded-full" src="<%= (!!user && !!user.avatar) ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}` : "/img/user-placeholder.png" %>" alt="User">
-                        <span>
+                <div class="w-1/2 relative">
+                    <a class="hover:text-gray-300 flex h-full justify-end text-lg" href="<%= !!user ? "/logout" : "/auth" %>">
+                        <img class="mt-1 hidden md:block rounded-full flex h-5/6 w-auto mr-4 items-center text-white transition-300" src="<%= (!!user && !!user.avatar) ? `https://cdn.discordapp.com/avatars/${user.id}/${user.avatar}` : "/img/user-placeholder.png" %>" alt="User">
+                        <span class="hover:text-gray-300 flex h-full items-center transition-300">
                             <%= !!user ? user.username : "Anmelden" %>
-                            <% if(!!user){ %>&nbsp;<span class="h-logout-bold"> Ausloggen</span><% } %>
+                            <% if(!!user){ %>&nbsp;<span class="font-bold hover:text-gray-300"> Ausloggen</span><% } %>
                         </span>
                     </a>
                 </div>
             </div>
         </header>
-        <section class="main">
+        <section class="mx-auto pt-24 pb-24 w-3/4">

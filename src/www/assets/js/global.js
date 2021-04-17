@@ -56,15 +56,24 @@ let getRoles = async function(SA, $){
         });
     }
 
-    $(".user-info.user-info-dc.user-info-dc-rollen").empty().addClass("grid-style");
+    $(".user-info-dc-rollen").empty().addClass("grid-style");
 
     return res.roles.forEach((r, i) => {
-        $(".user-info.user-info-dc.user-info-dc-rollen").append(
+        $(".user-info-dc-rollen").append(
+            '<div class="flex role py-2 md:py-0">'+
+                '<div class="relative flex discord-input">'+
+                    '<input type="checkbox" class="role-setter duration-300 hover:text-gray-300 cursor-pointer" name="role-' + i + '" id="role-' + i + '"' + (r.on_user ? " checked" : "") + '>' +
+                    '<label for="role-' + i + '"></label>'+
+                    '<span class="discord-tick"></span>'+
+                '</div>'+
+                '<label for="role-' + i + '" class="ml-4 block inline cursor-pointer">' + r.role + '</label>'+
+            '</div>  '      );
+        /*$(".user-info-dc-rollen").append(
             '<div class="role">' +
             '    <input type="checkbox" class="role-setter" name="role-' + i + '" id="role-' + i + '"' + (r.on_user ? " checked" : "") + '>' +
             '    <label for="role-' + i + '">' + r.role + '</label>' +
             '</div>'
-        );
+        );*/
     });
 };
 
@@ -106,7 +115,8 @@ let bugsAndFeedback = function(e, SA){
         "Feedback & Bugs",
         "Für Feedback oder Infos über Bugs, bitte an TheShad0w wenden:<br><br>" +
         'pr0gramm: <a href="https://pr0gramm.com/user/TheShad0w" target="_blank" rel="noopener" style="color: #000">TheShad0w</a><br>' +
-        "Discord: ShadowByte#1337"
+        "Discord: ShadowByte#1337<br><br>" +
+        'Hilfe beim Frontend-Design: <a href="https://pr0gramm.com/user/jonas32" target="_blank" rel="noopener" style="color: #000">jonas32</a>'
     );
 };
 
