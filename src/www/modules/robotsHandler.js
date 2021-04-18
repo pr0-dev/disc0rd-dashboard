@@ -4,6 +4,8 @@
 // = Copyright (c) TheShad0w = //
 // =========================== //
 
+const author = require("../../utils/configHandler").getAuthor();
+
 /**
  * Generate robots.txt
  *
@@ -12,7 +14,6 @@
  */
 module.exports = function(_, res){
     let cYear = (new Date()).getFullYear();
-    let author = "TheShad0w";
 
     res.type("text/plain");
     res.send(
