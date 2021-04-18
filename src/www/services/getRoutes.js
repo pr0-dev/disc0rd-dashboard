@@ -22,8 +22,8 @@ let hasParams = function(value){
  * List all registered routes
  *
  * @param {import("express").Application} app
- * @param {*} [path=[]]
- * @param {*} [endpoints=[]]
+ * @param {Array | String} [path=[]]
+ * @param {Array} [endpoints=[]]
  * @returns
  */
 let getRoutes = function(app, path = [], endpoints = []){
