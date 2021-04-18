@@ -19,6 +19,7 @@ module.exports = function(req, res){
         "guilds": null,
         "dc": null,
         "config": null,
+        "synced": false,
         "csrfToken": req.csrfToken(),
         "log": null,
         "pr0": null,
