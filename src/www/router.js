@@ -35,7 +35,7 @@ let logRoutes = r => r.forEach(e => log.info(`Route ${e.path} registered with me
  * @param {import("discord.js").Client} client
  */
 module.exports = function(app, client){
-    app.get("/", async(req, res) => indexHandler(req, res));
+    app.get("/", async(req, res) => indexHandler(req, res, client));
 
     app.get("/callback", (req, res) => callbackHandler(req, res));
 
