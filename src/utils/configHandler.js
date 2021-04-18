@@ -56,16 +56,36 @@ let getConfig = function(){
     return process.exit(1);
 };
 
+/**
+ * Get Package Version
+ *
+ * @returns {string}
+ */
 let getVersion = function(){
     return packagefile.version;
 };
 
+/**
+ * Get Package Name
+ *
+ * @returns {string}
+ */
 let getName = function(){
     return packagefile.name;
+};
+
+/**
+ * Get Package Author
+ *
+ * @returns {string}
+ */
+let getAuthor = function(){
+    return packagefile.author;
 };
 
 module.exports = {
     getConfig,
     getVersion,
     getName,
+    getAuthor
 };
