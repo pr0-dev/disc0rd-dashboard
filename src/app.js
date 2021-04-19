@@ -121,7 +121,7 @@ Um auf dem Server schreiben zu können, musst du dich zuerst mit deinem pr0gramm
 
 <https://pr0gramm.com/discord>
 
-Nachdem du das getan hast, wirst du automatisch freigeschalten. Dann kannst du deinen Account auf dem Discord Server hier verwalten:
+Nachdem du das getan hast, wirst du automatisch freigeschaltet. Dann kannst du deinen Account auf dem Discord Server hier verwalten:
 
 <https://discordpanel.pr0gramm.com>
 
