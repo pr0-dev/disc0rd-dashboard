@@ -49,7 +49,7 @@ const imgUri = "https://img.pr0gramm.com/";
  *
  * @param {Message} message
  * @param {Object} post
- * @returns embed
+ * @returns {object} embed
  */
 let uploadEmbed = function(message, post){
     /**
@@ -128,7 +128,7 @@ let uploadEmbed = function(message, post){
  *
  * @param {Message} message
  * @param {Object} data
- * @returns embed
+ * @returns {object} embed
  */
 let commentEmbed = function(message, data){
     let embed = {
@@ -183,7 +183,7 @@ let commentEmbed = function(message, data){
  *
  * @param {Message} message
  * @param {Object} data
- * @returns
+ * @returns {object} embed
  */
 let userEmbed = function(message, data){
     /**
@@ -273,7 +273,7 @@ let userEmbed = function(message, data){
  *
  * @param {Message} message
  * @param {Function} callback
- * @returns
+ * @returns {object} embed
  */
 let createEmbed = function(message, callback){
     if (config.bot_settings.embed_direct_links && (message.content).match(regexes.directsRegex)){

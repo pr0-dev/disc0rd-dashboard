@@ -24,7 +24,7 @@ let config = require("../utils/configHandler").getConfig();
  * @param {Client} client
  * @param {boolean} isModCommand
  * @param {Function} callback
- * @returns {any} callback
+ * @returns {Function} callback
  */
 let commandHandler = function(message, client, isModCommand, callback){
     let cmdPrefix = isModCommand ? config.bot_settings.prefix.mod_prefix : config.bot_settings.prefix.command_prefix;

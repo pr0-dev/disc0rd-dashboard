@@ -11,7 +11,7 @@
  * @param {import("discord.js").Message} message
  * @param {Array} args
  * @param {Function} callback
- * @returns {any} callback
+ * @returns {Function} callback
  */
 exports.run = (client, message, args, callback) => {
     let roleNames = message.guild.roles.cache
