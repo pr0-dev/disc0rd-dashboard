@@ -20,7 +20,7 @@ let rankSync = require("./rankSync");
  * @param {import("express").Request & { session: Object }} req
  * @param {import("express").Response} res
  * @param {import("discord.js").Client} client
- * @returns {Promise<any>} renderer
+ * @returns {Promise<void>} renderer
  */
 module.exports = async function(req, res, client){
     let pr0 = !req.session.user
@@ -41,7 +41,7 @@ module.exports = async function(req, res, client){
         }
     })).json();
 
-    let synced = rankSync(pr0 || null, req.session.user || null, client);
+    let synced = await rankSync(pr0 || null, req.session.user || null, client);
 
     return res.render("pages/index", {
         "routeTitle": "Dashboard",
