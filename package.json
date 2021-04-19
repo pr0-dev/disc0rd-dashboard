@@ -36,9 +36,10 @@
     "unirest": "^0.6.0"
   },
   "devDependencies": {
+    "@babel/eslint-parser": "^7.13.14",
     "@tailwindcss/postcss7-compat": "^2.0.3",
+    "@types/node": "^14.14.41",
     "autoprefixer": "^9.8.6",
-    "babel-eslint": "^10.1.0",
     "postcss": "^7.0.35",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.3"
   }
