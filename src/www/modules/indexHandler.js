@@ -44,16 +44,16 @@ module.exports = async function(req, res, client){
     let synced = await rankSync(pr0 || null, req.session.user || null, client);
 
     return res.render("pages/index", {
-        "routeTitle": "Dashboard",
-        "route": req.path,
-        "user": req.session.user || null,
-        "guilds": guilds,
-        "dc": guildInfo,
-        "config": config,
-        "synced": synced,
-        "csrfToken": req.csrfToken(),
-        "log": log,
-        "pr0": pr0,
-        "status_code": 200
+        guilds,
+        config,
+        synced,
+        log,
+        pr0,
+        routeTitle: "Dashboard",
+        route: req.path,
+        user: req.session.user || null,
+        dc: guildInfo,
+        csrfToken: req.csrfToken(),
+        status_code: 200
     });
 };

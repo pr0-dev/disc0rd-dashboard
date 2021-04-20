@@ -42,8 +42,8 @@ module.exports = async function(req, res, client){
                     .map(role => role.name)
                     .filter(role => configRoles.includes(role))
                     .forEach(e => finalRoles.push({
-                        "role": e,
-                        "on_user": userRoles.includes(e)
+                        role: e,
+                        on_user: userRoles.includes(e)
                     }))
                 ))
             ));

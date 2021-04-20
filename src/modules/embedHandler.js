@@ -287,20 +287,15 @@ let createEmbed = function(message, callback){
 
             if (!resData.items[0]) return null;
 
-            let up        = resData.items[0].up;
-            let down      = resData.items[0].down;
-            let image     = resData.items[0].image;
-            let flags     = resData.items[0].flags;
-            let user      = resData.items[0].user;
-            let timestamp = resData.items[0].created;
+            let { items: [{ up, down, image, flags, user, created: timestamp }] } = resData;
 
             let postLayout = uploadEmbed(message, {
-                up: up,
-                down: down,
-                image: image,
-                flags: flags,
-                user: user,
-                timestamp: timestamp
+                up,
+                down,
+                image,
+                flags,
+                user,
+                timestamp
             });
 
             return callback(null, postLayout);
@@ -320,22 +315,18 @@ let createEmbed = function(message, callback){
             let resData = res.body;
             if (resData.error) return log.error(resData.error);
 
-            let comments = resData.comments;
+            let { comments } = resData;
 
             for (let comment of comments){
                 if (Number(comment.id) === Number(commentId)){
-                    let content   = comment.content;
-                    let up        = comment.up;
-                    let down      = comment.down;
-                    let name      = comment.name;
-                    let timestamp = comment.created;
+                    let { content, up, down, name, created: timestamp } = comment;
 
                     let embedLayout = commentEmbed(message, {
-                        content: content,
-                        up: up,
-                        down: down,
-                        name: name,
-                        timestamp: timestamp
+                        content,
+                        up,
+                        down,
+                        name,
+                        timestamp
                     });
 
                     callback(null, embedLayout);
@@ -354,20 +345,15 @@ let createEmbed = function(message, callback){
             let resData = res.body;
             if (resData.error) return log.error(resData.error);
 
-            let up        = resData.items[0].up;
-            let down      = resData.items[0].down;
-            let image     = resData.items[0].image;
-            let flags     = resData.items[0].flags;
-            let user      = resData.items[0].user;
-            let timestamp = resData.items[0].created;
+            let { items: [{ up, down, image, flags, user, created: timestamp }] } = resData;
 
             let postLayout = uploadEmbed(message, {
-                up: up,
-                down: down,
-                image: image,
-                flags: flags,
-                user: user,
-                timestamp: timestamp
+                up,
+                down,
+                image,
+                flags,
+                user,
+                timestamp
             });
 
             callback(null, postLayout);

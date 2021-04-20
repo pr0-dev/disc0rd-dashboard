@@ -13,16 +13,16 @@
  */
 module.exports = function(req, res){
     return res.status(404).render("errors/404", {
-        "routeTitle": "Nicht gefunden =(",
-        "route": req.path,
-        "user": req.session.user || null,
-        "guilds": null,
-        "dc": null,
-        "config": null,
-        "synced": false,
-        "csrfToken": req.csrfToken(),
-        "log": null,
-        "pr0": null,
-        "status_code": 404
+        routeTitle: "Nicht gefunden =(",
+        route: req.path,
+        user: req.session.user || null,
+        guilds: null,
+        dc: null,
+        config: null,
+        synced: false,
+        csrfToken: req.csrfToken(),
+        log: null,
+        pr0: null,
+        status_code: 404
     });
 };
