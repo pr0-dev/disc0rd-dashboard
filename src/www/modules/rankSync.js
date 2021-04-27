@@ -27,20 +27,26 @@ module.exports = async function(pr0, user, client){
 
     if (userRoles.includes(config.user_ranks[pr0.user.mark])) return false;
 
-    // Remove all pr0-rank roles
-    client.guilds.cache
-        .get(config.auth.server_id).members.cache
-        .get(user.id).roles.remove(Object.values(config.user_ranks));
+    try {
+        // Remove all pr0-rank roles
+        client.guilds.cache
+            .get(config.auth.server_id).members.cache
+            .get(user.id).roles.remove(Object.values(config.user_ranks));
 
-    // Add appropriate pr0-rank role
-    client.guilds.cache
-        .get(config.auth.server_id).members.cache
-        .get(user.id).roles
-        .add(
-            client.guilds.cache
-                .get(config.auth.server_id).roles.cache
-                .find(r => r.id === config.user_ranks[pr0.user.mark])
-        );
+        // Add appropriate pr0-rank role
+        client.guilds.cache
+            .get(config.auth.server_id).members.cache
+            .get(user.id).roles
+            .add(
+                client.guilds.cache
+                    .get(config.auth.server_id).roles.cache
+                    .find(r => r.id === config.user_ranks[pr0.user.mark])
+            );
+    }
+
+    catch (e){
+        return false;
+    }
 
     return true;
 };
