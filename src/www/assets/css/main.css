@@ -56,6 +56,29 @@ body {
     transform: translate(-50%, -50%);
 }
 
+.rank-was-synced {
+    position: relative;
+    margin: 10px 0;
+    padding: 10px 10px 10px 45px;
+    border-radius: 3px 3px 3px 3px;
+    color: #270;
+    background-color: #DFF2BF;
+}
+
+.rank-was-synced::before {
+    content: "";
+    position: absolute;
+    top: 35%;
+    z-index: 12;
+    width: 10px;
+    height: 19px;
+    left: 10px;
+    border: solid 2px #270;
+    border-top: none;
+    border-left: none;
+    transform: rotate(45deg) translateY(-50%);
+}
+
 span.pr0-rank {
     font-size: 22px;
 }
@@ -178,7 +201,7 @@ button#resync-nick:disabled {
     margin-bottom: 10px;
 }
 
-.user-info-dc-rollen. {
+.user-info-dc-rollen {
     gap: 0px 0px;
     grid-template-areas:
         ". . . . ."

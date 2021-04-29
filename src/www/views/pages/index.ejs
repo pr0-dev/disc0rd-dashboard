@@ -53,6 +53,11 @@
         <% } 
         
         else { %>
+            <% if (synced){ %>
+                <div class="rank-was-synced">
+                    Deine Discord Rang-Rolle wurde mit deinem pr0gramm Rang synchronisiert.
+                </div>
+            <% } %>
             <div class="logged-in-inner logged-in">
                 <div class="w-full md:flex px-4 md:pr-6">
                     <div class="w-full md:w-1/2">
