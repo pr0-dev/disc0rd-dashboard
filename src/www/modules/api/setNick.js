@@ -37,7 +37,7 @@ module.exports = async function(req, res, client){
                         .add(
                             client.guilds.cache
                                 .get(config.auth.server_id).roles.cache
-                                .find(r => r.name === config.bot_settings.verfied_nick_role)
+                                .find(r => r.id === config.bot_settings.verfied_nick_role)
                         );
                 });
         }
