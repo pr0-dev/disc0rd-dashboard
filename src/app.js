@@ -112,6 +112,7 @@ client.on("guildDelete", (guild) => {
     log.info(`Von Gilde gelöscht: ${guild.name} (id: ${guild.id}).`);
 });
 
+/*
 client.on("guildMemberAdd", member => {
     member.send(`
 Hallo, ${member.user.username}!
@@ -129,6 +130,7 @@ Viel spaß! :orange_heart:
 `
     );
 });
+*/
 
 client.on("message", (message) => {
     if (message.author.bot) return;
