@@ -58,7 +58,7 @@ body {
 
 .rank-was-synced {
     position: relative;
-    margin: 10px 0;
+    margin: 5px 1rem 20px 1rem;
     padding: 10px 10px 10px 45px;
     border-radius: 3px 3px 3px 3px;
     color: #270;
@@ -77,6 +77,24 @@ body {
     border-top: none;
     border-left: none;
     transform: rotate(45deg) translateY(-50%);
+}
+
+.rank-was-synced > a#rank-sync-hide {
+    position: absolute;
+    top: 50%;
+    transform: translateY(-50%);
+    right: 12px;
+    color: rgb(34, 119, 0);
+    border: 1px solid rgb(34, 119, 0);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 30px;
+    width: 30px;
+    margin: 0;
+    padding: 0;
+    border-radius: 100%;
+    font-size: 17px;
 }
 
 span.pr0-rank {
