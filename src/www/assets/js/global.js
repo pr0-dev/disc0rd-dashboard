@@ -99,6 +99,17 @@ let handleRoleChange = async function(e, SA, $){
 };
 
 /**
+ * Hide rank sync notification
+ *
+ * @param {Event & { target: HTMLInputElement }} e
+ * @param {Function} $
+ */
+let hideNotification = function(e, $){
+    e.preventDefault();
+    $(".rank-was-synced").fadeOut();
+};
+
+/**
  * Show Bugs & Feedback modal
  *
  * @param {Event} e
@@ -129,6 +140,7 @@ let bugsAndFeedback = function(e, SA){
         if ($(".logged-in-inner").hasClass("logged-in")){
             $("#sync-nick").on("change", e => handleNickChange(e, SA, $));
             $("#resync-nick").on("click", e => handleNickChange(e, SA, $, true));
+            $("#rank-sync-hide").on("click", e => hideNotification(e, $));
             $(document).on("change", ".role-setter", e => handleRoleChange(e, SA, $));
             getRoles(SA, $);
         }
