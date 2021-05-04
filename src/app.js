@@ -17,7 +17,6 @@ let express = require("express");
 let favicon = require("serve-favicon");
 let cors = require("cors");
 let helmet = require("helmet");
-let minify = require("express-minify");
 let session = require("express-session");
 let csrf = require("csurf");
 let cookieParser = require("cookie-parser");
@@ -80,19 +79,10 @@ app.use(session({
     saveUninitialized: false
 }));
 app.use(csrf({ cookie: true }));
-
-app.use((req, res, next) => {
-    if (/\.min\.(css|js)$/.test(req.url)){
-        // @ts-ignore
-        res.minifyOptions = res.minifyOptions || {};
-        // @ts-ignore
-        res.minifyOptions.minify = false;
-    }
-    next();
-});
-
-app.use(minify());
-app.use(express.static("./src/www/assets"));
+app.use(express.static(process.env.NODE_ENV === "PRODUCTION"
+    ? "./src/www/assets-built"
+    : "./src/www/assets"
+));
 
 require("./www/router")(app, client);
 

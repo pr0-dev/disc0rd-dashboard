@@ -9,6 +9,9 @@ yarn-error.log*
 config.json
 config*.json
 
+# Built assets
+src/www/assets-built/
+
 # Cookie file
 cookie.txt
 
