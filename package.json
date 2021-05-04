@@ -7,7 +7,7 @@
     "tailwind": "cross-env ./node_modules/.bin/tailwind build ./tailwind.src.css -c ./tailwind.config.js -o ./src/www/assets/lib/css/tailwind.css",
     "lint": "eslint ./src",
     "start": "npm run tailwind && node ./src/app.js",
-    "copy-assets": "rsync -av --progress ./src/www/assets/ ./src/www/assets-built/ --exclude js --exclude css",
+    "copy-assets": "rsync -av --progress ./src/www/assets/ ./src/www/assets-built/ --exclude ./js/ --exclude ./css/",
     "minify-js": "node ./node_modules/uglifyjs-folder/cli.js ./src/www/assets/js -eo ./src/www/assets-built/js/ -x .js",
     "minify-css": "node ./node_modules/clean-css-cli/bin/cleancss --inline none --batch --batch-suffix '' ./src/www/assets/css/*.css -o ./src/www/assets-built/css",
     "build-assets": "npm run copy-assets && npm run minify-js && npm run minify-css",
