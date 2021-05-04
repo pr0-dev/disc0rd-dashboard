@@ -1,5 +1,7 @@
 "use strict";
 
+/* eslint-disable quote-props */
+
 module.exports = {
     purge: [],
     theme: {
@@ -10,8 +12,8 @@ module.exports = {
                 "discord-blue-dark": "#5566a3",
                 "light": "#36393f"
             }
-        },
+        }
     },
     variants: {},
-    plugins: [],
+    plugins: []
 };

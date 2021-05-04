@@ -4,7 +4,7 @@
   "description": "pr0gramm Discord Bot",
   "main": "./src/app.js",
   "scripts": {
-    "tailwind": "cross-env ./node_modules/.bin/tailwind build ./tailwind.src.css -c ./tailwind.config.js -o ./src/www/assets/lib/css/tailwind.css",
+    "tailwind": "node ./node_modules/.bin/tailwind build ./tailwind.src.css -c ./tailwind.config.js -o ./src/www/assets/lib/css/tailwind.css",
     "lint": "eslint ./src",
     "start": "npm run tailwind && node ./src/app.js",
     "copy-assets": "rsync -av --progress ./src/www/assets/ ./src/www/assets-built/ --exclude ./js/ --exclude ./css/",
