@@ -4,10 +4,11 @@
   "description": "pr0gramm Discord Bot",
   "main": "./src/app.js",
   "scripts": {
-    "start": "npm run tailwind && node ./src/app.js",
+    "tailwind": "cross-env ./node_modules/.bin/tailwind build ./tailwind.src.css -c ./tailwind.config.js -o ./src/www/assets/lib/css/tailwind.css",
     "lint": "eslint ./src",
-    "dev": "npm run tailwind && npm run lint && npm start",
-    "tailwind": "cross-env ./node_modules/.bin/tailwind build ./tailwind.src.css -c ./tailwind.config.js -o ./src/www/assets/lib/css/tailwind.css"
+    "start": "npm run tailwind && node ./src/app.js",
+    "prod": "npm run tailwind && NODE_ENV=production node ./src/app.js",
+    "dev": "npm run tailwind && npm run lint && npm start"
   },
   "repository": {
     "type": "git",
