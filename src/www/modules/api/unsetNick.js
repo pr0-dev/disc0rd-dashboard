@@ -17,7 +17,7 @@ let config = require("../../../utils/configHandler").getConfig();
 module.exports = async function(req, res, client){
     let response = {
         error: !!req.session.user ? 0 : 1,
-        status: !!req.session.user ? 200 : 403,
+        status: !!req.session.user ? 200 : 401,
         message: !!req.session.user ? "Nickname wurde entfernt." : "Nicht authorisiert."
     };
 
