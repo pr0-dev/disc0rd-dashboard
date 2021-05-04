@@ -21,6 +21,7 @@ let minify = require("express-minify");
 let session = require("express-session");
 let csrf = require("csurf");
 let cookieParser = require("cookie-parser");
+let MemoryStore = require("memorystore")(session);
 
 // Modules
 let embedHandler = require("./modules/embedHandler");
@@ -75,6 +76,7 @@ app.use(cookieParser());
 app.use(session({
     secret: config.webserver.session_secret,
     resave: false,
+    store: new MemoryStore({ checkPeriod: 86400000 }),
     saveUninitialized: false
 }));
 app.use(csrf({ cookie: true }));
