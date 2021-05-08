@@ -25,6 +25,7 @@ let MemoryStore = require("memorystore")(session);
 // Modules
 let embedHandler = require("./modules/embedHandler");
 let messageHandler = require("./modules/messageHandler");
+let deletedHandler = require("./modules/deletedHandler");
 
 // API
 let login = require("./api/pr0Login");
@@ -139,6 +140,8 @@ client.on("message", (message) => {
 
     else messageHandler(message, client);
 });
+
+client.on("messageDelete", message => deletedHandler(message, client));
 
 client.on("error", (err) => {
     log.error(err);
