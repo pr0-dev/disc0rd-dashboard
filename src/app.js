@@ -76,10 +76,11 @@ app.use(cookieParser());
 app.use(session({
     secret: config.webserver.session_secret,
     resave: false,
+    cookie: { maxAge: 3 * 60 * 60 * 1000 },
     store: new MemoryStore({ checkPeriod: 86400000 }),
     saveUninitialized: false
 }));
-app.use(csrf({ cookie: true }));
+app.use(csrf({ cookie: false }));
 app.use(express.static((process.env.NODE_ENV && (process.env.NODE_ENV).toLowerCase() === "production")
     ? "./src/www/assets-built"
     : "./src/www/assets"
