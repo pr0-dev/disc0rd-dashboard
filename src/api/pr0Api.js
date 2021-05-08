@@ -101,7 +101,7 @@ let reverseSearch = function(search, callback){
  */
 let getPost = function(postId, callback){
     let query = {
-        "id": postId
+        id: postId
     };
 
     performRequest("GET", "https://pr0gramm.com/api/items/get", query, {}, {}, (err, res) => {
@@ -122,7 +122,7 @@ let getPost = function(postId, callback){
  */
 let getPostMeta = function(postId, callback){
     let query = {
-        "itemId": postId
+        itemId: postId
     };
 
     performRequest("GET", "https://pr0gramm.com/api/items/info", query, {}, {}, (err, res) => {
@@ -143,7 +143,7 @@ let getPostMeta = function(postId, callback){
  */
 let getUser = function(username, callback){
     let query = {
-        "name": username
+        name: username
     };
 
     performRequest("GET", "https://pr0gramm.com/api/profile/info", query, {}, {}, (err, res) => {
@@ -205,8 +205,8 @@ let postLogin = function(user, pass, callback){
     };
 
     let formData = {
-        "name": user,
-        "password": pass
+        name: user,
+        password: pass
     };
 
     performRequest("POST", "https://pr0gramm.com/api/user/login", {}, headers, formData, (err, res) => {

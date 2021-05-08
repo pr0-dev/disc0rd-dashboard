@@ -17,9 +17,8 @@ let osinfo = process.platform;
  */
 let filterDevVal = function(dev, ifaces){
     let address;
-    ifaces[dev].filter(details => {
-        details.family === "IPv4" && details.internal === false ? address = details.address : undefined;
-    });
+    // eslint-disable-next-line prefer-destructuring
+    ifaces[dev].filter(details => (details.family === "IPv4" && details.internal === false ? (address = details.address) : undefined));
     return address;
 };
 
