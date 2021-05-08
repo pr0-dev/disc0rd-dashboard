@@ -14,7 +14,8 @@
             "mod_prefix": "~"
         },
         "moderator_roles": [],
-        "verfied_nick_role": ""
+        "verfied_nick_role": "",
+        "deleted_log_id": ""
     },
     "pr0api": {
         "username": "",
