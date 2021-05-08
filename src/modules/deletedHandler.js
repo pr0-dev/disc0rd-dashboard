@@ -19,6 +19,7 @@ let config = require("../utils/configHandler").getConfig();
 module.exports = async function(message, client){
     let entry = (await message.guild.fetchAuditLogs({ type: 72 })).entries.first();
 
+    /** @type {object} */
     let embed = {
         embed: {
             timestamp: moment.utc().format(),
