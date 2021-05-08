@@ -6,13 +6,12 @@
   "scripts": {
     "tailwind": "node ./node_modules/.bin/tailwind build ./tailwind.src.css -c ./tailwind.config.js -o ./src/www/assets/lib/css/tailwind.css",
     "lint": "eslint ./src",
-    "start": "npm run tailwind && node ./src/app.js",
     "copy-assets": "rsync -av --progress ./src/www/assets/ ./src/www/assets-built/ --exclude ./js/ --exclude ./css/",
     "minify-js": "node ./node_modules/uglifyjs-folder/cli.js ./src/www/assets/js -eo ./src/www/assets-built/js/ -x .js",
     "minify-css": "node ./node_modules/clean-css-cli/bin/cleancss --inline none --batch --batch-suffix '' ./src/www/assets/css/*.css -o ./src/www/assets-built/css",
     "build-assets": "npm run copy-assets && npm run minify-js && npm run minify-css",
     "prod": "npm run build-assets && npm run tailwind && NODE_ENV=production node ./src/app.js",
-    "dev": "npm run tailwind && npm run lint && npm start"
+    "start": "npm run build-assets && npm run tailwind && npm run lint && NODE_ENV=development node ./src/app.js"
   },
   "repository": {
     "type": "git",
@@ -41,11 +40,13 @@
     "unirest": "^0.6.0"
   },
   "devDependencies": {
+    "@babel/core": "^7.14.0",
     "@babel/eslint-parser": "^7.13.14",
     "@tailwindcss/postcss7-compat": "^2.0.3",
     "@types/node": "^14.14.41",
     "autoprefixer": "^9.8.6",
     "clean-css-cli": "^5.3.0",
+    "eslint": "^7.26.0",
     "postcss": "^7.0.35",
     "tailwindcss": "npm:@tailwindcss/postcss7-compat@^2.0.3",
     "uglifyjs-folder": "^2.0.0"
