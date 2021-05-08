@@ -11,7 +11,7 @@
     "minify-css": "node ./node_modules/clean-css-cli/bin/cleancss --inline none --batch --batch-suffix '' ./src/www/assets/css/*.css -o ./src/www/assets-built/css",
     "build-assets": "npm run copy-assets && npm run minify-js && npm run minify-css",
     "prod": "npm run build-assets && npm run tailwind && NODE_ENV=production node ./src/app.js",
-    "start": "npm run build-assets && npm run tailwind && npm run lint && NODE_ENV=development node ./src/app.js"
+    "start": "npm run tailwind && npm run lint && NODE_ENV=development node ./src/app.js"
   },
   "repository": {
     "type": "git",
