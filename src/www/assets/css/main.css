@@ -191,13 +191,14 @@ span.pr0-rank:before {
     -ms-transform: rotate(45deg);
     transform: rotate(45deg);
     user-select: none;
-    pointer-events:none;
+    pointer-events: none;
 }
 
 /* Resync Button */
 
 button#resync-nick:disabled {
     background: #585A63;
+    cursor: not-allowed;
 }
 
 .user-info-dc-rollen > .skeleton > .preload-line {
