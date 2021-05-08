@@ -79,7 +79,7 @@ app.use(session({
     saveUninitialized: false
 }));
 app.use(csrf({ cookie: true }));
-app.use(express.static((process.env.NODE_ENV).toLocaleLowerCase() === "production"
+app.use(express.static((process.env.NODE_ENV && (process.env.NODE_ENV).toLowerCase() === "production")
     ? "./src/www/assets-built"
     : "./src/www/assets"
 ));
