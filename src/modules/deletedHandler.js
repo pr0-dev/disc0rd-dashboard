@@ -15,8 +15,11 @@ let config = require("../utils/configHandler").getConfig();
  *
  * @param {import("discord.js").Message | import("discord.js").PartialMessage} message
  * @param {import("discord.js").Client} client
+ * @returns {any}
  */
 module.exports = async function(message, client){
+    if (message.channel.id === config.bot_settings.deleted_log_id) return;
+
     let entry = (await message.guild.fetchAuditLogs({ type: 72 })).entries.first();
 
     /** @type {object} */
@@ -67,7 +70,7 @@ module.exports = async function(message, client){
         }
     };
 
-    client.channels
+    return client.channels
         .fetch(config.bot_settings.deleted_log_id)
         .then(channel => /** @type {import("discord.js").TextChannel} */ (channel).send(embed));
 };
