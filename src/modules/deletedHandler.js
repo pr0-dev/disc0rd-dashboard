@@ -15,18 +15,20 @@ let config = require("../utils/configHandler").getConfig();
  *
  * @param {import("discord.js").Message | import("discord.js").PartialMessage} message
  * @param {import("discord.js").Client} client
- * @returns {any}
  */
 module.exports = async function(message, client){
+    // Don't log deleted entries in the deleted-log channel
     if (message.channel.id === config.bot_settings.deleted_log_id) return;
 
     let entry = (await message.guild.fetchAuditLogs({ type: 72 })).entries.first();
 
-    /** @type {object} */
+    // Don't log entries that have been deleted by the initial author (Data Privacy)
+    if (config.is_production && entry.target !== message.author) return;
+
     let embed = {
         embed: {
             timestamp: moment.utc().format(),
-            description: message.cleanContent + "\n\n\_\_\_\_\_",
+            description: message.cleanContent + "\n\n\- - - - -",
             author: {
                 // @ts-ignore
                 name: `Nachricht von ${message.author.username} in ${message.channel.name} gelöscht`,
@@ -57,7 +59,7 @@ module.exports = async function(message, client){
                 },
                 {
                     name: "Gelöscht von",
-                    value: entry.target === message.author ? entry.executor : "Selbst",
+                    value: entry.target === message.author ? entry.executor : message.author,
                     inline: true
                 },
                 {
@@ -70,7 +72,7 @@ module.exports = async function(message, client){
         }
     };
 
-    return client.channels
+    client.channels
         .fetch(config.bot_settings.deleted_log_id)
         .then(channel => /** @type {import("discord.js").TextChannel} */ (channel).send(embed));
 };

@@ -1,4 +1,5 @@
 {
+    "is_production": true,
     "auth": {
         "bot_token": "",
         "server_id": ""
