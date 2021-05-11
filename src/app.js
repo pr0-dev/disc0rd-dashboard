@@ -121,7 +121,7 @@ Dann kannst du deinen Account auf dem Discord Server hier verwalten:
 
 <https://discordpanel.pr0gramm.com>
 
-Viel spaß! :orange_heart:
+Viel Spaß! :orange_heart:
 `
     );
 });
