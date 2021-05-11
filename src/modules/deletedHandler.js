@@ -24,6 +24,7 @@ module.exports = async function(message, client){
 
     // Don't log entries that have been deleted by the initial author (Data Privacy)
     if (config.is_production && entry.target !== message.author) return;
+    let target = entry.target === message.author ? entry.executor : "Selbst"; // <- dev-mode only
 
     let embed = {
         embed: {
@@ -37,18 +38,17 @@ module.exports = async function(message, client){
             fields: [
                 {
                     name: "Von User",
+                    value: message.author,
+                    inline: true
+                },
+                {
+                    name: "User Tag",
                     value: message.author.tag,
                     inline: true
                 },
                 {
                     name: "User ID",
                     value: message.author.id,
-                    inline: true
-                },
-                {
-                    // Empty field as separator
-                    name: "\u200b",
-                    value: "\u200b",
                     inline: true
                 },
                 {
@@ -59,13 +59,12 @@ module.exports = async function(message, client){
                 },
                 {
                     name: "Gelöscht von",
-                    value: entry.target === message.author ? entry.executor : message.author,
+                    value: target,
                     inline: true
                 },
                 {
-                    // Empty field as separator
-                    name: "\u200b",
-                    value: "\u200b",
+                    name: "Datum/Zeit",
+                    value: String(moment().format("DD.MM.YYYY HH:mm:ss")),
                     inline: true
                 }
             ]
