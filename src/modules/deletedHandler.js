@@ -53,8 +53,7 @@ module.exports = async function(message, client){
                 },
                 {
                     name: "In Channel",
-                    // @ts-ignore
-                    value: message.channel.name,
+                    value: message.channel,
                     inline: true
                 },
                 {
