@@ -18,7 +18,8 @@ let config = require("../utils/configHandler").getConfig();
  */
 module.exports = async function(message, client){
     // Don't log deleted entries in the deleted-log channel
-    if (message.channel.id === config.bot_settings.deleted_log_id) return;
+    // Don't log entries made by a bot
+    if (message.channel.id === config.bot_settings.deleted_log_id || message.author.bot) return;
 
     let entry = (await message.guild.fetchAuditLogs({ type: 72 })).entries.first();
 
