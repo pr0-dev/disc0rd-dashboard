@@ -194,6 +194,15 @@ span.pr0-rank:before {
     pointer-events: none;
 }
 
+span#nick-info {
+    display: inline-block;
+    margin-left: 7px;
+}
+
+span#nick-info:hover {
+    cursor: pointer;
+}
+
 /* Resync Button */
 
 button#resync-nick:disabled {
