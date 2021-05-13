@@ -128,6 +128,23 @@ let bugsAndFeedback = function(e, SA){
     );
 };
 
+/**
+ * Show nick info modal
+ *
+ * @param {Event} e
+ * @param {any} SA
+ * @returns {void}
+ */
+let nickInfo = function(e, SA){
+    e.preventDefault();
+    return SA.fire(
+        "Informationen zum Nick-Sync:",
+        "Ist diese Checkbox gesetzt, wird dein pr0gramm Username als Nickname am disc0rd gesetzt.<br><br>" +
+        "Zusätzlich bekommst du die Rolle \"verified-nick\", sodass andere wissen, dass dein Discord name auch wirklich zu deinem pr0gramm Account gehört.<br><br>" +
+        "Wird diese Checkbox wieder deaktiviert, wird dein Nickname zurückgesetzt und die \"verified-nick\" Rolle wird entfernt."
+    );
+};
+
 (($, SA) => {
     $("a").attr("target", function(){
         if (this.host && this.host !== location.host) return "_blank";
@@ -143,6 +160,7 @@ let bugsAndFeedback = function(e, SA){
             $("#resync-nick").on("click", e => handleNickChange(e, SA, $, true));
             $("#rank-sync-hide").on("click", e => hideNotification(e, $));
             $(document).on("change", ".role-setter", e => handleRoleChange(e, SA, $));
+            $("#nick-info").on("click", e => nickInfo(e, SA));
             getRoles(SA, $);
         }
         $("#f-b").on("click", e => bugsAndFeedback(e, SA));
