@@ -23,7 +23,7 @@
   },
   "homepage": "https://github.com/pr0-dev/Discord-Bot",
   "author": "TheShad0w",
-  "license": "Apache-2.0",
+  "license": "AGPL-3.0-only",
   "dependencies": {
     "cookie-parser": "^1.4.5",
     "cors": "^2.8.5",
