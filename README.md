@@ -6,6 +6,12 @@
 
 **Info:** Dieses Repository basiert auf dem [pr0gramm Discord Bot](https://github.com/pr0-dev/Discord-Bot).
 
+## :diamond_shape_with_a_dot_inside: Funktionswünsche & Issues
+
+Funktionswunsch oder Fehler entdeckt? Bitte [öffne einen Issue](https://github.com/pr0-dev/disc0rd-dashboard/issues/new/choose) hier auf GitHub.
+
+<hr>
+
 ## :wrench: Installation
 
 0. Terminal aufmachen und dorthin navigieren, wo man es downloaden möchte <br><br>
@@ -23,11 +29,5 @@ $ `npm install`<br><br>
 5. Die frisch kopierte Config datei ausfüllen. <br><br>
 6. Das Script starten <br>
 $ `npm start` <br><br>
-
-<hr>
-
-## :diamond_shape_with_a_dot_inside: Funktionswünsche & Issues
-
-Funktionswunsch oder Fehler entdeckt? Bitte [öffne einen Issue](https://github.com/pr0-dev/disc0rd-dashboard/issues/new/choose) hier auf GitHub.
 
 <hr>
