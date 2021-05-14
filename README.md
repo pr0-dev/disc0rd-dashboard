@@ -25,3 +25,9 @@ $ `npm install`<br><br>
 $ `npm start` <br><br>
 
 <hr>
+
+## :diamond_shape_with_a_dot_inside: Funktionswünsche & Issues
+
+Funktionswunsch oder Fehler entdeckt? Bitte [öffne einen Issue](https://github.com/pr0-dev/disc0rd-dashboard/issues/new/choose) hier auf GitHub.
+
+<hr>
