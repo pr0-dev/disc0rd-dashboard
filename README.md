@@ -1,7 +1,7 @@
 # disc0rd-Dashboard
 
 <p align="center"><img height="150" width="auto" src="https://i.imgur.com/ff7vivP.png" /></p>
-<p align="center"><b>pr0gramm disc0rd Dashboard</b><br>[https://discordpanel.pr0gramm.com](https://discordpanel.pr0gramm.com)</p>
+<p align="center"><b>pr0gramm disc0rd Dashboard</b><br>https://discordpanel.pr0gramm.com</p>
 <hr>
 
 **Info:** Dieses Repository basiert auf dem [pr0gramm Discord Bot](https://github.com/pr0-dev/Discord-Bot).
