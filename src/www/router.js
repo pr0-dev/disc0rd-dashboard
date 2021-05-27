@@ -39,8 +39,7 @@ module.exports = function(app, client){
 
     app.get("/callback", (req, res) => callbackHandler(req, res));
 
-    // @ts-ignore
-    app.get("/auth", (req, res) => res.redirect(!!req.session.user ? "/" : authorizeUrl));
+    app.get("/auth", (req, res) => res.redirect(!! /** @type {object} */ (req.session).user ? "/" : authorizeUrl));
     app.get("/logout", checkAuth, (req, res) => req.session.destroy(() => res.redirect("/")));
 
     app.get("/roles/get", (req, res) => getRoles(req, res, client));

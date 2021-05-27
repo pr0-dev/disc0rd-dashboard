@@ -19,9 +19,9 @@ let { getPr0Name } = require("../../www/modules/pr0Helpers");
 exports.run = async(client, message, args, callback) => {
     if (!args.length) return callback("Du hast keine ID angegeben.");
 
+    /** @type {any} */
     let uid = message.content.slice(`${config.bot_settings.prefix.command_prefix}discord2pr0 `.length);
 
-    // @ts-ignore
     if (isNaN(uid)) return callback(`Das Input \`${uid}\` scheint keine gültige Discord-ID zu sein.`);
 
     let pr0 = await getPr0Name(uid);

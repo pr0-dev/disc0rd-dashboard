@@ -5,7 +5,7 @@
 // =========================== //
 
 // Dependencies
-let fetch = require("node-fetch");
+let fetch = require("node-fetch").default;
 
 // Utils
 let log = require("../../utils/logger");
@@ -27,14 +27,12 @@ module.exports = async function(req, res, client){
         ? null
         : await getPr0Account((await getPr0Name(req.session.user.id)).name);
 
-    // @ts-ignore
     let guilds = !req.session.access_token ? null : await (await fetch("https://discordapp.com/api/users/@me/guilds", {
         headers: {
             authorization: `${req.session.token_type} ${req.session.access_token}`
         }
     })).json();
 
-    // @ts-ignore
     let guildInfo = !guilds || !req.session.access_token ? null : await (await fetch(`https://discordapp.com/api/guilds/${config.auth.server_id}/members/${req.session.user.id}`, {
         headers: {
             authorization: `Bot ${config.auth.bot_token}`

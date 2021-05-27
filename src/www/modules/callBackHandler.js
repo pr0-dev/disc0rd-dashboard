@@ -6,7 +6,7 @@
 
 let FormData = require("form-data");
 let config = require("../../utils/configHandler").getConfig();
-let fetch = require("node-fetch");
+let fetch = require("node-fetch").default;
 
 const { clientId, clientSecret, scopes, redirectUri } = config.webserver.auth;
 
@@ -31,10 +31,8 @@ module.exports = function(req, res){
     data.append("scope", scopes.join(" "));
     data.append("code", accessCode);
 
-    // @ts-ignore
     return fetch("https://discordapp.com/api/oauth2/token", { method: "POST", body: data })
         .then(response => response.json()).then(response => {
-            // @ts-ignore
             fetch("https://discordapp.com/api/users/@me", {
                 method: "GET",
                 headers: {
