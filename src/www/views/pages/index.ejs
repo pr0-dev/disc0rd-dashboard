@@ -26,13 +26,13 @@
     <% if (!!user){
         if (!pr0?.user.name){ %>
 
-        <div class="login-notice absolute bg-light px-4 z-50 shadow-md rounded-md">
-            <div class="login-notice-inner text-center absolute">
+        <div class="login-notice h-auto absolute bg-light px-4 z-50 shadow-md rounded-md w-full md:w-1/3">
+            <div class="text-center p-4">
                 <h1 class="text-2xl">Fehler!</h1>
                 <h3 class="text-lg">Du scheinst deinen Discord Account noch nicht mit deinem pr0gramm Account verknüpft zu haben.</h3>
-
-                <a class="rounded-md shadow-md bg-discord-blue px-4 py-2 mt-8 inline-block text-white transition-300 cursor-pointer hover:bg-discord-blue-dark whitespace-normal" href="https://pr0gramm.com/discord">Discord- und pr0gramm Account verknüpfen</a>
-                <a class="rounded-md shadow-md bg-discord-blue px-4 py-2 mt-8 inline-block text-white transition-300 cursor-pointer hover:bg-discord-blue-dark whitespace-normal" href="/">Die Accounts sind nun verknüpft! (Neu laden)</a>
+                
+                <a class="mx-auto rounded-md w-full block shadow-md bg-discord-blue px-4 py-2 mt-8 text-white transition-300 cursor-pointer hover:bg-discord-blue-dark whitespace-normal" href="https://pr0gramm.com/discord">Discord- und pr0gramm Account verknüpfen</a>
+                <a class="mx-auto rounded-md w-full block shadow-md bg-discord-blue px-4 py-2 mt-4 text-white transition-300 cursor-pointer hover:bg-discord-blue-dark whitespace-normal" href="/">Die Accounts sind nun verknüpft! (Neu laden)</a>
             </div>
         </div>
 
@@ -40,13 +40,13 @@
 
         else if (!guilds.some(e => e.id === config.auth.server_id)){ %>
 
-        <div class="login-notice absolute bg-light px-4 z-50 shadow-md rounded-md">
-            <div class="login-notice-inner text-center absolute">
+        <div class="login-notice h-auto absolute bg-light px-4 z-50 shadow-md rounded-md w-full md:w-1/3">
+            <div class="text-center p-4">
                 <h1 class="text-2xl">Fehler!</h1>
                 <h3 class="text-lg">Du scheinst derzeit nicht am disc0rd server zu sein.</h3>
 
-                <a class="rounded-md shadow-md bg-discord-blue px-4 py-2 mt-8 inline-block text-white transition-300 cursor-pointer hover:bg-discord-blue-dark whitespace-normal" href="https://discord.com/invite/5245vVp">Klicke hier um beizutreten</a>
-                <a class="rounded-md shadow-md bg-discord-blue px-4 py-2 mt-8 inline-block text-white transition-300 cursor-pointer hover:bg-discord-blue-dark whitespace-normal" href="/">Ich bin nun beigetraten! (Neu laden)</a>
+                <a class="rounded-md w-full shadow-md bg-discord-blue px-4 py-2 mt-8 block text-white transition-300 cursor-pointer hover:bg-discord-blue-dark whitespace-normal" href="https://discord.com/invite/5245vVp">Klicke hier um beizutreten</a>
+                <a class="rounded-md w-full shadow-md bg-discord-blue px-4 py-2 mt-4 block text-white transition-300 cursor-pointer hover:bg-discord-blue-dark whitespace-normal" href="/">Ich bin nun beigetraten! (Neu laden)</a>
             </div>
         </div>
 
@@ -151,8 +151,8 @@
     }
 
     else { %> 
-        <div class="login-notice absolute bg-light px-4 z-50 shadow-md rounded-md">
-            <div class="login-notice-inner text-center absolute">
+        <div class="login-notice h-auto absolute bg-light px-4 z-50 shadow-md rounded-md w-full md:w-1/3">
+            <div class="text-center py-32">
                 <h1 class="text-2xl">Willkommen</h1>
                 <h3 class="text-xl">zum pr0gramm disc0rd panel</h3>
 
