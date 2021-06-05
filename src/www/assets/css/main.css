@@ -40,6 +40,10 @@ body {
     user-select: none;
 }
 
+.no-overflow {
+    overflow: hidden;
+}
+
 /* Main */
 
 .login-notice {
@@ -98,6 +102,11 @@ span.pr0-rank:before {
     content: "\25CF";
     margin-right: 0.4em;
     font-size: 20px;
+}
+
+img[alt="User"] {
+    max-width: 150px;
+    max-height: 150px;
 }
 
 /* User Marks */
