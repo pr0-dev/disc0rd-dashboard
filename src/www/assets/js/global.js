@@ -34,6 +34,14 @@
         });
     };
 
+    /**
+     * Inject roles into appropriate container
+     *
+     * @param {array} roles
+     * @param {string} selector
+     * @param {number} [counter=0]
+     * @returns {number}
+     */
     let injectRoles = function(roles, selector, counter = 0){
         let round = counter;
         roles.forEach(r => {

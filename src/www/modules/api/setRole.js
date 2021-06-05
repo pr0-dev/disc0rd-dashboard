@@ -27,7 +27,10 @@ module.exports = async function(req, res, client){
             response.status = 400;
             response.error = 1;
         }
-        else if (!config.rollen_auswahl.includes(decodeURIComponent(String(req.query.role)))) {
+
+        else if (
+            ![...config.rollen_auswahl, ...config.stammtisch_auswahl].includes(decodeURIComponent(String(req.query.role)))
+        ) {
             response.message = "Diese Rolle darf nicht gesetzt werden.";
             response.status = 403;
             response.error = 1;
