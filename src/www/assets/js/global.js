@@ -6,147 +6,143 @@
 
 /* eslint-disable no-var, no-use-before-define, consistent-return, quotes */
 
-/**
- * Set/Remove Nickname
- *
- * @param {Event & { target: HTMLInputElement }} e
- * @param {any} SA
- * @param {Function} $
- * @param {boolean} [force=false]
- * @returns {Promise<void>}
- */
-let handleNickChange = async function(e, SA, $, force = false){
-    let res = await (await fetch(
-        (force || e.target.checked)
-            ? "/nick/set"
-            : "/nick/unset"
-    )).json();
+(($, SA) => {
+    /**
+     * Set/Remove Nickname
+     *
+     * @param {Event & { target: HTMLInputElement }} e
+     * @param {boolean} [force=false]
+     * @returns {Promise<void>}
+     */
+    let handleNickChange = async function(e, force = false){
+        let res = await (await fetch(
+            (force || e.target.checked)
+                ? "/nick/set"
+                : "/nick/unset"
+        )).json();
 
-    $("#resync-nick").attr("disabled", !e.target.checked);
+        $("#resync-nick").attr("disabled", !e.target.checked);
 
-    return SA.fire({
-        position: "bottom-start",
-        title: res.error === 0 ? res.message : "Fehler beim aktualisieren des Nicknames",
-        // background: "#9AA3B5",
-        toast: true,
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true
-    });
-};
-
-/**
- * Retrieve Roles from Server
- *
- * @param {any} SA
- * @param {Function} $
- * @returns {Promise<void>}
- */
-let getRoles = async function(SA, $){
-    let res = await (await fetch("/roles/get")).json();
-
-    if (res.error !== 0){
         return SA.fire({
             position: "bottom-start",
-            title: "Fehler beim laden der Rollen",
+            title: res.error === 0 ? res.message : "Fehler beim aktualisieren des Nicknames",
             // background: "#9AA3B5",
             toast: true,
             showConfirmButton: false,
             timer: 3000,
             timerProgressBar: true
         });
-    }
+    };
 
-    $(".user-info-dc-rollen").empty().addClass("grid-style");
+    let injectRoles = function(roles, selector){
+        return roles.forEach((r, i) => {
+            $(selector).append(
+                '<div class="flex role py-2 md:py-0">' +
+                    '<div class="relative flex discord-input">' +
+                        '<input type="checkbox" class="role-setter duration-300 hover:text-gray-300 cursor-pointer" name="role-' + i + '" id="role-' + i + '"' + (r.on_user ? " checked" : "") + '>' +
+                        '<label for="role-' + i + '"></label>' +
+                        '<span class="discord-tick"></span>' +
+                    '</div>' +
+                    '<label for="role-' + i + '" class="ml-4 block inline cursor-pointer">' + r.role + '</label>' +
+                '</div>  '
+            );
+        });
+    };
 
-    return res.roles.forEach((r, i) => {
-        $(".user-info-dc-rollen").append(
-            '<div class="flex role py-2 md:py-0">' +
-                '<div class="relative flex discord-input">' +
-                    '<input type="checkbox" class="role-setter duration-300 hover:text-gray-300 cursor-pointer" name="role-' + i + '" id="role-' + i + '"' + (r.on_user ? " checked" : "") + '>' +
-                    '<label for="role-' + i + '"></label>' +
-                    '<span class="discord-tick"></span>' +
-                '</div>' +
-                '<label for="role-' + i + '" class="ml-4 block inline cursor-pointer">' + r.role + '</label>' +
-            '</div>  '
+    /**
+     * Retrieve Roles from Server
+     *
+     * @returns {Promise<void>}
+     */
+    let getRoles = async function(){
+        let res = await (await fetch("/roles/get")).json();
+
+        if (res.error !== 0){
+            return SA.fire({
+                position: "bottom-start",
+                title: "Fehler beim laden der Rollen",
+                // background: "#9AA3B5",
+                toast: true,
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true
+            });
+        }
+
+        $(".user-info-dc-rollen").empty().addClass("grid-style");
+
+        injectRoles(res.roles.special, ".user-info-dc-rollen-special");
+        injectRoles(res.roles.stammtisch, ".user-info-dc-rollen-stammtisch");
+    };
+
+    /**
+     * Set/Remove Role
+     *
+     * @param {Event & { target: HTMLInputElement }} e
+     * @returns {Promise<void>}
+     */
+    let handleRoleChange = async function(e){
+        let res = await (await fetch(((e.target.checked)
+            ? "/roles/set?role="
+            : "/roles/unset?role="
+        ) + encodeURIComponent($('label[for="' + e.target.id + '"]').text()))).json();
+
+        return SA.fire({
+            position: "bottom-start",
+            title: res.error === 0 ? res.message : "Fehler beim aktualisieren der Rollen",
+            // background: "#9AA3B5",
+            toast: true,
+            showConfirmButton: false,
+            timer: 3000,
+            timerProgressBar: true
+        });
+    };
+
+    /**
+     * Hide rank sync notification
+     *
+     * @param {Event & { target: HTMLInputElement }} e
+     */
+    let hideNotification = function(e){
+        e.preventDefault();
+        $(".rank-was-synced").fadeOut();
+    };
+
+    /**
+     * Show Bugs & Feedback modal
+     *
+     * @param {Event} e
+     * @returns {void}
+     */
+    let bugsAndFeedback = function(e){
+        e.preventDefault();
+        return SA.fire(
+            "Feedback & Bugs",
+            "Für Feedback oder Infos über Bugs, bitte an TheShad0w wenden:<br><br>" +
+            'pr0gramm: <a href="https://pr0gramm.com/user/TheShad0w" target="_blank" rel="noopener" style="color: #000">TheShad0w</a><br>' +
+            "Discord: ShadowByte#1337<br><br>" +
+            'Oder für Bug-Reports und Feature-Requests <a href="https://github.com/pr0-dev/disc0rd-dashboard/issues/new/choose" target="_blank" rel="noopener" style="color: #000">einen Issue auf GitHub erstellen</a><br><br>' +
+            'Source Code: <a href="https://github.com/pr0-dev/disc0rd-dashboard" target="_blank" rel="noopener" style="color: #000">GitHub</a><br><br>' +
+            'Hilfe beim Frontend-Design: <a href="https://pr0gramm.com/user/jonas32" target="_blank" rel="noopener" style="color: #000">jonas32</a>'
         );
-    });
-};
+    };
 
-/**
- * Set/Remove Role
- *
- * @param {Event & { target: HTMLInputElement }} e
- * @param {any} SA
- * @param {Function} $
- * @returns {Promise<void>}
- */
-let handleRoleChange = async function(e, SA, $){
-    let res = await (await fetch(((e.target.checked)
-        ? "/roles/set?role="
-        : "/roles/unset?role="
-    ) + encodeURIComponent($('label[for="' + e.target.id + '"]').text()))).json();
+    /**
+     * Show nick info modal
+     *
+     * @param {Event} e
+     * @returns {void}
+     */
+    let nickInfo = function(e){
+        e.preventDefault();
+        return SA.fire(
+            "Informationen zum Nick-Sync:",
+            "Ist diese Checkbox gesetzt, wird dein pr0gramm Username als Nickname am disc0rd gesetzt.<br><br>" +
+            "Zusätzlich bekommst du die Rolle \"verified-nick\", sodass andere wissen, dass dein Discord name auch wirklich zu deinem pr0gramm Account gehört.<br><br>" +
+            "Wird diese Checkbox wieder deaktiviert, wird dein Nickname zurückgesetzt und die \"verified-nick\" Rolle wird entfernt."
+        );
+    };
 
-    return SA.fire({
-        position: "bottom-start",
-        title: res.error === 0 ? res.message : "Fehler beim aktualisieren der Rollen",
-        // background: "#9AA3B5",
-        toast: true,
-        showConfirmButton: false,
-        timer: 3000,
-        timerProgressBar: true
-    });
-};
-
-/**
- * Hide rank sync notification
- *
- * @param {Event & { target: HTMLInputElement }} e
- * @param {Function} $
- */
-let hideNotification = function(e, $){
-    e.preventDefault();
-    $(".rank-was-synced").fadeOut();
-};
-
-/**
- * Show Bugs & Feedback modal
- *
- * @param {Event} e
- * @param {any} SA
- * @returns {void}
- */
-let bugsAndFeedback = function(e, SA){
-    e.preventDefault();
-    return SA.fire(
-        "Feedback & Bugs",
-        "Für Feedback oder Infos über Bugs, bitte an TheShad0w wenden:<br><br>" +
-        'pr0gramm: <a href="https://pr0gramm.com/user/TheShad0w" target="_blank" rel="noopener" style="color: #000">TheShad0w</a><br>' +
-        "Discord: ShadowByte#1337<br><br>" +
-        'Oder für Bug-Reports und Feature-Requests <a href="https://github.com/pr0-dev/disc0rd-dashboard/issues/new/choose" target="_blank" rel="noopener" style="color: #000">einen Issue auf GitHub erstellen</a><br><br>' +
-        'Source Code: <a href="https://github.com/pr0-dev/disc0rd-dashboard" target="_blank" rel="noopener" style="color: #000">GitHub</a><br><br>' +
-        'Hilfe beim Frontend-Design: <a href="https://pr0gramm.com/user/jonas32" target="_blank" rel="noopener" style="color: #000">jonas32</a>'
-    );
-};
-
-/**
- * Show nick info modal
- *
- * @param {Event} e
- * @param {any} SA
- * @returns {void}
- */
-let nickInfo = function(e, SA){
-    e.preventDefault();
-    return SA.fire(
-        "Informationen zum Nick-Sync:",
-        "Ist diese Checkbox gesetzt, wird dein pr0gramm Username als Nickname am disc0rd gesetzt.<br><br>" +
-        "Zusätzlich bekommst du die Rolle \"verified-nick\", sodass andere wissen, dass dein Discord name auch wirklich zu deinem pr0gramm Account gehört.<br><br>" +
-        "Wird diese Checkbox wieder deaktiviert, wird dein Nickname zurückgesetzt und die \"verified-nick\" Rolle wird entfernt."
-    );
-};
-
-(($, SA) => {
     $("a").attr("target", function(){
         if (this.host && this.host !== location.host) return "_blank";
     });
@@ -157,14 +153,14 @@ let nickInfo = function(e, SA){
 
     $(document).ready(function(){
         if ($(".logged-in-inner").hasClass("logged-in")){
-            $("#sync-nick").on("change", e => handleNickChange(e, SA, $));
-            $("#resync-nick").on("click", e => handleNickChange(e, SA, $, true));
-            $("#rank-sync-hide").on("click", e => hideNotification(e, $));
-            $(document).on("change", ".role-setter", e => handleRoleChange(e, SA, $));
-            $("#nick-info").on("click", e => nickInfo(e, SA));
-            getRoles(SA, $);
+            $("#sync-nick").on("change", e => handleNickChange(e));
+            $("#resync-nick").on("click", e => handleNickChange(e, true));
+            $("#rank-sync-hide").on("click", e => hideNotification(e));
+            $(document).on("change", ".role-setter", e => handleRoleChange(e));
+            $("#nick-info").on("click", e => nickInfo(e));
+            getRoles();
         }
-        $("#f-b").on("click", e => bugsAndFeedback(e, SA));
+        $("#f-b").on("click", e => bugsAndFeedback(e));
     });
 // @ts-ignore
 })($ || window.jQuery, swal || window.swal || window.Swal);

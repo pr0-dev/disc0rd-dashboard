@@ -22,8 +22,10 @@ module.exports = async function(req, res, client){
     };
 
     if (!!req.session.user){
-        const finalRoles = [];
-        const configRoles = config.rollen_auswahl;
+        const finalRoles = {
+            stammtisch: [],
+            special: []
+        };
 
         const userRoles = await client.guilds.cache
             .get(config.auth.server_id).members
@@ -36,17 +38,19 @@ module.exports = async function(req, res, client){
         await client.guilds.cache
             .get(config.auth.server_id)
             .fetch()
-            .then(async fetched => (await fetched.roles
-                .fetch()
-                .then(fetchedRoles => (fetchedRoles.cache
-                    .map(role => role.name)
-                    .filter(role => configRoles.includes(role))
-                    .forEach(e => finalRoles.push({
-                        role: e,
-                        on_user: userRoles.includes(e)
-                    }))
-                ))
-            ));
+            .then(async fetched => (await fetched.roles.fetch().then(fetchedRoles => {
+                let parsed = fetchedRoles.cache.map(role => role.name);
+
+                parsed.filter(role => config.rollen_auswahl.includes(role)).forEach(e => finalRoles.special.push({
+                    role: e,
+                    on_user: userRoles.includes(e)
+                }));
+
+                parsed.filter(role => config.stammtisch_auswahl.includes(role)).forEach(e => finalRoles.stammtisch.push({
+                    role: e,
+                    on_user: userRoles.includes(e)
+                }));
+            })));
 
         response.roles = finalRoles;
     }
