@@ -34,19 +34,22 @@
         });
     };
 
-    let injectRoles = function(roles, selector){
-        return roles.forEach((r, i) => {
+    let injectRoles = function(roles, selector, counter = 0){
+        let round = counter;
+        roles.forEach(r => {
             $(selector).append(
                 '<div class="flex role py-2 md:py-0">' +
                     '<div class="relative flex discord-input">' +
-                        '<input type="checkbox" class="role-setter duration-300 hover:text-gray-300 cursor-pointer" name="role-' + i + '" id="role-' + i + '"' + (r.on_user ? " checked" : "") + '>' +
-                        '<label for="role-' + i + '"></label>' +
+                        '<input type="checkbox" class="role-setter duration-300 hover:text-gray-300 cursor-pointer" name="role-' + round + '" id="role-' + round + '"' + (r.on_user ? " checked" : "") + '>' +
+                        '<label for="role-' + round + '"></label>' +
                         '<span class="discord-tick"></span>' +
                     '</div>' +
-                    '<label for="role-' + i + '" class="ml-4 block inline cursor-pointer">' + r.role + '</label>' +
+                    '<label for="role-' + round + '" class="ml-4 block inline cursor-pointer">' + r.role + '</label>' +
                 '</div>  '
             );
+            round += 1;
         });
+        return round;
     };
 
     /**
@@ -71,8 +74,8 @@
 
         $(".user-info-dc-rollen").empty().addClass("grid-style");
 
-        injectRoles(res.roles.special, ".user-info-dc-rollen-special");
-        injectRoles(res.roles.stammtisch, ".user-info-dc-rollen-stammtisch");
+        let count = injectRoles(res.roles.special, ".user-info-dc-rollen-special");
+        injectRoles(res.roles.stammtisch, ".user-info-dc-rollen-stammtisch", count);
     };
 
     /**
