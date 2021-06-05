@@ -27,7 +27,7 @@
         </style>
         <% } %>
     </head>
-    <body class="bg-dark">
+    <body class="bg-dark <%= !!user ? "" : "no-overflow" %>">
         <header class="shadow-md h-16 w-full flex fixed top-0 left-0 bg-light justify-center z-50">
             <div class="h-container flex relative w-3/4 justify-center w-3/4">
                 <div class="w-1/2 relative">
