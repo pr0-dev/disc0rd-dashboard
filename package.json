@@ -46,7 +46,7 @@
     "@babel/eslint-parser": "^7.13.14",
     "@tailwindcss/postcss7-compat": "^2.0.3",
     "@types/node": "^14.14.41",
-    "autoprefixer": "^9.8.6",
+    "autoprefixer": "^10.2.6",
     "clean-css-cli": "^5.3.0",
     "eslint": "^7.26.0",
     "postcss": "^8.2.10",
