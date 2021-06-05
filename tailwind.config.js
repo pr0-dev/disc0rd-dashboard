@@ -3,7 +3,15 @@
 /* eslint-disable quote-props */
 
 module.exports = {
-    purge: [],
+    purge: [
+        "./src/www/views/layouts/*.ejs",
+        "./src/www/views/pages/*.ejs",
+        "./src/www/views/errors/*.ejs",
+        "./src/www/assets-built/css/*.css",
+        "./src/www/assets/css/*.css",
+        "./src/www/assets-built/js/*.js",
+        "./src/www/assets/js/*.js"
+    ],
     theme: {
         extend: {
             colors: {
