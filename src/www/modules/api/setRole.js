@@ -19,8 +19,9 @@ let userHasTooManyRoles = function(client, req){
             .get(config.auth.server_id).members.cache
             .get(req.session.user.id).roles.cache
             .array()
+            .map(e => e.name)
             .includes(v)
-        ).length > 5
+        ).length >= Number(config.max_stammtisch_roles)
     );
 };
 
@@ -55,7 +56,7 @@ module.exports = async function(req, res, client){
         }
 
         else if (userHasTooManyRoles(client, req)){
-            response.message = "Du kannst nicht mehr als 5 Stammtischrollen setzen.";
+            response.message = `Du kannst nicht mehr als ${config.max_stammtisch_roles} Stammtischrollen setzen.`;
             response.status = 403;
             response.error = 1;
         }
