@@ -6,6 +6,10 @@
 
 let config = require("../../../utils/configHandler").getConfig();
 
+let userHasTooManyRoles = function(client, req){
+    return config.stammtisch_auswahl.filter(v => client.guilds.cache.get(config.auth.server_id).members.cache.get(req.session.user.id).roles.cache.array().includes(v)).length > 5;
+};
+
 /**
  * Set role for user
  *
@@ -30,11 +34,18 @@ module.exports = async function(req, res, client){
 
         else if (
             ![...config.rollen_auswahl, ...config.stammtisch_auswahl].includes(decodeURIComponent(String(req.query.role)))
-        ) {
+        ){
             response.message = "Diese Rolle darf nicht gesetzt werden.";
             response.status = 403;
             response.error = 1;
         }
+
+        else if (userHasTooManyRoles(req, client)){
+            response.message = "Du kannst nicht mehr als 5 Stammtischrollen setzen.";
+            response.status = 403;
+            response.error = 1;
+        }
+
         else {
             try {
                 client.guilds.cache
