@@ -96,15 +96,19 @@
             : "/roles/unset?role="
         ) + encodeURIComponent($('label[for="' + e.target.id + '"]').text()))).json();
 
-        return SA.fire({
-            position: "bottom-start",
-            title: res.error === 0 ? res.message : "Fehler beim aktualisieren der Rollen",
-            // background: "#9AA3B5",
-            toast: true,
-            showConfirmButton: false,
-            timer: 3000,
-            timerProgressBar: true
-        });
+        if (res.error) $('label[for="' + e.target.id + '"]').prop("checked", false);
+
+        return (res.error
+            ? SA.fire("Fehler beim aktualisieren der Rollen", res.message)
+            : SA.fire({
+                position: "bottom-start",
+                title: res.message,
+                toast: true,
+                showConfirmButton: false,
+                timer: 3000,
+                timerProgressBar: true
+            })
+        );
     };
 
     /**
