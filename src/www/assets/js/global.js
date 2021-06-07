@@ -4,8 +4,6 @@
 // = Copyright (c) TheShad0w = //
 // =========================== //
 
-/* eslint-disable no-var, no-use-before-define, consistent-return, quotes */
-
 (($, SA) => {
     /**
      * Set/Remove Nickname
@@ -45,15 +43,15 @@
     let injectRoles = function(roles, selector, counter = 0){
         let round = counter;
         roles.forEach(r => {
-            $(selector).append(
-                '<div class="flex role py-2 md:py-0">' +
-                    '<div class="relative flex discord-input">' +
-                        '<input type="checkbox" class="role-setter duration-300 hover:text-gray-300 cursor-pointer" name="role-' + round + '" id="role-' + round + '"' + (r.on_user ? " checked" : "") + '>' +
-                        '<label for="role-' + round + '"></label>' +
-                        '<span class="discord-tick"></span>' +
-                    '</div>' +
-                    '<label for="role-' + round + '" class="ml-4 block inline cursor-pointer">' + r.role + '</label>' +
-                '</div>  '
+            $(selector).append(`
+<div class="flex role py-2 md:py-0">
+    <div class="relative flex discord-input">
+        <input type="checkbox" class="role-setter duration-300 hover:text-gray-300 cursor-pointer" name="role-${round}" id="role-${round}"${(r.on_user ? " checked" : "")}>
+        <label for="role-${round}"></label>
+        <span class="discord-tick"></span>
+    </div>
+    <label for="role-${round}" class="ml-4 block inline cursor-pointer">${r.role}</label>
+</div>`
             );
             round += 1;
         });
@@ -63,7 +61,7 @@
     /**
      * Retrieve Roles from Server
      *
-     * @returns {Promise<void>}
+     * @returns {Promise<number>}
      */
     let getRoles = async function(){
         let res = await (await fetch("/roles/get")).json();
@@ -83,7 +81,7 @@
         $(".user-info-dc-rollen").empty().addClass("grid-style");
 
         let count = injectRoles(res.roles.special, ".user-info-dc-rollen-special");
-        injectRoles(res.roles.stammtisch, ".user-info-dc-rollen-stammtisch", count);
+        return injectRoles(res.roles.stammtisch, ".user-info-dc-rollen-stammtisch", count);
     };
 
     /**
@@ -154,10 +152,12 @@
         );
     };
 
+    // eslint-disable-next-line consistent-return
     $("a").attr("target", function(){
         if (this.host && this.host !== location.host) return "_blank";
     });
 
+    // eslint-disable-next-line consistent-return
     $("a").attr("rel", function(){
         if (this.host && this.host !== location.host) return "noopener";
     });
