@@ -94,9 +94,9 @@
         let res = await (await fetch(((e.target.checked)
             ? "/roles/set?role="
             : "/roles/unset?role="
-        ) + encodeURIComponent($('label[for="' + e.target.id + '"]').text()))).json();
+        ) + encodeURIComponent($(`label[for="${e.target.id}"]`).text()))).json();
 
-        if (res.error) $('label[for="' + e.target.id + '"]').prop("checked", false);
+        if (res.error) $(e.target).prop("checked", !$(e.target).prop("checked"));
 
         return (res.error
             ? SA.fire("Fehler beim aktualisieren der Rollen", res.message)
