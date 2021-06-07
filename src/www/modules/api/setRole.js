@@ -6,8 +6,22 @@
 
 let config = require("../../../utils/configHandler").getConfig();
 
+/**
+ * Check if the user already has too many roles
+ *
+ * @param {import("discord.js").Client} client
+ * @param {import("express").Request & { session: Object }} req
+ * @return {boolean}
+ */
 let userHasTooManyRoles = function(client, req){
-    return config.stammtisch_auswahl.filter(v => client.guilds.cache.get(config.auth.server_id).members.cache.get(req.session.user.id).roles.cache.array().includes(v)).length > 5;
+    return (
+        config.stammtisch_auswahl.filter(v => client.guilds.cache
+            .get(config.auth.server_id).members.cache
+            .get(req.session.user.id).roles.cache
+            .array()
+            .includes(v)
+        ).length > 5
+    );
 };
 
 /**
@@ -40,7 +54,7 @@ module.exports = async function(req, res, client){
             response.error = 1;
         }
 
-        else if (userHasTooManyRoles(req, client)){
+        else if (userHasTooManyRoles(client, req)){
             response.message = "Du kannst nicht mehr als 5 Stammtischrollen setzen.";
             response.status = 403;
             response.error = 1;
