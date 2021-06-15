@@ -24,7 +24,6 @@
         return SA.fire({
             position: "bottom-start",
             title: res.error === 0 ? res.message : "Fehler beim aktualisieren des Nicknames",
-            // background: "#9AA3B5",
             toast: true,
             showConfirmButton: false,
             timer: 3000,
@@ -70,7 +69,6 @@
             return SA.fire({
                 position: "bottom-start",
                 title: "Fehler beim laden der Rollen",
-                // background: "#9AA3B5",
                 toast: true,
                 showConfirmButton: false,
                 timer: 3000,

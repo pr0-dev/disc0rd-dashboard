@@ -39,15 +39,11 @@ module.exports = function(message, client){
      * @param {Function} callback
      */
     if (message.content.indexOf(config.bot_settings.prefix.command_prefix) === 0){
-        cmdHandler(message, client, false, (err) => {
-            if (err) message.channel.send(err);
-        });
+        cmdHandler(message, client, false, (err) => (err && message.channel.send(err)));
     }
 
     else if (message.content.indexOf(config.bot_settings.prefix.mod_prefix) === 0){
-        cmdHandler(message, client, true, (err) => {
-            if (err) message.channel.send(err);
-        });
+        cmdHandler(message, client, true, (err) => (err && message.channel.send(err)));
     }
 
     else return;
