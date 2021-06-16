@@ -1,6 +1,6 @@
 # disc0rd-Dashboard
 
-[![CodeQL](https://github.com/pr0-dev/disc0rd-dashboard/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/pr0-dev/disc0rd-dashboard/actions/workflows/codeql-analysis.yml) [![Stars](https://img.shields.io/github/stars/pr0-dev/disc0rd-dashboard?color=%2334D058)](#)
+[![CodeQL](https://github.com/pr0-dev/disc0rd-dashboard/actions/workflows/codeql-analysis.yml/badge.svg)](https://github.com/pr0-dev/disc0rd-dashboard/actions/workflows/codeql-analysis.yml) [![Codestyle](https://github.com/pr0-dev/disc0rd-dashboard/actions/workflows/codestyle.yml/badge.svg)](https://github.com/pr0-dev/disc0rd-dashboard/actions/workflows/codestyle.yml) [![Stars](https://img.shields.io/github/stars/pr0-dev/disc0rd-dashboard?color=%2334D058)](#)
 
 <p align="center"><img height="150" width="auto" src="https://i.imgur.com/ff7vivP.png" /></p>
 <p align="center"><b>pr0gramm disc0rd Dashboard</b><br>https://discordpanel.pr0gramm.com</p>
