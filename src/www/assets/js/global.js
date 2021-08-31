@@ -148,8 +148,8 @@
         e.preventDefault();
         return SA.fire(
             "Informationen zum Nick-Sync:",
-            "Ist diese Checkbox gesetzt, wird dein pr0gramm Username als Nickname am disc0rd gesetzt.<br><br>" +
-            "Zusätzlich bekommst du die Rolle \"verified-nick\", sodass andere wissen, dass dein Discord name auch wirklich zu deinem pr0gramm Account gehört.<br><br>" +
+            "Ist diese Checkbox gesetzt, wird dein pr0gramm Username als Nickname im disc0rd gesetzt.<br><br>" +
+            "Zusätzlich bekommst du die Rolle \"verified-nick\", sodass andere wissen, dass dein Discord Name auch wirklich zu deinem pr0gramm Account gehört.<br><br>" +
             "Wird diese Checkbox wieder deaktiviert, wird dein Nickname zurückgesetzt und die \"verified-nick\" Rolle wird entfernt."
         );
     };
