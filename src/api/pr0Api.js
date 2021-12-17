@@ -42,6 +42,7 @@ let performRequest = function(method, endpoint, params = {}, headers = {}, formD
 
     headers["cache-control"] = "no-cache";
     headers["cookie"] = String(cookieFile);
+    headers["user-agent"] = "Shad0wBot/1.1 (Debian 4.19.181-1; GNU/Linux; x86_64) NodeJS/15.11.0";
 
     req.query(params);
     req.headers(headers);
