@@ -16,7 +16,7 @@ let rankSync = require("./rankSync");
 
 let panic = function(error, req, res){
     log.error(error);
-    // req.session.destroy();
+    req.session.destroy();
     return res.status(500).render("errors/500", {
         config: null,
         log: null,
@@ -61,8 +61,6 @@ module.exports = async function(req, res, client){
     })).json();
 
     let synced = await rankSync(pr0 || null, req.session.user || null, client);
-
-    console.log(pr0);
 
     return res.render("pages/index", {
         guilds,
