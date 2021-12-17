@@ -1,7 +1,7 @@
 <%- include("../layouts/header"); -%>
 
 
-            <div class="not-found-wrap">
+            <div class="error-wrap">
                 <h1>&macr;\_(&#12484;)_/&macr;</h1>
                 <h3>ZOMG - Irgendwas doofes ist passiert.</h3>
                 <h4>
@@ -13,7 +13,7 @@
                 </h4>
                 <br><br>
                 <code>
-                    Unhandled rejection (promise: [object Promise], reason: TypeError: Cannot read properties of null (reading 'name'))
+                    <%= error_stack %>
                 </code>
             </div>
 

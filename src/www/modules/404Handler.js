@@ -13,7 +13,7 @@
  */
 module.exports = function(req, res){
     return res.status(404).render("errors/404", {
-        routeTitle: "Nicht gefunden =(",
+        routeTitle: "404 - Nicht gefunden =(",
         route: req.path,
         user: req.session.user || null,
         guilds: null,

@@ -16,16 +16,20 @@ let rankSync = require("./rankSync");
 
 let panic = function(error, req, res){
     log.error(error);
-    req.session.destroy();
-    return res.render("pages/index", {
-        config,
-        log,
+    // req.session.destroy();
+    return res.status(500).render("errors/500", {
+        config: null,
+        log: null,
         error_stack: error,
-        routeTitle: "Error 500",
+        routeTitle: "500 - Server Fehler =(",
         route: req.path,
         user: req.session.user || null,
         csrfToken: req.csrfToken(),
-        status_code: 500
+        status_code: 500,
+        guilds: null,
+        dc: null,
+        synced: false,
+        pr0: null
     });
 };
 
@@ -38,18 +42,11 @@ let panic = function(error, req, res){
  * @returns {Promise<void>} renderer
  */
 module.exports = async function(req, res, client){
-    let pr0 = null;
+    let pr0 = !req.session.user
+        ? null
+        : await getPr0Account((await getPr0Name(req.session.user.id)).name);
 
-    try {
-        pr0 = !req.session.user
-            ? null
-            : await getPr0Account((await getPr0Name(req.session.user.id))?.name);
-    }
-    catch (err){
-        panic(err, req, res);
-    }
-
-    if (!pr0) panic("fetchPr0Account returned null or undefined.", req, res);
+    if (!!req.session.user && !pr0) return panic("fetchPr0Account returned null or undefined.", req, res);
 
     let guilds = !req.session.access_token ? null : await (await fetch("https://discordapp.com/api/users/@me/guilds", {
         headers: {
