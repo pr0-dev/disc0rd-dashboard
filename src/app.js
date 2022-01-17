@@ -26,6 +26,7 @@ let MemoryStore = require("memorystore")(session);
 let embedHandler = require("./modules/embedHandler");
 let messageHandler = require("./modules/messageHandler");
 let deletedHandler = require("./modules/deletedHandler");
+let spamWatcher = require("./modules/spamWatcher");
 
 // API
 let login = require("./api/pr0Login");
@@ -38,7 +39,11 @@ let meta = require("./utils/meta");
 // Services
 let portHandler = require("./www/services/portCheck");
 
-const client = new Discord.Client();
+const client = new Discord.Client({
+    partials: ["MESSAGE", "CHANNEL", "REACTION"],
+    // @ts-ignore
+    intents: ["DIRECT_MESSAGES", "DIRECT_MESSAGE_REACTIONS", "GUILD_MESSAGES", "GUILD_MESSAGE_REACTIONS", "GUILDS"]
+});
 
 let appname = conf.getName();
 let version = conf.getVersion();
@@ -128,6 +133,8 @@ Viel Spaß! :orange_heart:
 
 client.on("message", (message) => {
     if (message.author.bot) return;
+
+    spamWatcher(message, client);
 
     if (message.content.startsWith("http") && message.content.match(/\bpr0gramm.com\//i)){
         embedHandler.createEmbed(/** @type {Message} */ (message), (err, embed) => {

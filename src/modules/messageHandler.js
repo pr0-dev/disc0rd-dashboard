@@ -20,7 +20,7 @@ let cmdHandler = require("./cmdHandler");
  *
  * @param {Message} message
  * @param {Client} client
- * @returns {Function} callbackS
+ * @returns {Function} callback
  */
 module.exports = function(message, client){
     let nonBiased = message.content
