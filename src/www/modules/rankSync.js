@@ -25,7 +25,7 @@ module.exports = async function(pr0, user, client){
             .then(fetchedUser => fetchedUser.roles.cache.map(role => role.id))
         );
 
-    if (userRoles.includes(config.user_ranks[pr0.user.mark])) return false;
+    if (userRoles.includes(config.user_ranks[pr0.user.mark]) || pr0.user.mark === 16 || pr0.user.mark === 17) return false;
 
     try {
         // Remove all pr0-rank roles
