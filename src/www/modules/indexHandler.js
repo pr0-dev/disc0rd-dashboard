@@ -23,7 +23,7 @@ let panic = function(error, req, res){
         error_stack: error,
         routeTitle: "500 - Server Fehler =(",
         route: req.path,
-        user: req.session.user || null,
+        user: null,
         csrfToken: req.csrfToken(),
         status_code: 500,
         guilds: null,
