@@ -9,35 +9,34 @@
  */
 
 // Core Modules
-let path = require("path");
+const path = require("path");
 
 // Dependencies
-let Discord = require("discord.js");
-let express = require("express");
-let favicon = require("serve-favicon");
-let cors = require("cors");
-let helmet = require("helmet");
-let session = require("express-session");
-let csrf = require("csurf");
-let cookieParser = require("cookie-parser");
-let MemoryStore = require("memorystore")(session);
+const Discord = require("discord.js");
+const express = require("express");
+const favicon = require("serve-favicon");
+const cors = require("cors");
+const helmet = require("helmet");
+const session = require("express-session");
+const csrf = require("csurf");
+const cookieParser = require("cookie-parser");
+const MemoryStore = require("memorystore")(session);
 
 // Modules
-let embedHandler = require("./modules/embedHandler");
-let messageHandler = require("./modules/messageHandler");
-let deletedHandler = require("./modules/deletedHandler");
-let spamWatcher = require("./modules/spamWatcher");
+const messageHandler = require("./modules/messageHandler");
+const deletedHandler = require("./modules/deletedHandler");
+const spamWatcher = require("./modules/spamWatcher");
 
 // API
-let login = require("./api/pr0Login");
+const login = require("./api/pr0Login");
 
 // Utils
-let conf = require("./utils/configHandler");
-let log = require("./utils/logger");
-let meta = require("./utils/meta");
+const conf = require("./utils/configHandler");
+const log = require("./utils/logger");
+const meta = require("./utils/meta");
 
 // Services
-let portHandler = require("./www/services/portCheck");
+const portHandler = require("./www/services/portCheck");
 
 const client = new Discord.Client({
     partials: ["MESSAGE", "CHANNEL", "REACTION"],
@@ -45,8 +44,8 @@ const client = new Discord.Client({
     intents: ["DIRECT_MESSAGES", "DIRECT_MESSAGE_REACTIONS", "GUILD_MESSAGES", "GUILD_MESSAGE_REACTIONS", "GUILDS"]
 });
 
-let appname = conf.getName();
-let version = conf.getVersion();
+const appname = conf.getName();
+const version = conf.getVersion();
 
 console.log(
     "\n" +
@@ -55,7 +54,7 @@ console.log(
     " #" + "-".repeat(14 + appname.length + version.toString().length) + "#\n"
 );
 
-let app = express();
+const app = express();
 
 log.info(`Starte ${appname}...`);
 const config = conf.getConfig();
@@ -136,17 +135,7 @@ client.on("message", (message) => {
 
     spamWatcher(message, client);
 
-    if (message.content.startsWith("http") && message.content.match(/\bpr0gramm.com\//i)){
-        embedHandler.createEmbed(/** @type {Message} */ (message), (err, embed) => {
-            if (err) return log.error(`Konnte Embed nicht erstellen: ${err}`);
-            message.channel.send(embed);
-
-            if (config.bot_settings.delete_user_message) message.delete();
-            return null;
-        });
-    }
-
-    else messageHandler(message, client);
+    messageHandler(message, client);
 });
 
 client.on("messageDelete", message => deletedHandler(message, client));
