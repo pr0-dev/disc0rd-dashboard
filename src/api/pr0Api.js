@@ -42,7 +42,7 @@ const performRequest = function(method, endpoint, params = {}, headers = {}, for
 
     headers["cache-control"] = "no-cache";
     headers["cookie"] = String(cookieFile);
-    headers["user-agent"] = "Shad0wBot/1.1 (Debian 4.19.181-1; GNU/Linux; x86_64) NodeJS/15.11.0";
+    headers["user-agent"] = config.pr0api.user_agent || `${config.pr0api.username}/1.1 (${process.platform}; ${process.arch}) NodeJS/${process.version.substring(1)}`;
 
     req.query(params);
     req.headers(headers);
@@ -190,25 +190,43 @@ const getDiscordId = function(username, callback){
     });
 };
 
+/**
+ * Get pr0gramm login captcha
+ *
+ * @param {Function} callback
+ * @returns {any} callback
+ */
+const getCaptcha = function(callback){
+    performRequest("GET", `https://pr0gramm.com/api/user/captcha?bust=${Math.random()}`, {}, {}, {}, (err, res) => {
+        if (err){
+            log.error(err);
+            return callback(err);
+        }
+        return callback(null, res);
+    });
+};
+
 // POST Requests
 
 /**
  * login to pr0gramm.com
  *
- * @param {string} user
- * @param {string} pass
+ * @param {Object} data
  * @param {Function} callback
  * @returns {any} callback
  */
-const postLogin = function(user, pass, callback){
+const postLogin = function(data, callback){
     const headers = {
         "Content-Type": "application/x-www-form-urlencoded"
     };
 
     const formData = {
-        name: user,
-        password: pass
+        name: data.user,
+        password: data.pass
     };
+
+    if (!!data.token) formData.token = data.token;
+    if (!!data.captcha) formData.captcha = data.captcha;
 
     performRequest("POST", "https://pr0gramm.com/api/user/login", {}, headers, formData, (err, res) => {
         if (err){
@@ -226,6 +244,7 @@ module.exports = {
     getPost,
     getPostMeta,
     getUser,
+    getCaptcha,
     getPr0Username,
     getDiscordId,
     // POST
