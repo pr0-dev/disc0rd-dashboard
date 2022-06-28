@@ -99,7 +99,7 @@ process.on("unhandledRejection", (err, promise) => {
 client.on("ready", () => {
     log.info("Bot läuft...");
     log.info(`${client.users.cache.size} User, in ${client.channels.cache.size} Kanälen von ${client.guilds.cache.size} Guilden`);
-    client.user.setActivity(config.bot_settings.bot_status);
+    client.user?.setActivity(config.bot_settings.bot_status);
 });
 
 client.on("guildCreate", (guild) => {
@@ -127,7 +127,7 @@ Dann kannst du deinen Account auf dem Discord Server hier verwalten:
 
 Viel Spaß! :orange_heart:
 `
-    );
+    ).catch();
 });
 
 client.on("message", (message) => {
