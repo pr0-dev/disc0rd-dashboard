@@ -4,7 +4,7 @@
 // = Copyright (c) TheShad0w = //
 // =========================== //
 
-let config = require("../../../utils/configHandler").getConfig();
+const config = require("../../../utils/configHandler").getConfig();
 
 /**
  * Reset nickname for user
@@ -15,7 +15,7 @@ let config = require("../../../utils/configHandler").getConfig();
  * @returns {Promise<any>} JSON
  */
 module.exports = async function(req, res, client){
-    let response = {
+    const response = {
         error: !!req.session.user ? 0 : 1,
         status: !!req.session.user ? 200 : 401,
         message: !!req.session.user ? "Nickname wurde entfernt." : "Nicht authorisiert."

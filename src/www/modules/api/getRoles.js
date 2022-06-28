@@ -4,7 +4,7 @@
 // = Copyright (c) TheShad0w = //
 // =========================== //
 
-let config = require("../../../utils/configHandler").getConfig();
+const config = require("../../../utils/configHandler").getConfig();
 
 /**
  * Get matching roles from discord server
@@ -15,7 +15,7 @@ let config = require("../../../utils/configHandler").getConfig();
  * @returns {Promise<any>} JSON
  */
 module.exports = async function(req, res, client){
-    let response = {
+    const response = {
         error: !!req.session.user ? 0 : 1,
         status: !!req.session.user ? 200 : 401,
         message: !!req.session.user ? "Erfolgreich." : "Nicht authorisiert."
@@ -39,7 +39,7 @@ module.exports = async function(req, res, client){
             .get(config.auth.server_id)
             .fetch()
             .then(async fetched => (await fetched.roles.fetch().then(fetchedRoles => {
-                let parsed = fetchedRoles.cache.map(role => role.name);
+                const parsed = fetchedRoles.cache.map(role => role.name);
 
                 parsed.filter(role => config.rollen_auswahl.includes(role)).forEach(e => finalRoles.special.push({
                     role: e,

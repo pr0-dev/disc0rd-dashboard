@@ -5,10 +5,10 @@
 // =========================== //
 
 // Dependencies
-let moment = require("moment");
+const moment = require("moment");
 
 // Utils
-let config = require("../utils/configHandler").getConfig();
+const config = require("../utils/configHandler").getConfig();
 
 /**
  * Log deleted messages
@@ -21,13 +21,13 @@ module.exports = async function(message, client){
     // Don't log entries made by a bot
     if (message.channel.id === config.bot_settings.deleted_log_id || message.author.bot) return;
 
-    let entry = (await message.guild.fetchAuditLogs({ type: 72 })).entries.first();
+    const entry = (await message.guild.fetchAuditLogs({ type: 72 })).entries.first();
 
     // Don't log entries that have been deleted by the initial author (Data Privacy)
     if (config.is_production && entry.target !== message.author) return;
-    let target = entry.target === message.author ? entry.executor : "Selbst"; // <- dev-mode only
+    const target = entry.target === message.author ? entry.executor : "Selbst"; // <- dev-mode only
 
-    let embed = {
+    const embed = {
         embed: {
             timestamp: moment.utc().format(),
             description: message.cleanContent + "\n\n\- - - - -",

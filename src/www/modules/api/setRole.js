@@ -4,7 +4,7 @@
 // = Copyright (c) TheShad0w = //
 // =========================== //
 
-let config = require("../../../utils/configHandler").getConfig();
+const config = require("../../../utils/configHandler").getConfig();
 
 /**
  * Check if the user already has too many roles
@@ -13,7 +13,7 @@ let config = require("../../../utils/configHandler").getConfig();
  * @param {import("express").Request & { session: Object }} req
  * @return {boolean}
  */
-let userHasTooManyRoles = function(client, req){
+const userHasTooManyRoles = function(client, req){
     return (
         config.stammtisch_auswahl.filter(v => client.guilds.cache
             .get(config.auth.server_id).members.cache
@@ -34,7 +34,7 @@ let userHasTooManyRoles = function(client, req){
  * @returns {Promise<any>} JSON
  */
 module.exports = async function(req, res, client){
-    let response = {
+    const response = {
         error: !!req.session.user ? 0 : 1,
         status: !!req.session.user ? 200 : 401,
         message: !!req.session.user ? "Rolle wurde hinzugefügt." : "Nicht authorisiert."
