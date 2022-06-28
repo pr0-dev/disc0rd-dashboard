@@ -12,8 +12,8 @@
      * @param {boolean} [force=false]
      * @returns {Promise<void>}
      */
-    let handleNickChange = async function(e, force = false){
-        let res = await (await fetch(
+    const handleNickChange = async function(e, force = false){
+        const res = await (await fetch(
             (force || e.target.checked)
                 ? "/nick/set"
                 : "/nick/unset"
@@ -39,7 +39,7 @@
      * @param {number} [counter=0]
      * @returns {number}
      */
-    let injectRoles = function(roles, selector, counter = 0){
+    const injectRoles = function(roles, selector, counter = 0){
         let round = counter;
         roles.forEach(r => {
             $(selector).append(`
@@ -62,8 +62,8 @@
      *
      * @returns {Promise<number>}
      */
-    let getRoles = async function(){
-        let res = await (await fetch("/roles/get")).json();
+    const getRoles = async function(){
+        const res = await (await fetch("/roles/get")).json();
 
         if (res.error !== 0){
             return SA.fire({
@@ -78,7 +78,7 @@
 
         $(".user-info-dc-rollen").empty().addClass("grid-style");
 
-        let count = injectRoles(res.roles.special, ".user-info-dc-rollen-special");
+        const count = injectRoles(res.roles.special, ".user-info-dc-rollen-special");
         return injectRoles(res.roles.stammtisch, ".user-info-dc-rollen-stammtisch", count);
     };
 
@@ -88,8 +88,8 @@
      * @param {Event & { target: HTMLInputElement }} e
      * @returns {Promise<void>}
      */
-    let handleRoleChange = async function(e){
-        let res = await (await fetch(((e.target.checked)
+    const handleRoleChange = async function(e){
+        const res = await (await fetch(((e.target.checked)
             ? "/roles/set?role="
             : "/roles/unset?role="
         ) + encodeURIComponent($(`label[for="${e.target.id}"]`).text()))).json();
@@ -114,7 +114,7 @@
      *
      * @param {Event & { target: HTMLInputElement }} e
      */
-    let hideNotification = function(e){
+    const hideNotification = function(e){
         e.preventDefault();
         $(".rank-was-synced").fadeOut();
     };
@@ -125,7 +125,7 @@
      * @param {Event} e
      * @returns {void}
      */
-    let bugsAndFeedback = function(e){
+    const bugsAndFeedback = function(e){
         e.preventDefault();
         return SA.fire(
             "Feedback & Bugs",
@@ -144,7 +144,7 @@
      * @param {Event} e
      * @returns {void}
      */
-    let nickInfo = function(e){
+    const nickInfo = function(e){
         e.preventDefault();
         return SA.fire(
             "Informationen zum Nick-Sync:",

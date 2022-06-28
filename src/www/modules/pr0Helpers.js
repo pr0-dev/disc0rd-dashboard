@@ -4,8 +4,8 @@
 // = Copyright (c) TheShad0w = //
 // =========================== //
 
-let api = require("../../api/pr0Api");
-let log = require("../../utils/logger");
+const api = require("../../api/pr0Api");
+const log = require("../../utils/logger");
 
 /**
  * Promise based querying of pr0gramm account
@@ -13,7 +13,7 @@ let log = require("../../utils/logger");
  * @param {String} name
  * @returns {Promise}
  */
-let getPr0Account = function(name){
+const getPr0Account = function(name){
     return new Promise(resolve => {
         api.getUser(name, (err, res) => {
             if (err){
@@ -31,7 +31,7 @@ let getPr0Account = function(name){
  * @param {String} uid
  * @returns {Promise}
  */
-let getPr0Name = function(uid){
+const getPr0Name = function(uid){
     return new Promise(resolve => {
         api.getPr0Username(uid, (err, res) => {
             if (err){
@@ -49,7 +49,7 @@ let getPr0Name = function(uid){
  * @param {String} username
  * @returns {Promise}
  */
-let getDiscordId = function(username){
+const getDiscordId = function(username){
     return new Promise(resolve => {
         api.getDiscordId(username, (err, res) => {
             if (err){

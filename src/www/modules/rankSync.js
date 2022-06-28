@@ -4,7 +4,7 @@
 // = Copyright (c) TheShad0w = //
 // =========================== //
 
-let config = require("../../utils/configHandler").getConfig();
+const config = require("../../utils/configHandler").getConfig();
 
 /**
  * Auto-Sync pr0 and discord rank

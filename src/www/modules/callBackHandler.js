@@ -4,9 +4,9 @@
 // = Copyright (c) TheShad0w = //
 // =========================== //
 
-let FormData = require("form-data");
-let config = require("../../utils/configHandler").getConfig();
-let fetch = require("node-fetch").default;
+const FormData = require("form-data");
+const config = require("../../utils/configHandler").getConfig();
+const fetch = require("node-fetch").default;
 
 const { clientId, clientSecret, scopes, redirectUri } = config.webserver.auth;
 
