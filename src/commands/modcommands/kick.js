@@ -4,7 +4,7 @@
 // = Copyright (c) TheShad0w = //
 // =========================== //
 
-let config = require("../../utils/configHandler").getConfig();
+const config = require("../../utils/configHandler").getConfig();
 
 /**
  * Kicks a user with reason
@@ -16,15 +16,15 @@ let config = require("../../utils/configHandler").getConfig();
  * @returns {Function} callback
  */
 exports.run = (client, message, args, callback) => {
-    let mentioned = message.mentions?.users?.first?.();
-    let reason = args.slice(1).join(" ");
+    const mentioned = message.mentions?.users?.first?.();
+    const reason = args.slice(1).join(" ");
 
     if (!mentioned) return callback(`Es wurde kein Username angegeben. Verwendung: \`${config.bot_settings.prefix.mod_prefix}kick \@username KICKGRUND\``);
     if (!reason) return callback(`Das Kick-Command erfordert einen Kick-Grund. Verwendung: \`${config.bot_settings.prefix.mod_prefix}kick \@username KICKGRUND\``);
 
-    let mentionedUserObject = message.guild.member(mentioned);
+    const mentionedUserObject = message.guild.member(mentioned);
 
-    if (!mentionedUserObject.kickable) return callback("Dieser User kann nicht gekickt werden.");
+    if (!mentionedUserObject || mentionedUserObject.kickable) return callback("Dieser User kann nicht gekickt werden.");
 
     message.channel.send(`User ${mentionedUserObject} wurde gekickt!\nGrund: ${reason}`);
     message.guild.member(mentioned).send(`

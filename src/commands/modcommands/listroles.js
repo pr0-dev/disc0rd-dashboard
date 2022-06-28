@@ -14,7 +14,7 @@
  * @returns {Function} callback
  */
 exports.run = (client, message, args, callback) => {
-    let roleNames = message.guild.roles.cache
+    const roleNames = message.guild.roles.cache
         .filter(element => String(element.name).toLowerCase() !== "@everyone")
         .map(element => element.name);
 

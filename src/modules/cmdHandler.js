@@ -10,12 +10,12 @@
  */
 
 // Core Modules
-let fs = require("fs");
-let path = require("path");
+const fs = require("fs");
+const path = require("path");
 
 // Utils
-let log = require("../utils/logger");
-let config = require("../utils/configHandler").getConfig();
+const log = require("../utils/logger");
+const config = require("../utils/configHandler").getConfig();
 
 /**
  * Passes commands to the correct executor
@@ -26,17 +26,17 @@ let config = require("../utils/configHandler").getConfig();
  * @param {Function} callback
  * @returns {Function} callback
  */
-let commandHandler = function(message, client, isModCommand, callback){
-    let cmdPrefix = isModCommand ? config.bot_settings.prefix.mod_prefix : config.bot_settings.prefix.command_prefix;
-    let args = message.content.slice(cmdPrefix.length).trim().split(/ +/g);
-    let command = args.shift().toLowerCase();
+const commandHandler = function(message, client, isModCommand, callback){
+    const cmdPrefix = isModCommand ? config.bot_settings.prefix.mod_prefix : config.bot_settings.prefix.command_prefix;
+    const args = message.content.slice(cmdPrefix.length).trim().split(/ +/g);
+    const command = args.shift().toLowerCase();
 
-    let commandArr = [];
-    let commandDir = isModCommand ? path.resolve("./src/commands/modcommands") : path.resolve("./src/commands");
+    const commandArr = [];
+    const commandDir = isModCommand ? path.resolve("./src/commands/modcommands") : path.resolve("./src/commands");
 
     fs.readdirSync(commandDir).forEach(file => {
-        let cmdPath = path.resolve(commandDir, file);
-        let stats = fs.statSync(cmdPath);
+        const cmdPath = path.resolve(commandDir, file);
+        const stats = fs.statSync(cmdPath);
         if (!stats.isDirectory()) commandArr.push(file.toLowerCase());
     });
 
@@ -56,7 +56,7 @@ let commandHandler = function(message, client, isModCommand, callback){
         `User "${message.author.tag}" (${message.author}) performed ${(isModCommand ? "mod-" : "")}command: ${cmdPrefix}${command}`
     );
 
-    let cmdHandle = require(path.join(commandDir, command));
+    const cmdHandle = require(path.join(commandDir, command));
 
     try {
         cmdHandle.run(client, message, args, function(err){

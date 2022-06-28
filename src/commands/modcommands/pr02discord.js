@@ -4,8 +4,8 @@
 // = Copyright (c) NullDev = //
 // ========================= //
 
-let config = require("../../utils/configHandler").getConfig();
-let { getDiscordId } = require("../../www/modules/pr0Helpers");
+const config = require("../../utils/configHandler").getConfig();
+const { getDiscordId } = require("../../www/modules/pr0Helpers");
 
 /**
  * Resolves a pr0gramm username to it's discord ID
@@ -19,9 +19,9 @@ let { getDiscordId } = require("../../www/modules/pr0Helpers");
 exports.run = async(client, message, args, callback) => {
     if (!args.length) return callback("Du hast keinen pr0gramm Username angegeben.");
 
-    let username = message.content.slice(`${config.bot_settings.prefix.command_prefix}discord2pr0 `.length);
+    const username = message.content.slice(`${config.bot_settings.prefix.command_prefix}discord2pr0 `.length);
 
-    let pr0 = await getDiscordId(username);
+    const pr0 = await getDiscordId(username);
 
     if (!pr0?.discordId) return callback("Diese Discord-ID ist mit keinem Account verknüpft.");
 

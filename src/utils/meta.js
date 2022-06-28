@@ -4,9 +4,9 @@
 // = Copyright (c) TheShad0w = //
 // =========================== //
 
-let env = process.env.NODE_ENV ?? "dev";
-let nodev = process.version;
-let osinfo = process.platform;
+const env = process.env.NODE_ENV ?? "dev";
+const nodev = process.version;
+const osinfo = process.platform;
 
 /**
  * Filter network devices / interfaces
@@ -15,11 +15,11 @@ let osinfo = process.platform;
  * @param {any} ifaces
  * @returns {string} address
  */
-let filterDevVal = function(dev, ifaces){
+const filterDevVal = function(dev, ifaces){
     let address;
     // eslint-disable-next-line prefer-destructuring
     ifaces[dev].filter(details => (details.family === "IPv4" && details.internal === false ? (address = details.address) : undefined));
-    return address;
+    return address || "";
 };
 
 /**
@@ -27,11 +27,11 @@ let filterDevVal = function(dev, ifaces){
  *
  * @returns {string} IP
  */
-let getIp = function(){
+const getIp = function(){
     let address;
-    let ifaces = require("os").networkInterfaces();
-    for (let dev in ifaces) address = filterDevVal(dev, ifaces);
-    return address;
+    const ifaces = require("os").networkInterfaces();
+    for (const dev in ifaces) address = filterDevVal(dev, ifaces);
+    return address || "";
 };
 
 /**
@@ -41,7 +41,7 @@ let getIp = function(){
  * @returns {any} callback
  */
 module.exports = function(callback){
-    let metadata = {};
+    const metadata = {};
 
     metadata.environment = env;
     metadata.nodeversion = nodev;

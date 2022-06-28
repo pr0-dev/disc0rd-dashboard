@@ -4,14 +4,14 @@
 // = Copyright (c) TheShad0w = //
 // =========================== //
 
-let fetch = require("node-fetch").default;
+const fetch = require("node-fetch").default;
 
 /**
  * Get all contributors from GitHub
  *
  * @return {Promise<String>}
  */
-let getContributors = function(){
+const getContributors = function(){
     return new Promise(async resolve => resolve((await (await fetch("https://api.github.com/repos/pr0-dev/disc0rd-dashboard/contributors", {
         headers: { Accept: "application/vnd.github.v3+json" }
     })).json()).filter(e => e.type === "User").map(e => `<${e.html_url}> (Contributions: ${e.contributions})`).join("\n")));

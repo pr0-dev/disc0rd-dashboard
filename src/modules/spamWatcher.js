@@ -5,10 +5,10 @@
 // =========================== //
 
 // Dependencies
-let moment = require("moment");
+const moment = require("moment");
 
 // Utils
-let config = require("../utils/configHandler").getConfig();
+const config = require("../utils/configHandler").getConfig();
 
 const WATCHER_SET = new Set();
 
@@ -29,7 +29,7 @@ module.exports = async function(message, client){
 
             (await message.guild.members.fetch(message.author.id)).ban(({ days: 7, reason: "Possible nitro spam detected (second offense)" }));
 
-            let embed = {
+            const embed = {
                 embed: {
                     timestamp: moment.utc().format(),
                     description: message.cleanContent + "\n\n\- - - - -",
