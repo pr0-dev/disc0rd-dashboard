@@ -12,7 +12,7 @@
 const path = require("path");
 
 // Dependencies
-const Discord = require("discord.js");
+const { Client, Intents } = require("discord.js");
 const express = require("express");
 const favicon = require("serve-favicon");
 const cors = require("cors");
@@ -38,11 +38,8 @@ const meta = require("./utils/meta");
 // Services
 const portHandler = require("./www/services/portCheck");
 
-const client = new Discord.Client({
-    partials: ["MESSAGE", "CHANNEL", "REACTION"],
-    // @ts-ignore
-    intents: ["DIRECT_MESSAGES", "DIRECT_MESSAGE_REACTIONS", "GUILD_MESSAGES", "GUILD_MESSAGE_REACTIONS", "GUILDS"]
-});
+const intents = new Intents(131071); // @ts-ignore
+const client = new Client({ intents });
 
 const appname = conf.getName();
 const version = conf.getVersion();
@@ -130,7 +127,7 @@ Viel Spaß! :orange_heart:
     ).catch();
 });
 
-client.on("message", (message) => {
+client.on("messageCreate", (message) => {
     if (message.author.bot) return;
 
     spamWatcher(message, client);
@@ -146,22 +143,21 @@ client.on("error", (err) => {
 
 log.info("Validiere pr0gramm session...");
 
-login.validSession((isValid) => {
-    if (isValid) log.done("Bereits auf pr0gramm eingeloggt");
-    else {
-        log.warn("Noch nicht auf pr0gramm eingelogt. Versuche login...");
-        login.performLogin(config.pr0api.username, config.pr0api.password);
-    }
-});
-
-log.info("Versuche Token login...");
-
-client.login(config.auth.bot_token).then(() => {
+const done = () => client.login(config.auth.bot_token).then(() => {
     log.done("Token login war erfolgreich!");
 }, (err) => {
     log.error(`Token login war nicht erfolgreich: "${err}"`);
     log.error("Schalte wegen falschem Token ab...\n\n");
     process.exit(1);
+});
+
+login.validSession(isValid => {
+    if (isValid){
+        log.done("Bereits auf pr0gramm eingeloggt");
+        return done();
+    }
+    log.warn("Noch nicht auf pr0gramm eingelogt. Versuche login...");
+    return login.performLogin(config.pr0api.username, config.pr0api.password, () => done());
 });
 
 app.listen(app.get("port"), (err) => {
