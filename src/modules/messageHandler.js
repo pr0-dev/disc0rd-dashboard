@@ -28,7 +28,7 @@ module.exports = function(message, client){
         .replace(config.bot_settings.prefix.mod_prefix, "")
         .replace(/\s/g, "");
 
-    if (message.author.bot || nonBiased === "" || message.channel.type === "dm") return;
+    if (message.author.bot || nonBiased === "" || message.channel.type === "DM") return;
 
     /**
      * cmdHandler Parameters:
