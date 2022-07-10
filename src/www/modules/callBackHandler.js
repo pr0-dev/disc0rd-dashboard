@@ -4,9 +4,9 @@
 // = Copyright (c) TheShad0w = //
 // =========================== //
 
-let FormData = require("form-data");
-let config = require("../../utils/configHandler").getConfig();
-let fetch = require("node-fetch").default;
+const FormData = require("form-data");
+const config = require("../../utils/configHandler").getConfig();
+const fetch = require("node-fetch").default;
 
 const { clientId, clientSecret, scopes, redirectUri } = config.webserver.auth;
 
@@ -36,8 +36,8 @@ module.exports = function(req, res){
             fetch("https://discordapp.com/api/users/@me", {
                 method: "GET",
                 headers: {
-                    authorization: `${response.token_type} ${response.access_token}`
-                }
+                    authorization: `${response.token_type} ${response.access_token}`,
+                },
             }).then(res2 => res2.json()).then(userResponse => {
                 userResponse.tag = `${userResponse.username}#${userResponse.discriminator}`;
                 userResponse.avatarURL = userResponse.avatar ? `https://cdn.discordapp.com/avatars/${userResponse.id}/${userResponse.avatar}.png?size=1024` : null;

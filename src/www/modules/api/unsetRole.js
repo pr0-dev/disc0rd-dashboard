@@ -4,7 +4,8 @@
 // = Copyright (c) TheShad0w = //
 // =========================== //
 
-let config = require("../../../utils/configHandler").getConfig();
+const config = require("../../../utils/configHandler").getConfig();
+const log = require("../../../utils/logger");
 
 /**
  * Unset role for user
@@ -15,10 +16,10 @@ let config = require("../../../utils/configHandler").getConfig();
  * @returns {Promise<any>} JSON
  */
 module.exports = async function(req, res, client){
-    let response = {
+    const response = {
         error: !!req.session.user ? 0 : 1,
         status: !!req.session.user ? 200 : 401,
-        message: !!req.session.user ? "Rolle wurde entfernt." : "Nicht authorisiert."
+        message: !!req.session.user ? "Rolle wurde entfernt." : "Nicht authorisiert.",
     };
 
     if (!!req.session.user){
@@ -39,23 +40,24 @@ module.exports = async function(req, res, client){
         else {
             try {
                 client.guilds.cache
-                    .get(config.auth.server_id).members.cache
-                    .get(req.session.user.id).roles
+                    .get(config.auth.server_id)?.members.cache
+                    .get(req.session.user.id)?.roles
                     .remove(
                         client.guilds.cache
-                            .get(config.auth.server_id).roles.cache
-                            .find(r => r.name === decodeURIComponent(String(req.query.role)))
-                    );
+                            .get(config.auth.server_id)?.roles.cache
+                            .find(r => r.name === decodeURIComponent(String(req.query.role))) || "",
+                    ).catch();
             }
             catch (e){
                 response.error = 1;
                 response.status = 500;
                 response.message = String(e);
+                log.error(e);
             }
         }
     }
 
     return res.set({
-        "Content-Type": "application/json; charset=utf-8"
+        "Content-Type": "application/json; charset=utf-8",
     }).status(response.status).send(response);
 };

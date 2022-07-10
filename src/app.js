@@ -9,53 +9,49 @@
  */
 
 // Core Modules
-let path = require("path");
+const path = require("path");
 
 // Dependencies
-let Discord = require("discord.js");
-let express = require("express");
-let favicon = require("serve-favicon");
-let cors = require("cors");
-let helmet = require("helmet");
-let session = require("express-session");
-let csrf = require("csurf");
-let cookieParser = require("cookie-parser");
-let MemoryStore = require("memorystore")(session);
+const { Client, Intents } = require("discord.js");
+const express = require("express");
+const favicon = require("serve-favicon");
+const cors = require("cors");
+const helmet = require("helmet");
+const session = require("express-session");
+const csrf = require("csurf");
+const cookieParser = require("cookie-parser");
+const MemoryStore = require("memorystore")(session);
 
 // Modules
-let embedHandler = require("./modules/embedHandler");
-let messageHandler = require("./modules/messageHandler");
-let deletedHandler = require("./modules/deletedHandler");
-let spamWatcher = require("./modules/spamWatcher");
+const messageHandler = require("./modules/messageHandler");
+const deletedHandler = require("./modules/deletedHandler");
+const spamWatcher = require("./modules/spamWatcher");
 
 // API
-let login = require("./api/pr0Login");
+const login = require("./api/pr0Login");
 
 // Utils
-let conf = require("./utils/configHandler");
-let log = require("./utils/logger");
-let meta = require("./utils/meta");
+const conf = require("./utils/configHandler");
+const log = require("./utils/logger");
+const meta = require("./utils/meta");
 
 // Services
-let portHandler = require("./www/services/portCheck");
+const portHandler = require("./www/services/portCheck");
 
-const client = new Discord.Client({
-    partials: ["MESSAGE", "CHANNEL", "REACTION"],
-    // @ts-ignore
-    intents: ["DIRECT_MESSAGES", "DIRECT_MESSAGE_REACTIONS", "GUILD_MESSAGES", "GUILD_MESSAGE_REACTIONS", "GUILDS"]
-});
+const intents = new Intents(131071); // @ts-ignore
+const client = new Client({ intents });
 
-let appname = conf.getName();
-let version = conf.getVersion();
+const appname = conf.getName();
+const version = conf.getVersion();
 
 console.log(
     "\n" +
     " #" + "-".repeat(14 + appname.length + version.toString().length) + "#\n" +
     " # " + appname + " v" + version + " gestartet #\n" +
-    " #" + "-".repeat(14 + appname.length + version.toString().length) + "#\n"
+    " #" + "-".repeat(14 + appname.length + version.toString().length) + "#\n",
 );
 
-let app = express();
+const app = express();
 
 log.info(`Starte ${appname}...`);
 const config = conf.getConfig();
@@ -83,24 +79,24 @@ app.use(session({
     resave: false,
     cookie: { maxAge: 3 * 60 * 60 * 1000 },
     store: new MemoryStore({ checkPeriod: 86400000 }),
-    saveUninitialized: false
+    saveUninitialized: false,
 }));
 app.use(csrf({ cookie: false }));
 app.use(express.static((process.env.NODE_ENV && (process.env.NODE_ENV).toLowerCase() === "production")
     ? "./src/www/assets-built"
-    : "./src/www/assets"
+    : "./src/www/assets",
 ));
 
 require("./www/router")(app, client);
 
 process.on("unhandledRejection", (err, promise) => {
-    log.error("Unhandled rejection (promise: " + promise + ", reason: " + err + ")");
+    log.error("Unhandled rejection (promise: " + JSON.stringify(promise) + ", reason: " + err + ")");
 });
 
 client.on("ready", () => {
     log.info("Bot läuft...");
     log.info(`${client.users.cache.size} User, in ${client.channels.cache.size} Kanälen von ${client.guilds.cache.size} Guilden`);
-    client.user.setActivity(config.bot_settings.bot_status);
+    client.user?.setActivity(config.bot_settings.bot_status);
 });
 
 client.on("guildCreate", (guild) => {
@@ -127,26 +123,16 @@ Dann kannst du deinen Account auf dem Discord Server hier verwalten:
 <https://discordpanel.pr0gramm.com>
 
 Viel Spaß! :orange_heart:
-`
-    );
+`,
+    ).catch();
 });
 
-client.on("message", (message) => {
+client.on("messageCreate", (message) => {
     if (message.author.bot) return;
 
     spamWatcher(message, client);
 
-    if (message.content.startsWith("http") && message.content.match(/\bpr0gramm.com\//i)){
-        embedHandler.createEmbed(/** @type {Message} */ (message), (err, embed) => {
-            if (err) return log.error(`Konnte Embed nicht erstellen: ${err}`);
-            message.channel.send(embed);
-
-            if (config.bot_settings.delete_user_message) message.delete();
-            return null;
-        });
-    }
-
-    else messageHandler(message, client);
+    messageHandler(message, client);
 });
 
 client.on("messageDelete", message => deletedHandler(message, client));
@@ -157,22 +143,21 @@ client.on("error", (err) => {
 
 log.info("Validiere pr0gramm session...");
 
-login.validSession((isValid) => {
-    if (isValid) log.done("Bereits auf pr0gramm eingeloggt");
-    else {
-        log.warn("Noch nicht auf pr0gramm eingelogt. Versuche login...");
-        login.performLogin(config.pr0api.username, config.pr0api.password);
-    }
-});
-
-log.info("Versuche Token login...");
-
-client.login(config.auth.bot_token).then(() => {
+const done = () => client.login(config.auth.bot_token).then(() => {
     log.done("Token login war erfolgreich!");
 }, (err) => {
     log.error(`Token login war nicht erfolgreich: "${err}"`);
     log.error("Schalte wegen falschem Token ab...\n\n");
     process.exit(1);
+});
+
+login.validSession(isValid => {
+    if (isValid){
+        log.done("Bereits auf pr0gramm eingeloggt");
+        return done();
+    }
+    log.warn("Noch nicht auf pr0gramm eingelogt. Versuche login...");
+    return login.performLogin(config.pr0api.username, config.pr0api.password, () => done());
 });
 
 app.listen(app.get("port"), (err) => {

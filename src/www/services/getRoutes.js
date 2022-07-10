@@ -4,17 +4,29 @@
 // = Copyright (c) TheShad0w = //
 // =========================== //
 
-let getRouteMethods = function(route){
-    let methods = [];
-    for (let method in route.methods){
+/**
+ * Get HTTP methods of a route
+ *
+ * @param {Object} route
+ * @return {Array}
+ */
+const getRouteMethods = function(route){
+    const methods = [];
+    for (const method in route.methods){
         if (method === "_all") continue;
         methods.push(method.toUpperCase());
     }
     return methods;
 };
 
-let hasParams = function(value){
-    let regExp = /\(\?:\(\[\^\\\/]\+\?\)\)/g;
+/**
+ * Check for route parameters
+ *
+ * @param {String} value
+ * @return {Boolean}
+ */
+const hasParams = function(value){
+    const regExp = /\(\?:\(\[\^\\\/]\+\?\)\)/g;
     return regExp.test(value);
 };
 
@@ -26,9 +38,9 @@ let hasParams = function(value){
  * @param {Array} [endpoints=[]]
  * @returns
  */
-let getRoutes = function(app, path = [], endpoints = []){
-    let regExp = /^\/\^\\\/(?:(:?[\w\\.-]*(?:\\\/:?[\w\\.-]*)*)|(\(\?:\(\[\^\\\/]\+\?\)\)))\\\/.*/;
-    let stack = app.stack || (app._router && app._router.stack);
+const getRoutes = function(app, path = [], endpoints = []){
+    const regExp = /^\/\^\\\/(?:(:?[\w\\.-]*(?:\\\/:?[\w\\.-]*)*)|(\(\?:\(\[\^\\\/]\+\?\)\)))\\\/.*/;
+    const stack = app.stack || (app._router && app._router.stack);
 
     stack.forEach(function(val){
         if (val.route){
@@ -36,16 +48,15 @@ let getRoutes = function(app, path = [], endpoints = []){
             if (pathFinal.replace(/\s/g, "") === "") pathFinal = "/";
             endpoints.push({
                 path: pathFinal,
-                methods: getRouteMethods(val.route)
+                methods: getRouteMethods(val.route),
             });
         }
         else if (val.name === "router" || val.name === "bound dispatch"){
             let newPath = regExp.exec(val.regexp);
 
-            if (newPath){
+            if (!!newPath){
                 let parsedRegexp = val.regexp;
                 let keyIndex = 0;
-                let parsedPath;
 
                 while (hasParams(parsedRegexp)){
                     parsedRegexp = parsedRegexp.toString().replace(/\(\?:\(\[\^\\\/]\+\?\)\)/, ":" + val.keys[keyIndex].name);
@@ -54,7 +65,7 @@ let getRoutes = function(app, path = [], endpoints = []){
 
                 if (parsedRegexp !== val.regexp) newPath = regExp.exec(parsedRegexp);
 
-                parsedPath = newPath[1].replace(/\\\//g, "/");
+                const parsedPath = newPath?.[1].replace(/\\\//g, "/");
 
                 if (parsedPath === ":postId/sub-router") console.log(val);
 

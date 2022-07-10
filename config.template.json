@@ -21,6 +21,7 @@
     "pr0api": {
         "username": "",
         "password": "",
+        "userbot": true,
         "discord_secret": ""
     },
     "webserver": {

@@ -1,5 +1,5 @@
 {                                           // NullDev-Style ESLint Config: https://github.com/NullDevCo/JavaScript-Styleguide
-    "plugins": [],
+    "plugins": [],                          // Additional ESLint Plugins
     "env": {                                // http://eslint.org/docs/user-guide/configuring.html#specifying-environments
         "browser": true,                    // browser global variables
         "node": true,                       // Node.js global variables and Node.js-specific rules
@@ -7,7 +7,7 @@
         "es2021": true,                     // ESNext support
         "es6": true                         // enable all ECMAScript 6 features except for modules
     },
-    "parser": "@babel/eslint-parser",       // npm install @babel/eslint-parser --save-dev
+    "parser": "@babel/eslint-parser",       // npm install @babel/eslint-parser @babel/core eslint --save-dev
     "parserOptions": {
         "ecmaVersion": 12,                  // set highest possible version
         "sourceType": "script",             // don't treat scripts as modules (keeps enforcing "use strict")
@@ -17,6 +17,10 @@
             ]
         }
     },
+    "ignorePatterns": [                     // Ignore dist folders and dependencies
+        "dist",
+        "node_modules"
+    ],
     "rules": {
         /**
          * Strict mode
@@ -26,7 +30,7 @@
          * ES6
          */
         "no-var": 2,                        // http://eslint.org/docs/rules/no-var
-        "prefer-const": 0,                  // http://eslint.org/docs/rules/prefer-const
+        "prefer-const": 2,                  // http://eslint.org/docs/rules/prefer-const
         "prefer-destructuring": [2, {       // http://eslint.org/docs/rules/prefer-destructuring
             "array": false,
             "object": true
@@ -46,7 +50,10 @@
         /**
          * Possible errors
          */
-        "comma-dangle": [2, "never"],       // http://eslint.org/docs/rules/comma-dangle
+        "comma-dangle": [                   // http://eslint.org/docs/rules/comma-dangle
+            2,
+            "always-multiline"
+        ],
         "no-cond-assign": [2, "always"],    // http://eslint.org/docs/rules/no-cond-assign
         "no-console": 0,                    // http://eslint.org/docs/rules/no-console
         "no-debugger": 1,                   // http://eslint.org/docs/rules/no-debugger
@@ -68,6 +75,7 @@
         "no-unreachable": 2,                // http://eslint.org/docs/rules/no-unreachable
         "use-isnan": 2,                     // http://eslint.org/docs/rules/use-isnan
         "block-scoped-var": 2,              // http://eslint.org/docs/rules/block-scoped-var
+        "valid-typeof": 2,                  // http://eslint.org/docs/rules/valid-typeof
         /**
          * Best practices
          */
@@ -80,6 +88,7 @@
         "dot-notation": [2, {               // http://eslint.org/docs/rules/dot-notation
             "allowKeywords": true
         }],
+        "linebreak-style": [2, "unix"],     // http://eslint.org/docs/rules/linebreak-style
         "eqeqeq": 2,                        // http://eslint.org/docs/rules/eqeqeq
         "guard-for-in": 0,                  // http://eslint.org/docs/rules/guard-for-in
         "no-array-constructor": 2,          // http://eslint.org/docs/rules/no-array-constructor
@@ -172,7 +181,15 @@
             "after": true
         }],
         "space-after-keywords": 0,          // http://eslint.org/docs/rules/space-after-keywords
-        "space-before-blocks": 0,           // http://eslint.org/docs/rules/space-before-blocks
+        "space-before-blocks": [2, {        // http://eslint.org/docs/rules/space-before-blocks
+            "functions": "never", 
+            "keywords": "never", 
+            "classes": "always"
+        }],
+        "keyword-spacing": [0, {            // http://eslint.org/docs/rules/keyword-spacing
+            "before": false,
+            "after": true
+        }],
         "space-before-function-paren": [2,
             "never"                         // http://eslint.org/docs/rules/space-before-function-paren
         ],

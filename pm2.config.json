@@ -1,0 +1,15 @@
+{
+    "apps": [
+        {
+            "name": "pr0panel",
+            "cwd": "./disc0rd-dashboard",
+            "pre-setup": "npm run build",
+            "script": "src/app.js",
+            "exec_mode": "cluster",
+            "instances": 1,
+            "env": { "NODE_ENV": "production" },
+            "repo": "https://github.com/pr0-dev/disc0rd-dashboard.git",
+            "ref": "origin/master"
+        }
+    ]
+}

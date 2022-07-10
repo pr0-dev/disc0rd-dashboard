@@ -4,7 +4,8 @@
 // = Copyright (c) TheShad0w = //
 // =========================== //
 
-let config = require("../../../utils/configHandler").getConfig();
+const config = require("../../../utils/configHandler").getConfig();
+const log = require("../../../utils/logger");
 
 /**
  * Get matching roles from discord server
@@ -15,47 +16,50 @@ let config = require("../../../utils/configHandler").getConfig();
  * @returns {Promise<any>} JSON
  */
 module.exports = async function(req, res, client){
-    let response = {
+    const response = {
         error: !!req.session.user ? 0 : 1,
         status: !!req.session.user ? 200 : 401,
-        message: !!req.session.user ? "Erfolgreich." : "Nicht authorisiert."
+        message: !!req.session.user ? "Erfolgreich." : "Nicht authorisiert.",
     };
 
     if (!!req.session.user){
         const finalRoles = {
-            stammtisch: [],
-            special: []
+            /** @type {Array} */ stammtisch: [],
+            /** @type {Array} */ special: [],
         };
 
         const userRoles = await client.guilds.cache
-            .get(config.auth.server_id).members
+            .get(config.auth.server_id)?.members
             .fetch()
             .then(guildMembers => guildMembers.get(req.session.user.id)
-                .fetch()
+                ?.fetch()
                 .then(fetchedUser => fetchedUser.roles.cache.map(role => role.name))
-            );
+                .catch(e => log.error(e)),
+            ).catch(e => log.error(e));
 
         await client.guilds.cache
             .get(config.auth.server_id)
-            .fetch()
+            ?.fetch()
             .then(async fetched => (await fetched.roles.fetch().then(fetchedRoles => {
-                let parsed = fetchedRoles.cache.map(role => role.name);
+                const parsed = fetchedRoles.cache.map(role => role.name);
 
-                parsed.filter(role => config.rollen_auswahl.includes(role)).forEach(e => finalRoles.special.push({
-                    role: e,
-                    on_user: userRoles.includes(e)
-                }));
+                parsed
+                    .filter(role => config.rollen_auswahl.includes(role))
+                    .forEach(e => finalRoles.special.push({
+                        role: e,
+                        on_user: userRoles?.includes(e),
+                    }));
 
                 parsed.filter(role => config.stammtisch_auswahl.includes(role)).forEach(e => finalRoles.stammtisch.push({
                     role: e,
-                    on_user: userRoles.includes(e)
+                    on_user: userRoles?.includes(e),
                 }));
-            })));
+            }))).catch(e => log.error(e));
 
         response.roles = finalRoles;
     }
 
     return res.set({
-        "Content-Type": "application/json; charset=utf-8"
+        "Content-Type": "application/json; charset=utf-8",
     }).status(response.status).send(response);
 };

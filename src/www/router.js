@@ -5,28 +5,28 @@
 // =========================== //
 
 // Utils
-let log = require("../utils/logger");
-let config = require("../utils/configHandler").getConfig();
+const log = require("../utils/logger");
+const config = require("../utils/configHandler").getConfig();
 
 // Services
-let getRoutes = require("./services/getRoutes");
-let robotsHandler = require("./modules/robotsHandler");
-let callbackHandler = require("./modules/callBackHandler");
+const getRoutes = require("./services/getRoutes");
+const robotsHandler = require("./modules/robotsHandler");
+const callbackHandler = require("./modules/callBackHandler");
 
 // Routes
-let setNick = require("./modules/api/setNick");
-let unsetNick = require("./modules/api/unsetNick");
-let getRoles = require("./modules/api/getRoles");
-let setRole = require("./modules/api/setRole");
-let unsetRole = require("./modules/api/unsetRole");
-let indexHandler = require("./modules/indexHandler");
-let notFoundHandler = require("./modules/404Handler");
+const setNick = require("./modules/api/setNick");
+const unsetNick = require("./modules/api/unsetNick");
+const getRoles = require("./modules/api/getRoles");
+const setRole = require("./modules/api/setRole");
+const unsetRole = require("./modules/api/unsetRole");
+const indexHandler = require("./modules/indexHandler");
+const notFoundHandler = require("./modules/404Handler");
 
 const { clientId, scopes, redirectUri } = config.webserver.auth;
 const authorizeUrl = `https://discordapp.com/api/oauth2/authorize?client_id=${clientId}&redirect_uri=${encodeURIComponent(redirectUri)}&response_type=code&scope=${scopes.join("%20")}`;
 
-let checkAuth = (req, res, next) => (!req.session.user) ? res.redirect("/") : next();
-let logRoutes = r => r.forEach(e => log.info(`Route ${e.path} registered with methods ${(e.methods).join(", ")}`));
+const checkAuth = (req, res, next) => (!req.session.user) ? res.redirect("/") : next();
+const logRoutes = r => r.forEach(e => log.info(`Route ${e.path} registered with methods ${(e.methods).join(", ")}`));
 
 /**
  * Main Router

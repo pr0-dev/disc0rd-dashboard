@@ -13,7 +13,7 @@ const author = require("../../utils/configHandler").getAuthor();
  * @param {import("express").Response} res
  */
 module.exports = function(_, res){
-    let cYear = (new Date()).getFullYear();
+    const cYear = (new Date()).getFullYear();
 
     res.type("text/plain");
     res.send(
@@ -36,6 +36,6 @@ module.exports = function(_, res){
         "User-agent: Yahoo Pipes 1.0\n" +
         "Disallow: /\n\n" +
         "User-agent: KSCrawler\n" +
-        "Disallow: /\n"
+        "Disallow: /\n",
     );
 };

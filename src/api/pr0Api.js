@@ -5,15 +5,15 @@
 // =========================== //
 
 // Core Modules
-let fs = require("fs");
-let path = require("path");
+const fs = require("fs");
+const path = require("path");
 
 // Dependencies
-let unirest = require("unirest");
+const unirest = require("unirest");
 
 // Utils
-let log = require("../utils/logger");
-let config = require("../utils/configHandler").getConfig();
+const log = require("../utils/logger");
+const config = require("../utils/configHandler").getConfig();
 
 // Helper Functions
 
@@ -30,8 +30,8 @@ const cookiePath = path.join("cookie.txt");
  * @param {Function} callback
  * @returns {any} callback
  */
-let performRequest = function(method, endpoint, params = {}, headers = {}, formData = {}, callback){
-    let req = unirest(method, endpoint);
+const performRequest = function(method, endpoint, params = {}, headers = {}, formData = {}, callback){
+    const req = unirest(method, endpoint);
 
     let cookieFile;
     if (fs.existsSync(cookiePath)) cookieFile = fs.readFileSync(cookiePath);
@@ -42,7 +42,7 @@ let performRequest = function(method, endpoint, params = {}, headers = {}, formD
 
     headers["cache-control"] = "no-cache";
     headers["cookie"] = String(cookieFile);
-    headers["user-agent"] = "Shad0wBot/1.1 (Debian 4.19.181-1; GNU/Linux; x86_64) NodeJS/15.11.0";
+    headers["user-agent"] = config.pr0api.user_agent || `${config.pr0api.username}/1.1 (${process.platform}; ${process.arch}) NodeJS/${process.version.substring(1)}`;
 
     req.query(params);
     req.headers(headers);
@@ -62,7 +62,7 @@ let performRequest = function(method, endpoint, params = {}, headers = {}, formD
  * @param {Function} callback
  * @returns {any} callback
  */
-let getLoginStatus = function(callback){
+const getLoginStatus = function(callback){
     performRequest("GET", "https://pr0gramm.com/api/user/loggedin", {}, {}, {}, (err, res) => {
         if (err){
             log.error(err);
@@ -79,9 +79,9 @@ let getLoginStatus = function(callback){
  * @param {Function} callback
  * @returns {any} callback
  */
-let reverseSearch = function(search, callback){
-    let query = {
-        tags: "!p:" + search
+const reverseSearch = function(search, callback){
+    const query = {
+        tags: "!p:" + search,
     };
 
     performRequest("GET", "https://pr0gramm.com/api/items/get", query, {}, {}, (err, res) => {
@@ -100,9 +100,9 @@ let reverseSearch = function(search, callback){
  * @param {Function} callback
  * @returns {any} callback
  */
-let getPost = function(postId, callback){
-    let query = {
-        id: postId
+const getPost = function(postId, callback){
+    const query = {
+        id: postId,
     };
 
     performRequest("GET", "https://pr0gramm.com/api/items/get", query, {}, {}, (err, res) => {
@@ -121,9 +121,9 @@ let getPost = function(postId, callback){
  * @param {Function} callback
  * @returns {any} callback
  */
-let getPostMeta = function(postId, callback){
-    let query = {
-        itemId: postId
+const getPostMeta = function(postId, callback){
+    const query = {
+        itemId: postId,
     };
 
     performRequest("GET", "https://pr0gramm.com/api/items/info", query, {}, {}, (err, res) => {
@@ -142,9 +142,9 @@ let getPostMeta = function(postId, callback){
  * @param {Function} callback
  * @returns {any} callback
  */
-let getUser = function(username, callback){
-    let query = {
-        name: username
+const getUser = function(username, callback){
+    const query = {
+        name: username,
     };
 
     performRequest("GET", "https://pr0gramm.com/api/profile/info", query, {}, {}, (err, res) => {
@@ -163,7 +163,7 @@ let getUser = function(username, callback){
  * @param {Function} callback
  * @returns {any} callback
  */
-let getPr0Username = function(discordId, callback){
+const getPr0Username = function(discordId, callback){
     performRequest("GET", `https://pr0gramm.com/api/discord/getUsername?id=${discordId}&secret=${config.pr0api.discord_secret}`, {}, {}, {}, (err, res) => {
         if (err){
             log.error(err);
@@ -180,8 +180,24 @@ let getPr0Username = function(discordId, callback){
  * @param {Function} callback
  * @returns {any} callback
  */
-let getDiscordId = function(username, callback){
+const getDiscordId = function(username, callback){
     performRequest("GET", `https://pr0gramm.com/api/discord/getDiscordId?name=${username}&secret=${config.pr0api.discord_secret}`, {}, {}, {}, (err, res) => {
+        if (err){
+            log.error(err);
+            return callback(err);
+        }
+        return callback(null, res);
+    });
+};
+
+/**
+ * Get pr0gramm login captcha
+ *
+ * @param {Function} callback
+ * @returns {any} callback
+ */
+const getCaptcha = function(callback){
+    performRequest("GET", `https://pr0gramm.com/api/user/captcha?bust=${Math.random()}`, {}, {}, {}, (err, res) => {
         if (err){
             log.error(err);
             return callback(err);
@@ -195,20 +211,22 @@ let getDiscordId = function(username, callback){
 /**
  * login to pr0gramm.com
  *
- * @param {string} user
- * @param {string} pass
+ * @param {Object} data
  * @param {Function} callback
  * @returns {any} callback
  */
-let postLogin = function(user, pass, callback){
-    let headers = {
-        "Content-Type": "application/x-www-form-urlencoded"
+const postLogin = function(data, callback){
+    const headers = {
+        "Content-Type": "application/x-www-form-urlencoded",
     };
 
-    let formData = {
-        name: user,
-        password: pass
+    const formData = {
+        name: data.user,
+        password: data.pass,
     };
+
+    if (!!data.token) formData.token = data.token;
+    if (!!data.captcha) formData.captcha = data.captcha;
 
     performRequest("POST", "https://pr0gramm.com/api/user/login", {}, headers, formData, (err, res) => {
         if (err){
@@ -226,8 +244,9 @@ module.exports = {
     getPost,
     getPostMeta,
     getUser,
+    getCaptcha,
     getPr0Username,
     getDiscordId,
     // POST
-    postLogin
+    postLogin,
 };

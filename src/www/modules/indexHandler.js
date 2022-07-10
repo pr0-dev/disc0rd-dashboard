@@ -5,16 +5,16 @@
 // =========================== //
 
 // Dependencies
-let fetch = require("node-fetch").default;
+const fetch = require("node-fetch").default;
 
 // Utils
-let log = require("../../utils/logger");
-let config = require("../../utils/configHandler").getConfig();
+const log = require("../../utils/logger");
+const config = require("../../utils/configHandler").getConfig();
 
-let { getPr0Account, getPr0Name } = require("./pr0Helpers");
-let rankSync = require("./rankSync");
+const { getPr0Account, getPr0Name } = require("./pr0Helpers");
+const rankSync = require("./rankSync");
 
-let panic = function(error, req, res){
+const panic = function(error, req, res){
     log.error(error);
     req.session.destroy();
     return res.status(500).render("errors/500", {
@@ -29,7 +29,7 @@ let panic = function(error, req, res){
         guilds: null,
         dc: null,
         synced: false,
-        pr0: null
+        pr0: null,
     });
 };
 
@@ -42,25 +42,25 @@ let panic = function(error, req, res){
  * @returns {Promise<void>} renderer
  */
 module.exports = async function(req, res, client){
-    let pr0 = !req.session.user
+    const pr0 = !req.session.user
         ? null
         : await getPr0Account((await getPr0Name(req.session.user.id)).name);
 
     if (!!req.session.user && !pr0) return panic("fetchPr0Account returned null or undefined.", req, res);
 
-    let guilds = !req.session.access_token ? null : await (await fetch("https://discordapp.com/api/users/@me/guilds", {
+    const guilds = !req.session.access_token ? null : await (await fetch("https://discordapp.com/api/users/@me/guilds", {
         headers: {
-            authorization: `${req.session.token_type} ${req.session.access_token}`
-        }
-    })).json();
+            authorization: `${req.session.token_type} ${req.session.access_token}`,
+        },
+    })).json().catch();
 
-    let guildInfo = !guilds || !req.session.access_token ? null : await (await fetch(`https://discordapp.com/api/guilds/${config.auth.server_id}/members/${req.session.user.id}`, {
+    const guildInfo = !guilds || !req.session.access_token ? null : await (await fetch(`https://discordapp.com/api/guilds/${config.auth.server_id}/members/${req.session.user.id}`, {
         headers: {
-            authorization: `Bot ${config.auth.bot_token}`
-        }
-    })).json();
+            authorization: `Bot ${config.auth.bot_token}`,
+        },
+    })).json().catch();
 
-    let synced = await rankSync(pr0 || null, req.session.user || null, client);
+    const synced = await rankSync(pr0 || null, req.session.user || null, client);
 
     return res.render("pages/index", {
         guilds,
@@ -73,6 +73,6 @@ module.exports = async function(req, res, client){
         user: req.session.user || null,
         dc: guildInfo,
         csrfToken: req.csrfToken(),
-        status_code: 200
+        status_code: 200,
     });
 };

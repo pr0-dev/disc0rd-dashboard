@@ -5,11 +5,11 @@
 // ========================= //
 
 // Core Modules
-let fs = require("fs");
-let path = require("path");
+const fs = require("fs");
+const path = require("path");
 
 // Utils
-let config = require("../../utils/configHandler").getConfig();
+const config = require("../../utils/configHandler").getConfig();
 
 /**
  * Enlists all mod-commands with descriptions
@@ -21,16 +21,16 @@ let config = require("../../utils/configHandler").getConfig();
  * @returns {Function} callback
  */
 exports.run = (client, message, args, callback) => {
-    let commandObj = {};
-    let commandDir = path.resolve("./src/commands/modcommands");
+    const commandObj = {};
+    const commandDir = path.resolve("./src/commands/modcommands");
 
     fs.readdirSync(commandDir).forEach(file => {
-        let cmdPath = path.resolve(commandDir, file);
-        let stats = fs.statSync(cmdPath);
+        const cmdPath = path.resolve(commandDir, file);
+        const stats = fs.statSync(cmdPath);
 
         if (!stats.isDirectory()){
             // Prefix + Command name
-            let commandStr = config.bot_settings.prefix.mod_prefix + file.toLowerCase().replace(/\.js/gi, "");
+            const commandStr = config.bot_settings.prefix.mod_prefix + file.toLowerCase().replace(/\.js/gi, "");
 
             // commandStr is the key and the description of the command is the value
             commandObj[commandStr] = require(path.join(commandDir, file)).description;
@@ -38,7 +38,7 @@ exports.run = (client, message, args, callback) => {
     });
 
     let commandText = "";
-    for (let i in commandObj){
+    for (const i in commandObj){
         commandText += i;
         commandText += ":\n";
         commandText += commandObj[i];
@@ -52,7 +52,7 @@ exports.run = (client, message, args, callback) => {
         "Hier ist eine Liste mit commands:\n\n```yml\n" +
         commandText +
         "``` \n\n" +
-        "Bei fragen kannst du dich an @ShadowByte#1337 wenden!"
+        "Bei fragen kannst du dich an @ShadowByte#1337 wenden!",
     );
 
     return callback();

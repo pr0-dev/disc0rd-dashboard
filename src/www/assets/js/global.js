@@ -12,11 +12,11 @@
      * @param {boolean} [force=false]
      * @returns {Promise<void>}
      */
-    let handleNickChange = async function(e, force = false){
-        let res = await (await fetch(
+    const handleNickChange = async function(e, force = false){
+        const res = await (await fetch(
             (force || e.target.checked)
                 ? "/nick/set"
-                : "/nick/unset"
+                : "/nick/unset",
         )).json();
 
         $("#resync-nick").attr("disabled", !e.target.checked);
@@ -27,7 +27,7 @@
             toast: true,
             showConfirmButton: false,
             timer: 3000,
-            timerProgressBar: true
+            timerProgressBar: true,
         });
     };
 
@@ -39,7 +39,7 @@
      * @param {number} [counter=0]
      * @returns {number}
      */
-    let injectRoles = function(roles, selector, counter = 0){
+    const injectRoles = function(roles, selector, counter = 0){
         let round = counter;
         roles.forEach(r => {
             $(selector).append(`
@@ -50,7 +50,7 @@
         <span class="discord-tick"></span>
     </div>
     <label for="role-${round}" class="ml-4 block inline cursor-pointer">${r.role}</label>
-</div>`
+</div>`,
             );
             round += 1;
         });
@@ -62,8 +62,8 @@
      *
      * @returns {Promise<number>}
      */
-    let getRoles = async function(){
-        let res = await (await fetch("/roles/get")).json();
+    const getRoles = async function(){
+        const res = await (await fetch("/roles/get")).json();
 
         if (res.error !== 0){
             return SA.fire({
@@ -72,13 +72,13 @@
                 toast: true,
                 showConfirmButton: false,
                 timer: 3000,
-                timerProgressBar: true
+                timerProgressBar: true,
             });
         }
 
         $(".user-info-dc-rollen").empty().addClass("grid-style");
 
-        let count = injectRoles(res.roles.special, ".user-info-dc-rollen-special");
+        const count = injectRoles(res.roles.special, ".user-info-dc-rollen-special");
         return injectRoles(res.roles.stammtisch, ".user-info-dc-rollen-stammtisch", count);
     };
 
@@ -88,8 +88,8 @@
      * @param {Event & { target: HTMLInputElement }} e
      * @returns {Promise<void>}
      */
-    let handleRoleChange = async function(e){
-        let res = await (await fetch(((e.target.checked)
+    const handleRoleChange = async function(e){
+        const res = await (await fetch(((e.target.checked)
             ? "/roles/set?role="
             : "/roles/unset?role="
         ) + encodeURIComponent($(`label[for="${e.target.id}"]`).text()))).json();
@@ -104,7 +104,7 @@
                 toast: true,
                 showConfirmButton: false,
                 timer: 3000,
-                timerProgressBar: true
+                timerProgressBar: true,
             })
         );
     };
@@ -114,7 +114,7 @@
      *
      * @param {Event & { target: HTMLInputElement }} e
      */
-    let hideNotification = function(e){
+    const hideNotification = function(e){
         e.preventDefault();
         $(".rank-was-synced").fadeOut();
     };
@@ -125,7 +125,7 @@
      * @param {Event} e
      * @returns {void}
      */
-    let bugsAndFeedback = function(e){
+    const bugsAndFeedback = function(e){
         e.preventDefault();
         return SA.fire(
             "Feedback & Bugs",
@@ -134,7 +134,7 @@
             "Discord: ShadowByte#1337<br><br>" +
             'Oder für Bug-Reports und Feature-Requests <a href="https://github.com/pr0-dev/disc0rd-dashboard/issues/new/choose" target="_blank" rel="noopener" style="color: #000">einen Issue auf GitHub erstellen</a><br><br>' +
             'Source Code: <a href="https://github.com/pr0-dev/disc0rd-dashboard" target="_blank" rel="noopener" style="color: #000">GitHub</a><br><br>' +
-            'Hilfe beim Frontend-Design: <a href="https://pr0gramm.com/user/jonas32" target="_blank" rel="noopener" style="color: #000">jonas32</a>'
+            'Hilfe beim Frontend-Design: <a href="https://pr0gramm.com/user/jonas32" target="_blank" rel="noopener" style="color: #000">jonas32</a>',
         );
     };
 
@@ -144,13 +144,13 @@
      * @param {Event} e
      * @returns {void}
      */
-    let nickInfo = function(e){
+    const nickInfo = function(e){
         e.preventDefault();
         return SA.fire(
             "Informationen zum Nick-Sync:",
             "Ist diese Checkbox gesetzt, wird dein pr0gramm Username als Nickname im disc0rd gesetzt.<br><br>" +
             "Zusätzlich bekommst du die Rolle \"verified-nick\", sodass andere wissen, dass dein Discord Name auch wirklich zu deinem pr0gramm Account gehört.<br><br>" +
-            "Wird diese Checkbox wieder deaktiviert, wird dein Nickname zurückgesetzt und die \"verified-nick\" Rolle wird entfernt."
+            "Wird diese Checkbox wieder deaktiviert, wird dein Nickname zurückgesetzt und die \"verified-nick\" Rolle wird entfernt.",
         );
     };
 

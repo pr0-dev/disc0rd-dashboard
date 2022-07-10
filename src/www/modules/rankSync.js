@@ -4,7 +4,8 @@
 // = Copyright (c) TheShad0w = //
 // =========================== //
 
-let config = require("../../utils/configHandler").getConfig();
+const config = require("../../utils/configHandler").getConfig();
+const log = require("../../utils/logger");
 
 /**
  * Auto-Sync pr0 and discord rank
@@ -18,33 +19,35 @@ module.exports = async function(pr0, user, client){
     if (!pr0 || !user) return false;
 
     const userRoles = await client.guilds.cache
-        .get(config.auth.server_id).members
+        .get(config.auth.server_id)?.members
         .fetch()
         .then(guildMembers => guildMembers.get(user.id)
-            .fetch()
+            ?.fetch()
             .then(fetchedUser => fetchedUser.roles.cache.map(role => role.id))
-        );
+            .catch(e => log.error(e)),
+        ).catch();
 
-    if (userRoles.includes(config.user_ranks[pr0.user.mark]) || pr0.user.mark === 16 || pr0.user.mark === 17) return false;
+    if (userRoles?.includes(config.user_ranks[pr0.user.mark]) || pr0.user.mark === 16 || pr0.user.mark === 17) return false;
 
     try {
         // Remove all pr0-rank roles
         client.guilds.cache
-            .get(config.auth.server_id).members.cache
-            .get(user.id).roles.remove(Object.values(config.user_ranks)).then(() => {
+            .get(config.auth.server_id)?.members.cache
+            .get(user.id)?.roles.remove(Object.values(config.user_ranks)).then(() => {
                 // Add appropriate pr0-rank role
                 client.guilds.cache
-                    .get(config.auth.server_id).members.cache
-                    .get(user.id).roles
+                    .get(config.auth.server_id)?.members.cache
+                    .get(user.id)?.roles
                     .add(
                         client.guilds.cache
-                            .get(config.auth.server_id).roles.cache
-                            .find(r => r.id === config.user_ranks[pr0.user.mark])
-                    );
-            });
+                            .get(config.auth.server_id)?.roles.cache
+                            .find(r => r.id === config.user_ranks[pr0.user.mark]) || "",
+                    ).catch();
+            }).catch();
     }
 
     catch (e){
+        log.error(e);
         return false;
     }
 

@@ -9,15 +9,15 @@
  *
  * @returns {string} Time
  */
-let getDate = function(){
+const getDate = function(){
     const date = new Date();
-    let hourData = date.getHours();
-    let minData = date.getMinutes();
-    let secData = date.getSeconds();
+    const hourData = date.getHours();
+    const minData = date.getMinutes();
+    const secData = date.getSeconds();
 
-    let hour = (hourData < 10 ? "0" : "") + hourData;
-    let min = (minData  < 10 ? "0" : "") + minData;
-    let sec = (secData  < 10 ? "0" : "") + secData;
+    const hour = (hourData < 10 ? "0" : "") + hourData;
+    const min = (minData  < 10 ? "0" : "") + minData;
+    const sec = (secData  < 10 ? "0" : "") + secData;
 
     return "[" + hour + ":" + min + ":" + sec + "]";
 };
@@ -27,17 +27,17 @@ let getDate = function(){
  *
  * @returns {String} StackTrace
  */
-let getTrace = function() {
-    let err = new Error();
+const getTrace = function(){
+    const err = new Error();
 
     // Parse the whole stacktrace
-    let callerLine = err.stack.split("\n");
+    const callerLine = (err.stack && err.stack.split("\n")) || [];
 
-    // Get everything after the third line
-    let splitArr = callerLine.filter((_, index) => index > 1);
+    // remove all lines containing node_modules
+    const splitArr = callerLine.filter(line => !line.includes("node_modules") && !line.includes("utils/logger.js") && !line.includes("node:internal"));
     let cleanArr = "";
 
-    for (let element of splitArr) {
+    for (const element of splitArr){
         // We want to end the trace once we reach the stack comming from dependencies
         if (element.match(/(node_modules)/gi)) break;
 
@@ -56,7 +56,7 @@ module.exports = {
     error(input){
         console.log(
             " \x1b[41m\x1b[315m x \x1b[0m\x1b[31m [ERROR] " + getDate() + " - " + input + "\n" +
-            "     StackTrace: " + getTrace() + "\x1b[0m"
+            "     StackTrace: " + getTrace() + "\x1b[0m",
         );
     },
 
@@ -70,5 +70,5 @@ module.exports = {
 
     done(input){
         console.log(" \x1b[42m\x1b[30m ✓ \x1b[0m\x1b[32m [DONE]  " + getDate() + " - " + input + "\x1b[0m");
-    }
+    },
 };
