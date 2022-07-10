@@ -24,7 +24,7 @@ const panic = function(error, req, res){
         routeTitle: "500 - Server Fehler =(",
         route: req.path,
         user: null,
-        csrfToken: req.csrfToken(),
+        // csrfToken: req.csrfToken(),
         status_code: 500,
         guilds: null,
         dc: null,
