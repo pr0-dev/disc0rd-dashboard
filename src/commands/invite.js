@@ -14,8 +14,8 @@
  * @returns {Function} callback
  */
 exports.run = (client, message, args, callback) => {
-    message.react("✉");
-    message.author.send("Invite Link: https://discord.pr0gramm.com");
+    message.react("✉").catch();
+    message.author.send("Invite Link: https://discord.pr0gramm.com").catch();
 
     return callback();
 };

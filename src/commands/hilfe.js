@@ -46,14 +46,14 @@ exports.run = (client, message, args, callback) => {
     }
 
     // Add :envelope: reaction to authors message
-    message.react("✉");
+    message.react("✉").catch();
     message.author.send(
         "Hallo, " + message.author.username + "!\n\n" +
         "Hier ist eine Liste mit commands:\n\n```yml\n" +
         commandText +
         "``` \n\n" +
         "Bei fragen kannst du dich an @ShadowByte#1337 wenden!",
-    );
+    ).catch();
 
     return callback();
 };

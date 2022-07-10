@@ -28,7 +28,7 @@ module.exports = function(message, client){
         .replace(config.bot_settings.prefix.mod_prefix, "")
         .replace(/\s/g, "");
 
-    if (message.author.bot || nonBiased === "" || message.channel.type === "DM") return;
+    if (message.author.bot || nonBiased === "" || String(message.channel.type).toLowerCase() === "dm") return;
 
     /**
      * cmdHandler Parameters:
@@ -39,11 +39,11 @@ module.exports = function(message, client){
      * @param {Function} callback
      */
     if (message.content.indexOf(config.bot_settings.prefix.command_prefix) === 0){
-        cmdHandler(message, client, false, (err) => (err && message.channel.send(err)));
+        cmdHandler(message, client, false, (err) => (err && message.channel.send(err).catch()));
     }
 
     else if (message.content.indexOf(config.bot_settings.prefix.mod_prefix) === 0){
-        cmdHandler(message, client, true, (err) => (err && message.channel.send(err)));
+        cmdHandler(message, client, true, (err) => (err && message.channel.send(err).catch()));
     }
 
     else return;

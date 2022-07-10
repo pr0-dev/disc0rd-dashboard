@@ -25,7 +25,9 @@ module.exports = async function(message, client){
         if (WATCHER_SET.has(message.author.id)){
             WATCHER_SET.delete(message.author.id);
 
-            message.author.send("Du wurdest wegen spam vom pr0gramm Disc0rd verbannt. Wenn du denkst, dass das ein Fehler war, melde dich bitte an ShadowByte#1337");
+            message.author.send(
+                "Du wurdest wegen spam vom pr0gramm Disc0rd verbannt. Wenn du denkst, dass das ein Fehler war, melde dich bitte an ShadowByte#1337",
+            ).catch();
 
             (await message.guild?.members.fetch(message.author.id))?.ban(({
                 days: 7,
@@ -51,7 +53,7 @@ module.exports = async function(message, client){
 
             client.channels
                 .fetch(config.bot_settings.deleted_log_id)
-                .then(channel => /** @type {import("discord.js").TextChannel} */ (channel).send(/** @type {Object} */ (embed)));
+                .then(channel => /** @type {import("discord.js").TextChannel} */ (channel).send(/** @type {Object} */ (embed)).catch()).catch();
         }
         else WATCHER_SET.add(message.author.id);
     }

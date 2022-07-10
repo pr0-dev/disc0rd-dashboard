@@ -74,5 +74,5 @@ module.exports = async function(message, client){
 
     client.channels
         .fetch(config.bot_settings.deleted_log_id)
-        .then(channel => /** @type {import("discord.js").TextChannel} */ (channel).send(/** @type {Object} */ (embed)));
+        .then(channel => /** @type {import("discord.js").TextChannel} */ (channel).send(/** @type {Object} */ (embed)).catch()).catch();
 };

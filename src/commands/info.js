@@ -27,7 +27,7 @@ const getContributors = function(){
  * @returns {Promise<Function>} callback
  */
 exports.run = async(client, message, args, callback) => {
-    message.react("✉");
+    message.react("✉").catch();
     message.author.send(
         "Programmiert von ShadowByte#1337 (TheShad0w) für den pr0gramm disc0rd (<https://discord.pr0gramm.com>)\n\n" +
         "Contributions von:\n" +
@@ -42,7 +42,7 @@ exports.run = async(client, message, args, callback) => {
         "- User CPU usage time: " + process.cpuUsage().user + "\n" +
         "- Architecture: " + process.arch + "\n\n" +
         "Source Code: <https://github.com/pr0-dev/disc0rd-dashboard>",
-    );
+    ).catch();
 
     return callback();
 };

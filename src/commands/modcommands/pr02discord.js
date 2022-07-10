@@ -25,7 +25,7 @@ exports.run = async(client, message, args, callback) => {
 
     if (!pr0?.discordId) return callback("Diese Discord-ID ist mit keinem Account verknüpft.");
 
-    message.channel.send(`Der pr0gramm Username \`${username}\` gehört zur Discord-ID \`${pr0.discordId}\` -> <@${pr0.discordId}>`);
+    message.channel.send(`Der pr0gramm Username \`${username}\` gehört zur Discord-ID \`${pr0.discordId}\` -> <@${pr0.discordId}>`).catch();
 
     return callback();
 };
