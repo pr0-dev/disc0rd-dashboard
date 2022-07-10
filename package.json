@@ -39,6 +39,7 @@
     "moment": "^2.27.0",
     "node-fetch": "^2.6.1",
     "serve-favicon": "^2.5.0",
+    "terminal-image": "^1.2.1",
     "unirest": "^0.6.0"
   },
   "devDependencies": {
