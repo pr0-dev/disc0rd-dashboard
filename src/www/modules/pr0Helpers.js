@@ -62,7 +62,7 @@ const getDiscordId = function(username){
             return resolve(
                 typeof res.body.discordId !== "string"
                     ? JSON.parse(res.raw_body.replace(/"discordId":(\d+),/g, '"discordId":"$1",'))
-                    : res.body
+                    : res.body,
             );
         });
     });
@@ -71,5 +71,5 @@ const getDiscordId = function(username){
 module.exports = {
     getPr0Account,
     getPr0Name,
-    getDiscordId
+    getDiscordId,
 };
