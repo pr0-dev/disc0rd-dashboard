@@ -16,7 +16,7 @@
         const res = await (await fetch(
             (force || e.target.checked)
                 ? "/nick/set"
-                : "/nick/unset"
+                : "/nick/unset",
         )).json();
 
         $("#resync-nick").attr("disabled", !e.target.checked);
@@ -27,7 +27,7 @@
             toast: true,
             showConfirmButton: false,
             timer: 3000,
-            timerProgressBar: true
+            timerProgressBar: true,
         });
     };
 
@@ -50,7 +50,7 @@
         <span class="discord-tick"></span>
     </div>
     <label for="role-${round}" class="ml-4 block inline cursor-pointer">${r.role}</label>
-</div>`
+</div>`,
             );
             round += 1;
         });
@@ -72,7 +72,7 @@
                 toast: true,
                 showConfirmButton: false,
                 timer: 3000,
-                timerProgressBar: true
+                timerProgressBar: true,
             });
         }
 
@@ -104,7 +104,7 @@
                 toast: true,
                 showConfirmButton: false,
                 timer: 3000,
-                timerProgressBar: true
+                timerProgressBar: true,
             })
         );
     };
@@ -134,7 +134,7 @@
             "Discord: ShadowByte#1337<br><br>" +
             'Oder für Bug-Reports und Feature-Requests <a href="https://github.com/pr0-dev/disc0rd-dashboard/issues/new/choose" target="_blank" rel="noopener" style="color: #000">einen Issue auf GitHub erstellen</a><br><br>' +
             'Source Code: <a href="https://github.com/pr0-dev/disc0rd-dashboard" target="_blank" rel="noopener" style="color: #000">GitHub</a><br><br>' +
-            'Hilfe beim Frontend-Design: <a href="https://pr0gramm.com/user/jonas32" target="_blank" rel="noopener" style="color: #000">jonas32</a>'
+            'Hilfe beim Frontend-Design: <a href="https://pr0gramm.com/user/jonas32" target="_blank" rel="noopener" style="color: #000">jonas32</a>',
         );
     };
 
@@ -150,7 +150,7 @@
             "Informationen zum Nick-Sync:",
             "Ist diese Checkbox gesetzt, wird dein pr0gramm Username als Nickname im disc0rd gesetzt.<br><br>" +
             "Zusätzlich bekommst du die Rolle \"verified-nick\", sodass andere wissen, dass dein Discord Name auch wirklich zu deinem pr0gramm Account gehört.<br><br>" +
-            "Wird diese Checkbox wieder deaktiviert, wird dein Nickname zurückgesetzt und die \"verified-nick\" Rolle wird entfernt."
+            "Wird diese Checkbox wieder deaktiviert, wird dein Nickname zurückgesetzt und die \"verified-nick\" Rolle wird entfernt.",
         );
     };
 

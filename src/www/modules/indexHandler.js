@@ -29,7 +29,7 @@ const panic = function(error, req, res){
         guilds: null,
         dc: null,
         synced: false,
-        pr0: null
+        pr0: null,
     });
 };
 
@@ -50,14 +50,14 @@ module.exports = async function(req, res, client){
 
     const guilds = !req.session.access_token ? null : await (await fetch("https://discordapp.com/api/users/@me/guilds", {
         headers: {
-            authorization: `${req.session.token_type} ${req.session.access_token}`
-        }
+            authorization: `${req.session.token_type} ${req.session.access_token}`,
+        },
     })).json();
 
     const guildInfo = !guilds || !req.session.access_token ? null : await (await fetch(`https://discordapp.com/api/guilds/${config.auth.server_id}/members/${req.session.user.id}`, {
         headers: {
-            authorization: `Bot ${config.auth.bot_token}`
-        }
+            authorization: `Bot ${config.auth.bot_token}`,
+        },
     })).json();
 
     const synced = await rankSync(pr0 || null, req.session.user || null, client);
@@ -73,6 +73,6 @@ module.exports = async function(req, res, client){
         user: req.session.user || null,
         dc: guildInfo,
         csrfToken: req.csrfToken(),
-        status_code: 200
+        status_code: 200,
     });
 };

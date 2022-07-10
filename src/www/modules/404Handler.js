@@ -23,6 +23,6 @@ module.exports = function(req, res){
         csrfToken: req.csrfToken(),
         log: null,
         pr0: null,
-        status_code: 404
+        status_code: 404,
     });
 };
