@@ -48,7 +48,7 @@ const getRoutes = function(app, path = [], endpoints = []){
             if (pathFinal.replace(/\s/g, "") === "") pathFinal = "/";
             endpoints.push({
                 path: pathFinal,
-                methods: getRouteMethods(val.route)
+                methods: getRouteMethods(val.route),
             });
         }
         else if (val.name === "router" || val.name === "bound dispatch"){

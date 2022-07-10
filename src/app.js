@@ -48,7 +48,7 @@ console.log(
     "\n" +
     " #" + "-".repeat(14 + appname.length + version.toString().length) + "#\n" +
     " # " + appname + " v" + version + " gestartet #\n" +
-    " #" + "-".repeat(14 + appname.length + version.toString().length) + "#\n"
+    " #" + "-".repeat(14 + appname.length + version.toString().length) + "#\n",
 );
 
 const app = express();
@@ -79,12 +79,12 @@ app.use(session({
     resave: false,
     cookie: { maxAge: 3 * 60 * 60 * 1000 },
     store: new MemoryStore({ checkPeriod: 86400000 }),
-    saveUninitialized: false
+    saveUninitialized: false,
 }));
 app.use(csrf({ cookie: false }));
 app.use(express.static((process.env.NODE_ENV && (process.env.NODE_ENV).toLowerCase() === "production")
     ? "./src/www/assets-built"
-    : "./src/www/assets"
+    : "./src/www/assets",
 ));
 
 require("./www/router")(app, client);
@@ -123,7 +123,7 @@ Dann kannst du deinen Account auf dem Discord Server hier verwalten:
 <https://discordpanel.pr0gramm.com>
 
 Viel Spaß! :orange_heart:
-`
+`,
     ).catch();
 });
 

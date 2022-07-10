@@ -13,7 +13,7 @@ const fetch = require("node-fetch").default;
  */
 const getContributors = function(){
     return new Promise(async resolve => resolve((await (await fetch("https://api.github.com/repos/pr0-dev/disc0rd-dashboard/contributors", {
-        headers: { Accept: "application/vnd.github.v3+json" }
+        headers: { Accept: "application/vnd.github.v3+json" },
     })).json()).filter(e => e.type === "User").map(e => `<${e.html_url}> (Contributions: ${e.contributions})`).join("\n")));
 };
 
@@ -41,7 +41,7 @@ exports.run = async(client, message, args, callback) => {
         "- System CPU usage time: " + process.cpuUsage().system + "\n" +
         "- User CPU usage time: " + process.cpuUsage().user + "\n" +
         "- Architecture: " + process.arch + "\n\n" +
-        "Source Code: <https://github.com/pr0-dev/disc0rd-dashboard>"
+        "Source Code: <https://github.com/pr0-dev/disc0rd-dashboard>",
     );
 
     return callback();

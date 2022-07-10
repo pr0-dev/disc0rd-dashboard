@@ -40,7 +40,7 @@ const performLogin = function(user, pass, cb){
             const buffer = Buffer.from(captcha.replace(/^data:image\/png;base64,/, ""), "base64");
             console.log(
                 "\n" +
-                await termImg.buffer(buffer, { width: 70, height: 50, preserveAspectRatio: true })
+                await termImg.buffer(buffer, { width: 70, height: 50, preserveAspectRatio: true }),
             );
 
             const captchaSolution = await new Promise(resolve => {
@@ -94,5 +94,5 @@ const validSession = function(callback){
 
 module.exports = {
     performLogin,
-    validSession
+    validSession,
 };

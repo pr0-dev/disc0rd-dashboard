@@ -87,5 +87,5 @@ module.exports = {
     getConfig,
     getVersion,
     getName,
-    getAuthor
+    getAuthor,
 };
