@@ -31,10 +31,10 @@ const getTrace = function(){
     const err = new Error();
 
     // Parse the whole stacktrace
-    const callerLine = err.stack && err.stack.split("\n");
+    const callerLine = (err.stack && err.stack.split("\n")) || [];
 
-    // Get everything after the third line
-    const splitArr = (callerLine || []).filter((_, index) => index > 1);
+    // remove all lines containing node_modules
+    const splitArr = callerLine.filter(line => !line.includes("node_modules"));
     let cleanArr = "";
 
     for (const element of splitArr){
@@ -56,7 +56,7 @@ module.exports = {
     error(input){
         console.log(
             " \x1b[41m\x1b[315m x \x1b[0m\x1b[31m [ERROR] " + getDate() + " - " + input + "\n" +
-            "     StackTrace: " + getTrace() + "\x1b[0m"
+            "     StackTrace: " + getTrace() + "\x1b[0m",
         );
     },
 
@@ -70,5 +70,5 @@ module.exports = {
 
     done(input){
         console.log(" \x1b[42m\x1b[30m ✓ \x1b[0m\x1b[32m [DONE]  " + getDate() + " - " + input + "\x1b[0m");
-    }
+    },
 };
