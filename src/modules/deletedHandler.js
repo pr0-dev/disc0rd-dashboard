@@ -19,13 +19,14 @@ const config = require("../utils/configHandler").getConfig();
 module.exports = async function(message, client){
     // Don't log deleted entries in the deleted-log channel
     // Don't log entries made by a bot
-    if (message.channel.id === config.bot_settings.deleted_log_id || message.author.bot) return;
+    if (message.channel.id === config.bot_settings.deleted_log_id || message.author?.bot) return;
 
+    // @ts-ignore
     const entry = (await message.guild.fetchAuditLogs({ type: 72 })).entries.first();
 
     // Don't log entries that have been deleted by the initial author (Data Privacy)
-    if (config.is_production && entry.target !== message.author) return;
-    const target = entry.target === message.author ? entry.executor : "Selbst"; // <- dev-mode only
+    if (config.is_production && entry?.target !== message.author) return;
+    const target = (!!entry && entry.target === message.author) ? String(entry.executor) : "Selbst"; // <- dev-mode only
 
     const embed = {
         embed: {
@@ -34,41 +35,41 @@ module.exports = async function(message, client){
             author: {
                 // @ts-ignore
                 name: `Nachricht von ${message.author.username} in ${message.channel.name} gelöscht`,
-                icon_url: message.author.displayAvatarURL()
+                icon_url: message.author?.displayAvatarURL(),
             },
             fields: [
                 {
                     name: "Von User",
-                    value: message.author,
-                    inline: true
+                    value: String(message.author),
+                    inline: true,
                 },
                 {
                     name: "User Tag",
-                    value: message.author.tag,
-                    inline: true
+                    value: String(message.author?.tag),
+                    inline: true,
                 },
                 {
                     name: "User ID",
-                    value: message.author.id,
-                    inline: true
+                    value: String(message.author?.id),
+                    inline: true,
                 },
                 {
                     name: "In Channel",
-                    value: message.channel,
-                    inline: true
+                    value: String(message.channel),
+                    inline: true,
                 },
                 {
                     name: "Gelöscht von",
                     value: target,
-                    inline: true
+                    inline: true,
                 },
                 {
                     name: "Datum/Zeit",
                     value: String(moment().format("DD.MM.YYYY HH:mm:ss")),
-                    inline: true
-                }
-            ]
-        }
+                    inline: true,
+                },
+            ],
+        },
     };
 
     client.channels

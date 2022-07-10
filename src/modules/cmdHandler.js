@@ -29,7 +29,7 @@ const config = require("../utils/configHandler").getConfig();
 const commandHandler = function(message, client, isModCommand, callback){
     const cmdPrefix = isModCommand ? config.bot_settings.prefix.mod_prefix : config.bot_settings.prefix.command_prefix;
     const args = message.content.slice(cmdPrefix.length).trim().split(/ +/g);
-    const command = args.shift().toLowerCase();
+    const command = args.shift()?.toLowerCase() || "";
 
     const commandArr = [];
     const commandDir = isModCommand ? path.resolve("./src/commands/modcommands") : path.resolve("./src/commands");
@@ -44,16 +44,16 @@ const commandHandler = function(message, client, isModCommand, callback){
         return callback();
     }
 
-    if (isModCommand && !message.member.roles.cache.some(r => config.bot_settings.moderator_roles.includes(r.name))){
+    if (isModCommand && !message.member?.roles.cache.some(r => config.bot_settings.moderator_roles.includes(r.name))){
         log.warn(`User "${message.author.tag}" (${message.author}) versuchte mod command "${cmdPrefix}${command}" auszuführen und wurde verweigert.`);
 
         return callback(
-            `Tut mir leid, ${message.author}. Du hast nicht genügend Rechte um dieses Command zu verwenden =(`
+            `Tut mir leid, ${message.author}. Du hast nicht genügend Rechte um dieses Command zu verwenden =(`,
         );
     }
 
     log.info(
-        `User "${message.author.tag}" (${message.author}) performed ${(isModCommand ? "mod-" : "")}command: ${cmdPrefix}${command}`
+        `User "${message.author.tag}" (${message.author}) performed ${(isModCommand ? "mod-" : "")}command: ${cmdPrefix}${command}`,
     );
 
     const cmdHandle = require(path.join(commandDir, command));
@@ -68,7 +68,7 @@ const commandHandler = function(message, client, isModCommand, callback){
     // Exception returned by the command handler
     catch (err){
         callback(
-            "Sorry, irgendwas ist schief gegangen! =("
+            "Sorry, irgendwas ist schief gegangen! =(",
         );
         log.error(err);
     }
