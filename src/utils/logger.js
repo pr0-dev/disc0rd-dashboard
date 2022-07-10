@@ -34,7 +34,7 @@ const getTrace = function(){
     const callerLine = (err.stack && err.stack.split("\n")) || [];
 
     // remove all lines containing node_modules
-    const splitArr = callerLine.filter(line => !line.includes("node_modules"));
+    const splitArr = callerLine.filter(line => !line.includes("node_modules") && !line.includes("utils/logger.js") && !line.includes("node:internal"));
     let cleanArr = "";
 
     for (const element of splitArr){

@@ -25,7 +25,7 @@ module.exports = async function(pr0, user, client){
             ?.fetch()
             .then(fetchedUser => fetchedUser.roles.cache.map(role => role.id))
             .catch(e => log.error(e)),
-        );
+        ).catch();
 
     if (userRoles?.includes(config.user_ranks[pr0.user.mark]) || pr0.user.mark === 16 || pr0.user.mark === 17) return false;
 
@@ -42,8 +42,8 @@ module.exports = async function(pr0, user, client){
                         client.guilds.cache
                             .get(config.auth.server_id)?.roles.cache
                             .find(r => r.id === config.user_ranks[pr0.user.mark]) || "",
-                    );
-            });
+                    ).catch();
+            }).catch();
     }
 
     catch (e){

@@ -46,7 +46,7 @@ module.exports = async function(req, res, client){
                         client.guilds.cache
                             .get(config.auth.server_id)?.roles.cache
                             .find(r => r.name === decodeURIComponent(String(req.query.role))) || "",
-                    );
+                    ).catch();
             }
             catch (e){
                 response.error = 1;

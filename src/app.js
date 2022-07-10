@@ -90,7 +90,7 @@ app.use(express.static((process.env.NODE_ENV && (process.env.NODE_ENV).toLowerCa
 require("./www/router")(app, client);
 
 process.on("unhandledRejection", (err, promise) => {
-    log.error("Unhandled rejection (promise: " + promise + ", reason: " + err + ")");
+    log.error("Unhandled rejection (promise: " + JSON.stringify(promise) + ", reason: " + err + ")");
 });
 
 client.on("ready", () => {

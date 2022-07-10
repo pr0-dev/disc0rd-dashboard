@@ -52,13 +52,13 @@ module.exports = async function(req, res, client){
         headers: {
             authorization: `${req.session.token_type} ${req.session.access_token}`,
         },
-    })).json();
+    })).json().catch();
 
     const guildInfo = !guilds || !req.session.access_token ? null : await (await fetch(`https://discordapp.com/api/guilds/${config.auth.server_id}/members/${req.session.user.id}`, {
         headers: {
             authorization: `Bot ${config.auth.bot_token}`,
         },
-    })).json();
+    })).json().catch();
 
     const synced = await rankSync(pr0 || null, req.session.user || null, client);
 
