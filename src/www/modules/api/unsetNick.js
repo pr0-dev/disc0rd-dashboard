@@ -24,17 +24,17 @@ module.exports = async function(req, res, client){
 
     if (!!req.session.user){
         try {
-            client.guilds.cache
-                .get(config.auth.server_id)?.members.cache
+            client.guilds?.cache
+                .get(config.auth.server_id)?.members?.cache
                 .get(req.session.user.id)
                 ?.setNickname("", "pr0 nick-desync")
                 .then(() => {
-                    client.guilds.cache
-                        .get(config.auth.server_id)?.members.cache
+                    client.guilds?.cache
+                        .get(config.auth.server_id)?.members?.cache
                         .get(req.session.user.id)?.roles
                         .remove(
-                            client.guilds.cache
-                                .get(config.auth.server_id)?.roles.cache
+                            client.guilds?.cache
+                                .get(config.auth.server_id)?.roles?.cache
                                 .find(r => r.id === config.bot_settings.verfied_nick_role) || "",
                         );
                 });

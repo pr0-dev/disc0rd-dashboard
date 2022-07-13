@@ -16,9 +16,9 @@ const log = require("../../../utils/logger");
  */
 const userHasTooManyRoles = function(client, req){
     return (
-        config.stammtisch_auswahl.filter(v => client.guilds.cache
-            .get(config.auth.server_id)?.members.cache
-            .get(req.session.user.id)?.roles.cache
+        config.stammtisch_auswahl.filter(v => client.guilds?.cache
+            .get(config.auth.server_id)?.members?.cache
+            .get(req.session.user.id)?.roles?.cache
             .array()
             .map(e => e.name)
             .includes(v),
@@ -64,12 +64,12 @@ module.exports = async function(req, res, client){
 
         else {
             try {
-                client.guilds.cache
-                    .get(config.auth.server_id)?.members.cache
+                client.guilds?.cache
+                    .get(config.auth.server_id)?.members?.cache
                     .get(req.session.user.id)?.roles
                     .add(
-                        client.guilds.cache
-                            .get(config.auth.server_id)?.roles.cache
+                        client.guilds?.cache
+                            .get(config.auth.server_id)?.roles?.cache
                             .find(r => r.name === decodeURIComponent(String(req.query.role))) || "",
                     ).catch();
             }

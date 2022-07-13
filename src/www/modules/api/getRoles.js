@@ -28,20 +28,20 @@ module.exports = async function(req, res, client){
             /** @type {Array} */ special: [],
         };
 
-        const userRoles = await client.guilds.cache
+        const userRoles = await client.guilds?.cache
             .get(config.auth.server_id)?.members
             .fetch()
             .then(guildMembers => guildMembers.get(req.session.user.id)
                 ?.fetch()
-                .then(fetchedUser => fetchedUser.roles.cache.map(role => role.name))
+                .then(fetchedUser => fetchedUser.roles?.cache.map(role => role.name))
                 .catch(e => log.error(e)),
             ).catch(e => log.error(e));
 
-        await client.guilds.cache
+        await client.guilds?.cache
             .get(config.auth.server_id)
             ?.fetch()
             .then(async fetched => (await fetched.roles.fetch().then(fetchedRoles => {
-                const parsed = fetchedRoles.cache.map(role => role.name);
+                const parsed = fetchedRoles?.cache.map(role => role.name);
 
                 parsed
                     .filter(role => config.rollen_auswahl.includes(role))

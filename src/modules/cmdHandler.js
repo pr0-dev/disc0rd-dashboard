@@ -44,7 +44,7 @@ const commandHandler = function(message, client, isModCommand, callback){
         return callback();
     }
 
-    if (isModCommand && !message.member?.roles.cache.some(r => config.bot_settings.moderator_roles.includes(r.name))){
+    if (isModCommand && !message.member?.roles?.cache.some(r => config.bot_settings.moderator_roles.includes(r.name))){
         log.warn(`User "${message.author.tag}" (${message.author}) versuchte mod command "${cmdPrefix}${command}" auszuführen und wurde verweigert.`);
 
         return callback(

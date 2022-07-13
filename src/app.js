@@ -95,16 +95,7 @@ process.on("unhandledRejection", (err, promise) => {
 
 client.on("ready", () => {
     log.info("Bot läuft...");
-    log.info(`${client.users.cache.size} User, in ${client.channels.cache.size} Kanälen von ${client.guilds.cache.size} Guilden`);
     client.user?.setActivity(config.bot_settings.bot_status);
-});
-
-client.on("guildCreate", (guild) => {
-    log.info(`Neuer Gilde beigetreten: ${guild.name} (id: ${guild.id}) mit ${guild.memberCount} mitgliedern`);
-});
-
-client.on("guildDelete", (guild) => {
-    log.info(`Von Gilde gelöscht: ${guild.name} (id: ${guild.id}).`);
 });
 
 client.on("guildMemberAdd", member => {

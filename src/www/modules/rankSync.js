@@ -18,12 +18,12 @@ const log = require("../../utils/logger");
 module.exports = async function(pr0, user, client){
     if (!pr0 || !user) return false;
 
-    const userRoles = await client.guilds.cache
+    const userRoles = await client.guilds?.cache
         .get(config.auth.server_id)?.members
         .fetch()
         .then(guildMembers => guildMembers.get(user.id)
             ?.fetch()
-            .then(fetchedUser => fetchedUser.roles.cache.map(role => role.id))
+            .then(fetchedUser => fetchedUser.roles?.cache.map(role => role.id))
             .catch(e => log.error(e)),
         ).catch();
 
@@ -31,16 +31,16 @@ module.exports = async function(pr0, user, client){
 
     try {
         // Remove all pr0-rank roles
-        client.guilds.cache
-            .get(config.auth.server_id)?.members.cache
+        client.guilds?.cache
+            .get(config.auth.server_id)?.members?.cache
             .get(user.id)?.roles.remove(Object.values(config.user_ranks)).then(() => {
                 // Add appropriate pr0-rank role
-                client.guilds.cache
-                    .get(config.auth.server_id)?.members.cache
+                client.guilds?.cache
+                    .get(config.auth.server_id)?.members?.cache
                     .get(user.id)?.roles
                     .add(
-                        client.guilds.cache
-                            .get(config.auth.server_id)?.roles.cache
+                        client.guilds?.cache
+                            .get(config.auth.server_id)?.roles?.cache
                             .find(r => r.id === config.user_ranks[pr0.user.mark]) || "",
                     ).catch();
             }).catch();
