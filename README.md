@@ -14,6 +14,16 @@ Funktionswunsch oder Fehler entdeckt? Bitte [öffne einen Issue](https://github.
 
 <hr>
 
+## :camera: Screenshots
+<sub>zum vergrößern, anklicken</sub>
+
+<p align="center">
+<img height="245" width="auto" src="https://cdn.discordapp.com/attachments/995720633428230154/1018474084809584690/Screenshot_20220911_125008.png" />
+<img height="245" width="auto" src="https://cdn.discordapp.com/attachments/995720633428230154/1018474085057044490/Screenshot_20220911_125034.png" />
+</p>
+
+<hr>
+
 ## :wrench: Installation
 
 0. Terminal aufmachen und dorthin navigieren, wo man es downloaden möchte <br><br>
